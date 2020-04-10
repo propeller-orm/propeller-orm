@@ -1,0 +1,47 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: propel_mysql
+    network_mode: host
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: "test"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  mysql_init_databases:
+    image: arey/mysql-client
+    container_name: propel_mysql_init_databases
+    depends_on:
+      - mysql
+    network_mode: host
+    command: |
+      mysql -h 127.0.0.1 -u root -p '' -e ' \
+          SET FOREIGN_KEY_CHECKS = 0; \
+          DROP DATABASE IF EXISTS test; \
+          DROP DATABASE IF EXISTS contest; \
+          DROP DATABASE IF EXISTS bookstore_schemas; \
+          DROP DATABASE IF EXISTS second_hand_books; \
+          DROP DATABASE IF EXISTS reverse_bookstore; \
+          SET FOREIGN_KEY_CHECKS = 1; \
+          CREATE DATABASE test; \
+          CREATE DATABASE contest; \
+          CREATE DATABASE bookstore_schemas; \
+          CREATE DATABASE second_hand_books; \
+          CREATE DATABASE reverse_bookstore; \
+      '
+
+  php:
+    build: .
+    depends_on: [ mysql, mysql_init_databases ]
+    restart: always
+    container_name: propel_php
+    network_mode: host
+    volumes:
+      - .:/source:delegated
+    environment:
+      DB: mysql
+      DB_USER: root

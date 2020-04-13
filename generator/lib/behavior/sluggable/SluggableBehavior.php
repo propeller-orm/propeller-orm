@@ -231,7 +231,9 @@ protected static function cleanupSlugPart(\$slug, \$replacement = '" . $this->ge
 {
     // try transliterating with `intl`
     if (function_exists('transliterator_create')) {
-        \$slug = transliterator_create('ascii')->transliterate(\$slug);
+        if (\$transliterator = transliterator_create('ASCII-Latin')) {
+            \$slug = \$transliterator->transliterate(\$slug);
+        }
     }
 
     // try transliterating with `iconv`

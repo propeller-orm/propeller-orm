@@ -14,6 +14,8 @@ RUN apt-get update \
         php-cli \
         php-curl \
         php-dom \
+        php-iconv \
+        php-intl \
         php-json \
         php-mbstring \
         php-mysql \

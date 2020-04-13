@@ -25,26 +25,26 @@ class PropelArrayFormatter extends PropelFormatter
     public function format(PDOStatement $stmt)
     {
         $this->checkInit();
-        if ($class = $this->collectionName) {
-            $collection = new $class();
-            $collection->setModel($this->class);
-            $collection->setFormatter($this);
-        } else {
-            $collection = array();
-        }
+        $array = array();
         if ($this->isWithOneToMany() && $this->hasLimit) {
             throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
             if ($object = &$this->getStructuredArrayFromRow($row)) {
-                $collection[] = $object;
+                $array[] = &$object;
             }
         }
         $this->currentObjects = array();
         $this->alreadyHydratedObjects = array();
         $stmt->closeCursor();
 
-        return $collection;
+        if ($class = $this->collectionName) {
+            $collection = new $class($array);
+            $collection->setModel($this->class);
+            $collection->setFormatter($this);
+            return $collection;
+        }
+        return $array;
     }
 
     public function formatOne(PDOStatement $stmt)
@@ -88,7 +88,7 @@ class PropelArrayFormatter extends PropelFormatter
      * @param array $row associative array indexed by column number,
      *                   as returned by PDOStatement::fetch(PDO::FETCH_NUM)
      *
-     * @return Array
+     * @return array
      */
     public function &getStructuredArrayFromRow($row)
     {
@@ -163,7 +163,7 @@ class PropelArrayFormatter extends PropelFormatter
             return $this->alreadyHydratedObjects[$this->class][$mainKey];
         } else {
             // we still need to return a reference to something to avoid a warning
-            return $emptyVariable;
+            return $this->emptyVariable;
         }
     }
 }

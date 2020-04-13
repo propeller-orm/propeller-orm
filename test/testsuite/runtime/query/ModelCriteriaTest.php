@@ -1372,6 +1372,8 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->join('Book');
         $c->withColumn('COUNT(Book.Id)', 'NbBooks');
         $c->select(array('FirstName', 'LastName'));
+        $c->groupBy('FirstName');
+        $c->groupBy('LastName');
         $collection = $c->find();
 
         $this->assertThat($collection, $this->isInstanceOf('PropelCollection'));
@@ -2216,8 +2218,8 @@ class ModelCriteriaTest extends BookstoreTestBase
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 
         $c = new ModelCriteria('bookstore', 'Book');
-        $books = $c->groupByTitle()->find($con);
-        $expectedSQL = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` GROUP BY book.title";
+        $books = $c->groupById()->find($con);
+        $expectedSQL = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` GROUP BY book.id";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'groupByXXX() is turned into groupBy(XXX)');
     }
 

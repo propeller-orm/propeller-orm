@@ -5,6 +5,7 @@ RUN apt-get update \
         git \
         unzip \
         make \
+        mysql-client \
     && rm -rf /var/lib/apt/lists/* \
     ;
 

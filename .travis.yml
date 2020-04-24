@@ -28,6 +28,8 @@ install:
 
 before_script:
   # MySQL
+  - cat "$TRAVIS_BUILD_DIR/test/etc/mysql.cnf" | sudo tee -a /etc/mysql/my.cnf
+  - sudo service mysql restart
   - mysql < "$TRAVIS_BUILD_DIR/test/reset_database.sql"
 
   # Composer

@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.archivable
  */
-class ArchivableBehaviorTest extends PHPUnit_Framework_TestCase
+class ArchivableBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     protected static $generatedSQL;
 

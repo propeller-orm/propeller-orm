@@ -16,7 +16,7 @@ include_once dirname(__FILE__) . '/CmsDataPopulator.php';
 /**
  * Base class contains some methods shared by subclass test cases.
  */
-abstract class CmsTestBase extends PHPUnit_Framework_TestCase
+abstract class CmsTestBase extends \PHPUnit\Framework\TestCase
 {
     protected $con;
 

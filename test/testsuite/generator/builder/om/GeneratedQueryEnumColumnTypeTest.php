@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedQueryEnumColumnTest extends PHPUnit_Framework_TestCase
+class GeneratedQueryEnumColumnTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

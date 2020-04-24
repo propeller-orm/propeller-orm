@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @author		 Soenke Ruempler
  * @package		runtime.util
  */
-class PropelDateTimeTest extends PHPUnit_Framework_TestCase
+class PropelDateTimeTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

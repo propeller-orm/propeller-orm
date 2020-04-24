@@ -18,7 +18,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__
  * @version    $Revision$
  * @package    generator.builder
  */
-class NamespaceTest extends PHPUnit_Framework_TestCase
+class NamespaceTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

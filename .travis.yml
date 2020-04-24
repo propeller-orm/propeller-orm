@@ -24,7 +24,7 @@ cache:
 
 install:
   - composer self-update
-  - wget https://phar.phpunit.de/phpunit-5.7.phar -O phpunit.phar
+  - wget https://phar.phpunit.de/phpunit-6.5.14.phar -O phpunit.phar
 
 before_script:
   # MySQL

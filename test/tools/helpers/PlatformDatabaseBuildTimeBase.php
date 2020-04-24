@@ -1,6 +1,6 @@
 <?php
 
-class PlatformDatabaseBuildTimeBase extends PHPUnit_Framework_TestCase
+class PlatformDatabaseBuildTimeBase extends \PHPUnit\Framework\TestCase
 {
 
     /**

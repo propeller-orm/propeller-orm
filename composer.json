@@ -18,7 +18,7 @@
     "phing/phing": "~2.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0"
+    "phpunit/phpunit": "^6.0"
   },
   "provide": {
     "propel/propel1": "1.7.1"

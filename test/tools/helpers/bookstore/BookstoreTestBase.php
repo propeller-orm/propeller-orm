@@ -15,8 +15,9 @@ Propel::init(dirname(__FILE__) . '/../../../fixtures/bookstore/build/conf/bookst
 /**
  * Base class contains some methods shared by subclass test cases.
  */
-abstract class BookstoreTestBase extends PHPUnit_Framework_TestCase
+abstract class BookstoreTestBase extends \PHPUnit\Framework\TestCase
 {
+    /** @var PropelPDO */
     protected $con;
 
     /**

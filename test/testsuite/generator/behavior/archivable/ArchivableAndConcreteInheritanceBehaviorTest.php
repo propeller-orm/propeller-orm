@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 /**
  * Tests for the combination of ArchivableBehavior and ConcreteInheritanceBehavior classes
  */
-class ArchivableAndConcreteInheritanceBehaviorTest extends PHPUnit_Framework_TestCase
+class ArchivableAndConcreteInheritanceBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     protected static $generatedSQL;
 

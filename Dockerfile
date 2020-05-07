@@ -39,6 +39,9 @@ RUN php -r "copy('https://getcomposer.org/download/${COMPOSER_PHAR_VERSION}/comp
     chmod +x composer.phar ; \
     mv composer.phar /usr/local/bin/composer
 
+RUN echo 'error_reporting = E_ALL' > /etc/php/7.4/mods-available/error_reporting_all.ini ; \
+    phpenmod error_reporting_all
+
 WORKDIR /source
 
 ENV PATH="/source/vendor/bin:${PATH}"

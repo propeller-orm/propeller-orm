@@ -1420,7 +1420,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->$clo = stream_get_contents(\$row[0]);";
         } elseif ($col->isLobType() && !$platform->hasStreamBlobImpl()) {
             $script .= "
-            if (\$row[0] !== null) {
+            if (isset(\$row[0])) {
                 \$this->$clo = fopen('php://memory', 'r+');
                 fwrite(\$this->$clo, \$row[0]);
                 rewind(\$this->$clo);
@@ -1429,13 +1429,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }";
         } elseif ($col->isPhpPrimitiveType()) {
             $script .= "
-            \$this->$clo = (\$row[0] !== null) ? (" . $col->getPhpType() . ") \$row[0] : null;";
+            \$this->$clo = isset(\$row[0]) ? (" . $col->getPhpType() . ") \$row[0] : null;";
         } elseif ($col->isPhpObjectType()) {
             $script .= "
-            \$this->$clo = (\$row[0] !== null) ? new " . $col->getPhpType() . "(\$row[0]) : null;";
+            \$this->$clo = isset(\$row[0]) ? new " . $col->getPhpType() . "(\$row[0]) : null;";
         } else {
             $script .= "
-            \$this->$clo = \$row[0];";
+            \$this->$clo = isset(\$row[0]) ? \$row[0]: null;";
         }
 
         $script .= "

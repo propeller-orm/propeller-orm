@@ -24,7 +24,7 @@ cache:
 install:
   - composer self-update
   - >
-    if [ $(phpenv version-name) = "7.4" ]; \
+    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; \
       then wget https://phar.phpunit.de/phpunit-7.5.15.phar -O phpunit.phar; \
       else wget https://phar.phpunit.de/phpunit-6.5.14.phar -O phpunit.phar; \
     fi

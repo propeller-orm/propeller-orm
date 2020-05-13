@@ -1,5 +1,10 @@
 # Changelog Of The Propel 1.x Branch #
 
+## 2020-03-13: Version 2.0.0
+
+- [#10](https://github.com/rock-symphony/propel-orm/pull/11) Drop PHP 5.6 support
+- [#11](https://github.com/rock-symphony/propel-orm/pull/11) PHP 7.4 compatibility
+
 ## 2020-03-01: Version 1.8.5
 
 - [#7](https://github.com/rock-symphony/propel-orm/pull/7) Fix PHP 7.3 compatibility

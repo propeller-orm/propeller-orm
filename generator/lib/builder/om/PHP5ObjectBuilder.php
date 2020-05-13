@@ -4125,15 +4125,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * @param string     &$script The script will be modified in this method.
      * @param ForeignKey $refFK
-     * @param ForeignKey $crossFK
      */
-    protected function addRefFKRemove(&$script, $refFK)
+    protected function addRefFKRemove(string &$script, ForeignKey $refFK)
     {
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedObjectName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedObjectClassName = $refFK->getTable()->getPhpName();
 
         $inputCollection = lcfirst($relatedName . 'ScheduledForDeletion');
-        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
+        $lowerRelatedObjectName = lcfirst($relatedObjectName);
 
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
@@ -4142,13 +4142,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param  {$relatedObjectClassName} \${$lowerRelatedObjectName} The $lowerRelatedObjectName object to remove.
+     * @return {$this->getObjectClassname()} The current object (for fluent API support)
      */
-    public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
+    public function remove{$relatedObjectName}(\${$lowerRelatedObjectName})
     {
-        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectName})) {
+            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectName}));
             if (null === \$this->{$inputCollection}) {
                 \$this->{$inputCollection} = clone \$this->{$collName};
                 \$this->{$inputCollection}->clear();
@@ -4156,14 +4156,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
             $script .= "
-            \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};";
+            \$this->{$inputCollection}[]= \${$lowerRelatedObjectName};";
         } else {
             $script .= "
-            \$this->{$inputCollection}[]= clone \${$lowerRelatedObjectClassName};";
+            \$this->{$inputCollection}[]= clone \${$lowerRelatedObjectName};";
         }
 
         $script .= "
-            \${$lowerRelatedObjectClassName}->set{$relCol}(null);
+            \${$lowerRelatedObjectName}->set{$relCol}(null);
         }
 
         return \$this;

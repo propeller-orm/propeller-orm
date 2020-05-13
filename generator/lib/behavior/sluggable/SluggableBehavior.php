@@ -229,9 +229,16 @@ protected function createRawSlug()
  */
 protected static function cleanupSlugPart(\$slug, \$replacement = '" . $this->getParameter('replacement') . "')
 {
-    // transliterate
+    // try transliterating with `intl`
+    if (function_exists('transliterator_create')) {
+        if (\$transliterator = transliterator_create('ASCII-Latin')) {
+            \$slug = \$transliterator->transliterate(\$slug);
+        }
+    }
+
+    // try transliterating with `iconv`
     if (function_exists('iconv')) {
-        \$slug = iconv('utf-8', 'us-ascii//TRANSLIT', \$slug);
+        \$slug = iconv('UTF-8', 'ASCII//TRANSLIT', \$slug);
     }
 
     // lowercase

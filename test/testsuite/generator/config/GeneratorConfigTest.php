@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorCon
  * @author	William Durand <william.durand1@gmail.com>
  * @package	propel.generator.config
  */
-class GeneratorConfigTest extends PHPUnit_Framework_TestCase
+class GeneratorConfigTest extends \PHPUnit\Framework\TestCase
 {
     protected $pathToFixtureFiles;
 

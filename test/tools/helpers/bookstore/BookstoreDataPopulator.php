@@ -22,7 +22,7 @@ define('_LOB_SAMPLE_FILE_PATH', dirname(__FILE__) . '/../../../etc/lob');
 class BookstoreDataPopulator
 {
 
-    public static function populate($con = null, $loadMoreBooks = false)
+    public static function populate(PropelPDO $con = null, $loadMoreBooks = false)
     {
         if ($con === null) {
             $con = Propel::getConnection(BookPeer::DATABASE_NAME);

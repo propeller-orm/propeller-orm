@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedObjectTemporalColumnTypeTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectTemporalColumnTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

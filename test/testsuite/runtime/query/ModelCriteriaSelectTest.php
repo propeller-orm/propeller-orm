@@ -136,7 +136,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $c->where('Author.FirstName = ?', 'Neal');
         $c->select('FirstName');
         $author = $c->findOne($this->con);
-        $this->assertEquals(count($author), 1, 'findOne() called after select(string) allows for where() statements');
+        $this->assertNotNull($author, 'findOne() called after select(string) allows for where() statements');
         $expectedSQL = "SELECT author.first_name AS `FirstName` FROM `author` WHERE author.first_name = 'Neal' LIMIT 1";
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) allows for where() statements');
     }
@@ -167,7 +167,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $c->where('Author.FirstName = ?', 'Neal');
         $c->select('Title');
         $title = $c->findOne($this->con);
-        $this->assertEquals(count($title), 1, 'findOne() called after select(string) allows for join() statements');
+        $this->assertNotNull($title, 'findOne() called after select(string) allows for join() statements');
         $expectedSQL = "SELECT book.title AS `Title` FROM `book` INNER JOIN `author` ON (book.author_id=author.id) WHERE author.first_name = 'Neal' LIMIT 1";
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) allows for where() statements');
 
@@ -431,7 +431,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
     {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->select('Title');
-        $this->assertEquals('Title', $c->getSelect());
+        $this->assertEquals(['Title'], $c->getSelect());
     }
 
     public function testGetSelectReturnsArrayWhenSelectingSeveralColumns()

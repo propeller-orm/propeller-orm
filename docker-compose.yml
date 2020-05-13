@@ -1,0 +1,35 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: propel_mysql
+    network_mode: host
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: "test"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  php:
+    build: .
+    depends_on: [ mysql ]
+    restart: always
+    container_name: propel_php
+    network_mode: host
+    volumes:
+      - .:/source:delegated
+    environment:
+      DB: mysql
+      DB_USER: root
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        make vendor
+        echo 'Waiting for MySQL to be available'
+        test/wait-for-it.sh 127.0.0.1:3306 -t 60
+        mysql --host=127.0.0.1 --user=root --password='' < ./test/reset_database.sql
+        make test

@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/Xml
  * @version    $Revision$
  * @package    generator.builder.util
  */
-class XmlToAppDataTest extends PHPUnit_Framework_TestCase
+class XmlToAppDataTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testParseStringEmptySchema()

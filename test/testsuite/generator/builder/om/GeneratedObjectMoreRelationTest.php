@@ -16,7 +16,7 @@
  * @version		$Revision$
  * @package		generator.builder.om
  */
-class GeneratedObjectMoreRelationTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectMoreRelationTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

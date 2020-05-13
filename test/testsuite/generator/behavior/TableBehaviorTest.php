@@ -14,7 +14,7 @@
  * @author     Francois Zaninotto
  * @package    generator.behavior
  */
-class TableBehaviorTest extends PHPUnit_Framework_TestCase
+class TableBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

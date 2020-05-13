@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @version    $Id$
  * @package    runtime.map
  */
-class TableMapTest extends PHPUnit_Framework_TestCase
+class TableMapTest extends \PHPUnit\Framework\TestCase
 {
   protected $databaseMap;
 

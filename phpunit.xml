@@ -3,12 +3,12 @@
 <phpunit backupGlobals="false"
     backupStaticAttributes="false"
     colors="true"
+    convertDeprecationsToExceptions="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
     processIsolation="false"
     stopOnFailure="false"
-    syntaxCheck="false"
     bootstrap="test/bootstrap.php"
     >
 

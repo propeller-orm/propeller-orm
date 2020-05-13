@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/Timestampa
  * @version    $Revision$
  * @package    generator.model
  */
-class BehaviorTest extends PHPUnit_Framework_TestCase
+class BehaviorTest extends \PHPUnit\Framework\TestCase
 {
   private $xmlToAppData;
   private $appData;

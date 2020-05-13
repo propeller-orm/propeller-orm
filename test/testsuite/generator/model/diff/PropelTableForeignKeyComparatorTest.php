@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.p
  *
  * @package    generator.model.diff
  */
-class PropelTableForeignKeyComparatorTest extends PHPUnit_Framework_TestCase
+class PropelTableForeignKeyComparatorTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

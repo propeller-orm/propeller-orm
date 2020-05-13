@@ -14,7 +14,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__
 /**
  * Bse class for tests on the schemas schema
  */
-abstract class SchemasTestBase extends PHPUnit_Framework_TestCase
+abstract class SchemasTestBase extends \PHPUnit\Framework\TestCase
 {
 
     protected function setUp()

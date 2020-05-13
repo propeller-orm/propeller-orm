@@ -35,7 +35,9 @@ fi
 DIRS=`ls $FIXTURES_DIR`
 
 for dir in $DIRS ; do
-    rebuild $dir
+    if [ -f "$FIXTURES_DIR/$dir/build.properties" ] ; then
+      rebuild $dir
+    fi
 done
 
 # Special case for reverse fixtures
@@ -44,7 +46,7 @@ REVERSE_DIRS=`ls $FIXTURES_DIR/reverse`
 
 for dir in $REVERSE_DIRS ; do
     if [ -f "$FIXTURES_DIR/reverse/$dir/build.properties" ] ; then
-        echo "[ $dir ]"
+        echo "[ reverse/$dir ]"
         $ROOT/generator/bin/propel-gen $FIXTURES_DIR/reverse/$dir insert-sql > /dev/null
     fi
 done

@@ -1,0 +1,15 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS contest;
+DROP DATABASE IF EXISTS bookstore_schemas;
+DROP DATABASE IF EXISTS second_hand_books;
+DROP DATABASE IF EXISTS reverse_bookstore;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE DATABASE test;
+CREATE DATABASE contest;
+CREATE DATABASE bookstore_schemas;
+CREATE DATABASE second_hand_books;
+CREATE DATABASE reverse_bookstore;

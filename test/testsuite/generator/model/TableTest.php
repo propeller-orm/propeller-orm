@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/DummyPlatforms.php';
  * @author     Martin Poeschl (mpoeschl@marmot.at)
  * @package    generator.model
  */
-class TableTest extends PHPUnit_Framework_TestCase
+class TableTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
@@ -120,7 +120,7 @@ EOF;
 
   <table name="foo">
 
-    <behavior name="autoAddPKBehavior"/>
+    <column name="id" type="INTEGER" primaryKey="true"/>
     <column name="name" type="VARCHAR"/>
     <column name="subid" type="INTEGER"/>
 
@@ -128,8 +128,7 @@ EOF;
 
   <table name="bar">
 
-    <behavior name="autoAddPKBehavior"/>
-
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="VARCHAR"/>
     <column name="subid" type="INTEGER"/>
 
@@ -145,9 +144,9 @@ EOF;
 $expectedRelationSql = "
 CREATE TABLE `bar`
 (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255),
     `subid` INTEGER,
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (`id`),
     INDEX `bar_FI_1` (`id`, `subid`)
 ) ENGINE=MyISAM;

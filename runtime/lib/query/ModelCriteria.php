@@ -527,7 +527,7 @@ class ModelCriteria extends Criteria
     {
         $columnArray = (array) $columnArray;
 
-        if (count($columnArray) === 0) {
+        if (count($columnArray) === 0 || $columnArray === ['']) {
             throw new PropelException('You must ask for at least one column');
         }
 

@@ -26,7 +26,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConve
  * @version     $Revision$
  * @package     propel.generator.reverse.mysql
  */
-class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
+class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

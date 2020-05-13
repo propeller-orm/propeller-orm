@@ -23,18 +23,24 @@ cache:
 
 install:
   - composer self-update
+  - >
+    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; \
+      then wget https://phar.phpunit.de/phpunit-7.5.15.phar -O phpunit.phar; \
+      else wget https://phar.phpunit.de/phpunit-6.5.14.phar -O phpunit.phar; \
+    fi
 
 before_script:
   # MySQL
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'SET FOREIGN_KEY_CHECKS = 0; DROP DATABASE IF EXISTS test; DROP SCHEMA IF EXISTS second_hand_books; DROP SCHEMA IF EXISTS contest; DROP DATABASE IF EXISTS reverse_bookstore; DROP SCHEMA IF EXISTS bookstore_schemas; SET FOREIGN_KEY_CHECKS = 1;'; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE test; CREATE SCHEMA bookstore_schemas; CREATE SCHEMA contest; CREATE SCHEMA second_hand_books; CREATE DATABASE reverse_bookstore;'; fi"
+  - cat "$TRAVIS_BUILD_DIR/test/etc/mysql.cnf" | sudo tee -a /etc/mysql/my.cnf
+  - sudo service mysql restart
+  - mysql < "$TRAVIS_BUILD_DIR/test/reset_database.sql"
 
   # Composer
   - composer install --prefer-source
 
   - ./test/reset_tests.sh
 
-script: phpunit
+script: php phpunit.phar
 
 matrix:
   allow_failures:

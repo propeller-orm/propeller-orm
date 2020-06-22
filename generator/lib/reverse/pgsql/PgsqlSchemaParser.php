@@ -484,6 +484,10 @@ class PgsqlSchemaParser extends BaseSchemaParser
 
             $arrColumns = explode(' ', $row['indkey']);
             foreach ($arrColumns as $intColNum) {
+                if ($intColNum === '0') {
+                    // `indkey` contains zero for indexes based on expressions, rather than plain columns.
+                    continue;
+                }
                 $stmt2->bindValue(1, $oid);
                 $stmt2->bindValue(2, $intColNum);
                 $stmt2->execute();

@@ -33,10 +33,10 @@ class Index extends XMLElement
     private $parentTable;
 
     /** @var string[] */
-    private $indexColumns;
+    private $indexColumns = [];
 
     /** @var int[] */
-    private $indexColumnSizes = array();
+    private $indexColumnSizes = [];
 
     /**
      * Creates a new Index instance.

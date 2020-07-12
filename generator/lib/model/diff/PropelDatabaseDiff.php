@@ -8,9 +8,6 @@
  * @license     MIT License
  */
 
-require_once dirname(__FILE__) . '/../Database.php';
-require_once dirname(__FILE__) . '/PropelTableDiff.php';
-
 /**
  * Value object for storing Database object diffs
  * Heavily inspired by Doctrine2's Migrations

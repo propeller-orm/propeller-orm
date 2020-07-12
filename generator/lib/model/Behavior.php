@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/Index.php';
-require_once dirname(__FILE__) . '/../builder/util/PropelTemplate.php';
-
 /**
  * Information about behaviors of a table.
  *

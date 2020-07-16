@@ -8,11 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/archivable/ArchivableBehavior.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/concrete_inheritance/ConcreteInheritanceBehavior.php';
-require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
-
 /**
  * Tests for the combination of ArchivableBehavior and ConcreteInheritanceBehavior classes
  */

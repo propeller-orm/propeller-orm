@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once 'AddClassBehaviorBuilder.php';
-
 class AddClassBehavior extends Behavior
 {
     protected $additionalBuilders = array('AddClassBehaviorBuilder');

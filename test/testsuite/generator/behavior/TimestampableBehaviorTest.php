@@ -8,12 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorConfig.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/Behavior.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/TimestampableBehavior.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBuilder.php';
-
 /**
  * Tests for TimestampableBehavior class
  *

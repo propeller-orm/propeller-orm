@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelParser.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelCSVParser.php';
-
 /**
  * Test for PropelCSVParser class
  *

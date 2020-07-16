@@ -20,8 +20,6 @@ class TableBehaviorTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
         set_include_path(get_include_path() . PATH_SEPARATOR . "fixtures/bookstore/build/classes");
-        require_once 'behavior/alternative_coding_standards/map/Table3TableMap.php';
-        require_once 'behavior/alternative_coding_standards/Table3Peer.php';
     }
 
   public function testModifyTable()

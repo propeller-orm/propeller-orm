@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/OMBuilder.php';
-
 /**
  * Test class for OMBuilder.
  *

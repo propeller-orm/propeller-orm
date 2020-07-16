@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../runtime/lib/Propel.php';
-
 /**
  * Base functionality to be extended by all Propel test cases.  Test
  * case implementations are used to automate unit testing via PHPUnit.

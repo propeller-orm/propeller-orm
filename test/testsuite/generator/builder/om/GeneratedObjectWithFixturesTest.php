@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 /**
  * Tests the generated Object classes.
  *
@@ -24,12 +22,6 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
  */
 class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-        require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/TestAuthor.php';
-    }
-
     /**
      * Test the reload() method.
      */

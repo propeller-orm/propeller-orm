@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
-
 /**
  *
  * @package    generator.util
@@ -19,7 +16,6 @@ class PropelQuickBuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetPlatform()
     {
-        require_once dirname(__FILE__) . '/../../../../generator/lib/platform/MysqlPlatform.php';
         $builder = new PropelQuickBuilder();
         $builder->setPlatform(new MysqlPlatform());
         $this->assertTrue($builder->getPLatform() instanceof MysqlPlatform);

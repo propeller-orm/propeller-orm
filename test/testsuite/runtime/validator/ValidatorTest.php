@@ -9,8 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 /**
  * Tests the validator classes.
  *
@@ -33,7 +31,6 @@ class ValidatorTest extends BookstoreEmptyTestBase
     {
         parent::setUp();
         BookstoreDataPopulator::populate();
-        require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/validator/ISBNValidator.php';
     }
 
     /**

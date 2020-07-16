@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
 {
     protected function setUp()

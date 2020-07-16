@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorConfig.php';
-
 /**
  * @author	William Durand <william.durand1@gmail.com>
  * @package	propel.generator.config

@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-
 /**
  * Tests the generated Object classes.
  *
@@ -29,12 +26,6 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
  */
 class GeneratedObjectTest extends BookstoreTestBase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-        require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/TestAuthor.php';
-    }
-
     /**
      * Test saving an object after setting default values for it.
      */

@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/BaseTestCase.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/query/Criteria.php';
-
 Propel::init(dirname(__FILE__) . '/../../../fixtures/bookstore/build/conf/bookstore-conf.php');
 
 /**

@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../runtime/lib/om/BaseObject.php';
-
 /**
  * Test class for BaseObject.
  *

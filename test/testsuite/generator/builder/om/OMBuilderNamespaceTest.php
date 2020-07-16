@@ -8,11 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Table.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/OMBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPlatform.php';
-
 /**
  * Test class for OMBuilder.
  *

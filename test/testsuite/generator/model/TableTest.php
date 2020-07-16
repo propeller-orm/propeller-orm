@@ -9,12 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../generator/lib/builder/util/XmlToAppData.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorConfig.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/platform/DefaultPlatform.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/platform/MysqlPlatform.php';
-require_once dirname(__FILE__) . '/../../../tools/helpers/DummyPlatforms.php';
-
 /**
  * Tests for Table model class
  *

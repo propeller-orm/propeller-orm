@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/PropelTemplate.php';
-
 /**
  * Tests for PropelTemplate class
  *

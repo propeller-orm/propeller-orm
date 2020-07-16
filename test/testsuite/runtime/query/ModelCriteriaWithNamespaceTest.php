@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/namespaces/NamespacesTestBase.php';
-
 /**
  * Test class for ModelCriteria with namespaces.
  *

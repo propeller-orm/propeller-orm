@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 /**
  * Test class for PropelArrayFormatter when Criteria uses with().
  *

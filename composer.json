@@ -19,7 +19,7 @@
     "php": ">=7.0",
     "phing/phing": "~2.16.3"
   },
-  "provide": {
+  "replace": {
     "rock-symphony/propel-orm": "2.0",
     "propel/propel1": "1.7.1"
   },

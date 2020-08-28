@@ -24,18 +24,18 @@ class XMLElementTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $xmlElement->getDefaultValueForArray($value));
     }
 
-    public static function providerForGetDefaultValueForArray()
+    public static function providerForGetDefaultValueForArray(): array
     {
-        return array(
-            array('', null),
-            array(null, null),
-            array('FOO', '||FOO||'),
-            array('FOO, BAR', '||FOO | BAR||'),
-            array('FOO , BAR', '||FOO | BAR||'),
-            array('FOO,BAR', '||FOO | BAR||'),
-            array(' ', null),
-            array(', ', null),
-        );
+        return [
+            ['', ''],
+            [null, null],
+            ['FOO', '||FOO||'],
+            ['FOO, BAR', '||FOO | BAR||'],
+            ['FOO , BAR', '||FOO | BAR||'],
+            ['FOO,BAR', '||FOO | BAR||'],
+            [' ', ''],
+            [', ', ''],
+        ];
     }
 }
 

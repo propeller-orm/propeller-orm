@@ -1174,7 +1174,7 @@ ALTER TABLE %s ADD
         $stringValue = trim($stringValue);
 
         if (empty($stringValue)) {
-            return null;
+            return $this->quote('');
         }
 
         $values = array();
@@ -1184,7 +1184,7 @@ ALTER TABLE %s ADD
 
         $value = implode(' | ', $values);
         if (empty($value) || ' | ' === $value) {
-            return null;
+            return $this->quote('');
         }
 
         return $this->quote(sprintf('||%s||', $value));

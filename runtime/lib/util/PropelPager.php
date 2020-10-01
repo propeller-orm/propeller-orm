@@ -87,6 +87,8 @@
  */
 class PropelPager implements Countable, Iterator
 {
+    const PEER_COUNT_METHOD = 'doCount';
+    const PEER_SELECT_METHOD = 'doSelect';
 
     private $recordCount;
     private $pages;
@@ -193,7 +195,7 @@ class PropelPager implements Countable, Iterator
     {
         $this->criteria->setOffset($this->start);
         $this->criteria->setLimit($this->max);
-        $this->rs = call_user_func([$this->getPeerClass(), 'doSelect'], $this->criteria);
+        $this->rs = call_user_func([$this->getPeerClass(), self::PEER_SELECT_METHOD], $this->criteria);
     }
 
     /**
@@ -428,7 +430,7 @@ class PropelPager implements Countable, Iterator
             $this->countCriteria->setLimit(0);
             $this->countCriteria->setOffset(0);
 
-            $this->recordCount = call_user_func([$this->getPeerClass(), 'doCount'], $this->countCriteria);
+            $this->recordCount = call_user_func([$this->getPeerClass(), self::PEER_COUNT_METHOD], $this->countCriteria);
         }
 
         return $this->recordCount;

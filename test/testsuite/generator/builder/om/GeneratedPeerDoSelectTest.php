@@ -215,7 +215,6 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
 
         $results = BookstoreEmployeeAccountQuery::create()
             ->joinAcctAccessRole()
-            ->joinAcctAuditLog()
             ->joinBookstoreEmployee()
             ->find();
         $o = $results[0];

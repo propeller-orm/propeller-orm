@@ -314,7 +314,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
             ->find();
         $book = $books[0];
 
-        $arr1 = $book->toArray(BasePeer::TYPE_PHPNAME, null, array(), true);
+        $arr1 = $book->toArray(BasePeer::TYPE_PHPNAME, null, [], true);
         $expectedKeys = array(
             'Id',
             'Title',
@@ -329,13 +329,13 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 
         $books = BookQuery::create()
             ->filterByTitle('Don Juan')
-            ->joinAuthor()
-            ->joinPublisher()
+            ->joinWith('Author')
+            ->joinWith('Publisher')
             ->find();
         $book = $books[0];
 
-        $arr2 = $book->toArray(BasePeer::TYPE_PHPNAME, null, array(), true);
-        $expectedKeys = array(
+        $arr2 = $book->toArray(BasePeer::TYPE_PHPNAME, null, [], true);
+        $expectedKeys = [
             'Id',
             'Title',
             'ISBN',
@@ -343,8 +343,8 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
             'PublisherId',
             'AuthorId',
             'Publisher',
-            'Author'
-        );
+            'Author',
+        ];
         $this->assertEquals($expectedKeys, array_keys($arr2), 'toArray() can return sub arrays for hydrated related objects');
     }
 

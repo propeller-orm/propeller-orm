@@ -19,11 +19,6 @@
  *  $c = new Criteria();
  *  $c->addDescendingOrderByColumn(poemPeer::SID);
  *
- *  // with join
- *  $pager = new PropelPager($c, 'poemPeer', 'doSelectJoinPoemUsers', 1, 50);
- *
- *  // without Join
- *
  *  $pager = new PropelPager($c, 'poemPeer', 'doSelect', 1, 50);
  *
  * Some template:

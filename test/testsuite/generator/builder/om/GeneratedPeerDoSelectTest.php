@@ -68,90 +68,14 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
 
         $limitcount = $count - 1;
 
-        $lc = new Criteria();
-        $lc->setLimit($limitcount);
-
-        $results = BookPeer::doSelect($lc);
+        $results = BookQuery::create()->limit($limitcount)->find();
 
         $this->assertEquals($limitcount, count($results), "Expected $limitcount results from BookPeer::doSelect()");
 
-        // re-create it just to avoid side-effects
-        $lc2 = new Criteria();
-        $lc2->setLimit($limitcount);
-        $results2 = BookPeer::doSelectJoinAuthor($lc2);
+        $results2 = BookQuery::create()->joinAuthor()->limit($limitcount)->find();
 
-        $this->assertEquals($limitcount, count($results2), "Expected $limitcount results from BookPeer::doSelectJoinAuthor()");
+        $this->assertEquals($limitcount, count($results2), "Expected $limitcount results from BookQuery::create()->joinAuthor()->limit(...)->find()");
 
-    }
-
-    /**
-     * Test the basic functionality of the doSelectJoin*() methods.
-     */
-    public function testDoSelectJoin()
-    {
-
-        BookPeer::clearInstancePool();
-
-        $c = new Criteria();
-
-        $books = BookPeer::doSelect($c);
-        $obj = $books[0];
-        // $size = strlen(serialize($obj));
-
-        BookPeer::clearInstancePool();
-
-        $joinBooks = BookPeer::doSelectJoinAuthor($c);
-        $obj2 = $joinBooks[0];
-        $obj2Array = $obj2->toArray(BasePeer::TYPE_PHPNAME, true, array(), true);
-        // $joinSize = strlen(serialize($obj2));
-
-        $this->assertEquals(count($books), count($joinBooks), "Expected to find same number of rows in doSelectJoin*() call as doSelect() call.");
-
-        // $this->assertTrue($joinSize > $size, "Expected a serialized join object to be larger than a non-join object.");
-
-        $this->assertTrue(array_key_exists('Author', $obj2Array));
-    }
-
-    /**
-     * Test the doSelectJoin*() methods when the related object is NULL.
-     */
-    public function testDoSelectJoin_NullFk()
-    {
-        $b1 = new Book();
-        $b1->setTitle("Test NULLFK 1");
-        $b1->setISBN("NULLFK-1");
-        $b1->save();
-
-        $b2 = new Book();
-        $b2->setTitle("Test NULLFK 2");
-        $b2->setISBN("NULLFK-2");
-        $b2->setAuthor(new Author());
-        $b2->getAuthor()->setFirstName("Hans")->setLastName("L");
-        $b2->save();
-
-        BookPeer::clearInstancePool();
-        AuthorPeer::clearInstancePool();
-
-        $c = new Criteria();
-        $c->add(BookPeer::ISBN, 'NULLFK-%', Criteria::LIKE);
-        $c->addAscendingOrderByColumn(BookPeer::ISBN);
-
-        $matches = BookPeer::doSelectJoinAuthor($c);
-        $this->assertEquals(2, count($matches), "Expected 2 matches back from new books; got back " . count($matches));
-
-        $this->assertNull($matches[0]->getAuthor(), "Expected first book author to be null");
-        $this->assertInstanceOf('Author', $matches[1]->getAuthor(), "Expected valid Author object for second book.");
-    }
-
-    public function testDoSelectJoinOneToOne()
-    {
-        $con = Propel::getConnection();
-        $count = $con->getQueryCount();
-        Propel::disableInstancePooling();
-        $c = new Criteria();
-        $accs = BookstoreEmployeeAccountPeer::doSelectJoinBookstoreEmployee($c);
-        Propel::enableInstancePooling();
-        $this->assertEquals(1, $con->getQueryCount() - $count, 'doSelectJoin() makes only one query in a one-to-one relationship');
     }
 
     public function testDoSelectOne()
@@ -202,19 +126,7 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
 
         $this->assertTrue($bookauthor === $author, "Expected same object instance when calling fk object accessor as retrieveByPK()");
 
-        // 4) test a doSelectJoin()
-        $morebooks = BookPeer::doSelectJoinAuthor(new Criteria());
-        for ($i=0,$j=0; $j < count($morebooks); $i++, $j++) {
-            $testb1 = $allbooks[$i];
-            $testb2 = $allbooks[$j];
-            $this->assertTrue($testb1 === $testb2, "Expected the same objects from consecutive doSelect() calls.");
-            // we could probably also test this by just verifying that $book & $testb are the same
-            if ($testb1->getPrimaryKey() === $book) {
-                $this->assertTrue($book->getAuthor() === $testb1->getAuthor(), "Expected same author object in calls to pkey-matching books.");
-            }
-        }
-
-        // 5) test creating a new object, saving it, and then retrieving that object (should all be same instance)
+        // 4) test creating a new object, saving it, and then retrieving that object (should all be same instance)
         $b = new BookstoreEmployee();
         $b->setName("Testing");
         $b->setJobTitle("Testing");
@@ -301,8 +213,11 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
         $bempacct->setPassword("johnp4ss");
         $bempacct->save();
 
-        $c = new Criteria();
-        $results = BookstoreEmployeeAccountPeer::doSelectJoinAll($c);
+        $results = BookstoreEmployeeAccountQuery::create()
+            ->joinAcctAccessRole()
+            ->joinAcctAuditLog()
+            ->joinBookstoreEmployee()
+            ->find();
         $o = $results[0];
 
         $this->assertEquals('Admin', $o->getAcctAccessRole()->getName());
@@ -343,7 +258,12 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
         $c->add(ReaderFavoritePeer::BOOK_ID, $b1->getId());
         $c->add(ReaderFavoritePeer::READER_ID, $r1->getId());
 
-        $results = ReaderFavoritePeer::doSelectJoinBookOpinion($c);
+        $results = ReaderFavoriteQuery::create()
+            ->filterByBookId($b1->getId())
+            ->filterByReaderId($r1->getId())
+            ->joinBookOpinion()
+            ->find();
+
         $this->assertEquals(1, count($results), "Expected 1 result");
     }
 

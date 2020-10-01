@@ -215,41 +215,4 @@ class Ticket520Test extends BookstoreTestBase
         actually updated the DB, the $b2 would still be a "zombie" in
         $a's $colBooks field. */
     }
-
-    public function testNewObjectsGetLostOnJoin()
-    {
-        /* While testNewObjectsAvailableWhenSaveNotCalled passed as of
-        revision 851, in this case we call getBooksJoinPublisher() instead
-        of just getBooks(). get...Join...() does not contain the check whether
-        the current object is new, it will always consult the DB and lose the
-        new objects entirely. Thus the test fails. (At least for Propel 1.2 ?!?) */
-        $this->markTestSkipped();
-
-        $a = new Author();
-        $a->setFirstName("Douglas");
-        $a->setLastName("Adams");
-
-        $p = new Publisher();
-        $p->setName('Pan Books Ltd.');
-
-        $b1 = new Book();
-        $b1->setTitle("The Hitchhikers Guide To The Galaxy");
-        $b1->setPublisher($p); // uh... did not check that :^)
-        $a->addBook($b1);
-
-        $b2 = new Book();
-        $b2->setTitle("The Restaurant At The End Of The Universe");
-        $b2->setPublisher($p);
-        $a->addBook($b2);
-
-        $books = $a->getBooksJoinPublisher();
-        $this->assertEquals(2, count($books));
-        $this->assertContains($b1, $books);
-        $this->assertContains($b2, $books);
-
-        $a->save();
-        $this->assertFalse($b1->isNew());
-        $this->assertFalse($b2->isNew());
-    }
-
 }

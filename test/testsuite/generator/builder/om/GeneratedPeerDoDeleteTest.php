@@ -413,8 +413,6 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
     {
         $c = new Criteria();
         $this->assertInternalType('integer', BookPeer::doCount($c), "Expected doCount() to return an integer.");
-        $this->assertInternalType('integer', BookPeer::doCountJoinAll($c), "Expected doCountJoinAll() to return an integer.");
-        $this->assertInternalType('integer', BookPeer::doCountJoinAuthor($c), "Expected doCountJoinAuthor() to return an integer.");
     }
 
     /**
@@ -453,42 +451,6 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
         $c5->setOffset(20);
         $c5->setLimit(10);
         $this->assertEquals(5, BookPeer::doCount($c5));
-    }
-
-    /**
-     * Test doCountJoin*() methods.
-     */
-    public function testDoCountJoin()
-    {
-        BookPeer::doDeleteAll();
-
-        for ($i=0; $i < 25; $i++) {
-            $b = new Book();
-            $b->setTitle("Book $i");
-            $b->setISBN("ISBN $i");
-            $b->save();
-        }
-
-        $c = new Criteria();
-        $totalCount = BookPeer::doCount($c);
-
-        $this->assertEquals($totalCount, BookPeer::doCountJoinAuthor($c));
-        $this->assertEquals($totalCount, BookPeer::doCountJoinPublisher($c));
-    }
-
-    /**
-     * Test doCountJoin*() methods with ORDER BY columns in Criteria.
-     * @link http://trac.propelorm.org/ticket/627
-     */
-    public function testDoCountJoinWithOrderBy()
-    {
-        $c = new Criteria(BookPeer::DATABASE_NAME);
-        $c->addAscendingOrderByColumn(BookPeer::ID);
-
-        // None of these should not throw an exception!
-        BookPeer::doCountJoinAll($c);
-        BookPeer::doCountJoinAllExceptAuthor($c);
-        BookPeer::doCountJoinAuthor($c);
     }
 
     /**

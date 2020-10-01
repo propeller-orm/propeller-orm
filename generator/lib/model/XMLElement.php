@@ -101,7 +101,7 @@ abstract class XMLElement
         $stringValue = trim($stringValue);
 
         if (empty($stringValue)) {
-            return null;
+            return '';
         }
 
         $values = array();
@@ -111,7 +111,7 @@ abstract class XMLElement
 
         $value = implode(' | ', $values);
         if (empty($value) || ' | ' === $value) {
-            return null;
+            return '';
         }
 
         return sprintf('||%s||', $value);

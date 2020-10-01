@@ -52,6 +52,8 @@ EOF;
     {
         $peer = new \Test\SortableTest1Peer();
         $peer->shiftRank(1); //should not throw any exception
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testParameters()

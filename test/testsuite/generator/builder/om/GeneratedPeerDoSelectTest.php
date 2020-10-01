@@ -57,7 +57,7 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
     }
 
     /**
-     * Tests performing doSelect() and doSelectJoin() using LIMITs.
+     * Tests performing Query::find() and Query::join()->find() using LIMITs.
      */
     public function testDoSelect_Limit()
     {

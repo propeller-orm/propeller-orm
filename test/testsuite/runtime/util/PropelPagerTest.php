@@ -88,7 +88,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   {
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect");
+    $pager = new PropelPager($cr, BookPeer::class);
     $this->assertEquals(7, count($pager));
   }
 
@@ -96,7 +96,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   {
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect", 1, 5);
+    $pager = new PropelPager($cr, BookPeer::class, 1, 5);
     $this->assertEquals(5, count($pager));
   }
 
@@ -104,7 +104,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   {
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect", 2, 5);
+    $pager = new PropelPager($cr, BookPeer::class, 2, 5);
     $this->assertEquals(2, count($pager));
   }
 
@@ -112,7 +112,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   {
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect");
+    $pager = new PropelPager($cr, BookPeer::class);
     $i = 0;
     foreach ($pager as $key => $book) {
       $i++;
@@ -124,7 +124,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   {
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect", 2, 5);
+    $pager = new PropelPager($cr, BookPeer::class, 2, 5);
     $i = 0;
     foreach ($pager as $key => $book) {
       $i++;
@@ -137,7 +137,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
     $cr->addAscendingOrderByColumn(BookPeer::TITLE);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect");
+    $pager = new PropelPager($cr, BookPeer::class);
     $books = array();
     foreach ($pager as $book) {
       $books[] = $book;
@@ -150,7 +150,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
     $cr = new Criteria();
     $cr->add(BookPeer::AUTHOR_ID, $this->authorId);
     $cr->addAscendingOrderByColumn(BookPeer::TITLE);
-    $pager = new PropelPager($cr, "BookPeer", "doSelect");
+    $pager = new PropelPager($cr, BookPeer::class);
     $i = 0;
     foreach ($pager as $book) {
       $i++;

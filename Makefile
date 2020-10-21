@@ -7,5 +7,5 @@ test/reset_tests.sh:
 	./test/reset_tests.sh
 
 test: vendor test/reset_tests.sh
-	phpunit
+	php vendor/bin/phpunit
 

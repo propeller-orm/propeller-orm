@@ -55,6 +55,7 @@ class ModelCriteria extends Criteria
     protected $primaryCriteria = null;
     protected $formatter = null;
     protected $defaultFormatterClass = ModelCriteria::FORMAT_OBJECT;
+    /** @var ModelWith[] */
     protected $with = array();
     protected $isWithOneToMany = false;
     protected $previousJoin = null; // this is introduced to prevent useQuery->join from going wrong
@@ -383,7 +384,7 @@ class ModelCriteria extends Criteria
      */
     public function orderBy($columnName, $order = Criteria::ASC)
     {
-        list(, $realColumnName) = $this->getColumnFromName($columnName, false);
+        [, $realColumnName] = $this->getColumnFromName($columnName, false);
         $order = strtoupper($order);
         switch ($order) {
             case Criteria::ASC:
@@ -413,7 +414,7 @@ class ModelCriteria extends Criteria
      */
     public function groupBy($columnName)
     {
-        list(, $realColumnName) = $this->getColumnFromName($columnName, false);
+        [, $realColumnName] = $this->getColumnFromName($columnName, false);
         $this->addGroupByColumn($realColumnName);
 
         return $this;
@@ -661,7 +662,7 @@ class ModelCriteria extends Criteria
     public function join($relation, $joinType = Criteria::INNER_JOIN)
     {
         // relation looks like '$leftName.$relationName $relationAlias'
-        list($fullName, $relationAlias) = self::getClassAndAlias($relation);
+        [$fullName, $relationAlias] = self::getClassAndAlias($relation);
         if (strpos($fullName, '.') === false) {
             // simple relation name, refers to the current table
             $leftName = $this->getModelAliasOrName();
@@ -669,7 +670,7 @@ class ModelCriteria extends Criteria
             $previousJoin = $this->getPreviousJoin();
             $tableMap = $this->getTableMap();
         } else {
-            list($leftName, $relationName) = explode('.', $fullName);
+            [$leftName, $relationName] = explode('.', $fullName);
             // find the TableMap for the left table using the $leftName
             if ($leftName == $this->getModelAliasOrName()) {
                 $previousJoin = $this->getPreviousJoin();
@@ -885,7 +886,7 @@ class ModelCriteria extends Criteria
      * together with the main object.
      *
      * @see       with()
-     * @return array
+     * @return    ModelWith[]
      */
     public function getWith()
     {
@@ -896,9 +897,9 @@ class ModelCriteria extends Criteria
      * Sets the array of ModelWith specifying which objects must be hydrated
      * together with the main object.
      *
-     * @param    array
+     * @param    ModelWith[]
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return   ModelCriteria The current object, for fluid interface
      */
     public function setWith($with)
     {
@@ -1133,7 +1134,7 @@ class ModelCriteria extends Criteria
     public static function getClassAndAlias($class)
     {
         if (strpos($class, ' ') !== false) {
-            list($class, $alias) = explode(' ', $class);
+            [$class, $alias] = explode(' ', $class);
         } else {
             $alias = null;
         }
@@ -1152,13 +1153,13 @@ class ModelCriteria extends Criteria
     public static function getRelationName($relation)
     {
         // get the relationName
-        list($fullName, $relationAlias) = self::getClassAndAlias($relation);
+        [$fullName, $relationAlias] = self::getClassAndAlias($relation);
         if ($relationAlias) {
             $relationName = $relationAlias;
         } elseif (false === strpos($fullName, '.')) {
             $relationName = $fullName;
         } else {
-            list(, $relationName) = explode('.', $fullName);
+            [, $relationName] = explode('.', $fullName);
         }
 
         return $relationName;
@@ -2016,7 +2017,7 @@ class ModelCriteria extends Criteria
     protected function doReplaceNameInExpression($matches)
     {
         $key = $matches[0];
-        list($column, $realColumnName) = $this->getColumnFromName($key);
+        [$column, $realColumnName] = $this->getColumnFromName($key);
         if ($column instanceof ColumnMap) {
             $this->replacedColumns[] = $column;
             $this->foundMatch = true;
@@ -2052,7 +2053,7 @@ class ModelCriteria extends Criteria
             $prefix = $this->getModelAliasOrName();
         } else {
             // $prefix could be either class name or table name
-            list($prefix, $phpName) = explode('.', $phpName);
+            [$prefix, $phpName] = explode('.', $phpName);
         }
 
         if ($prefix == $this->getModelAliasOrName() || $prefix == $this->getTableMap()->getName()) {

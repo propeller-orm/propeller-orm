@@ -10,6 +10,11 @@ Propeller has some nice features you should know about:
  - It provides command line tools for generating code (well documented with an IDE-friendly syntax);
  - It's very flexible: you can simply extend any Propeller model;
  - It uses PDO (PHP Data Objects) so it allows you to use the RDBMS of your choice (MySQL, SQLite, PostgreSQL, Oracle and MSSQL are supported);
+ 
+## Roadmap
+
+See https://github.com/propeller-orm/propeller-orm/projects/1
+
 
 ## Installation ##
 

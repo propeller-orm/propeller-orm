@@ -310,7 +310,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 
         $books = BookQuery::create()
             ->filterByTitle('Don Juan')
-            ->joinAuthor()
+            ->joinWith('Author')
             ->find();
         $book = $books[0];
 

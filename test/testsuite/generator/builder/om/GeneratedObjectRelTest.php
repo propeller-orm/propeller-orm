@@ -380,21 +380,6 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals($sql, $con->getLastExecutedQuery(), 'refFK getter uses instance pool if possible');
     }
 
-    public function testRefFKGetJoin()
-    {
-        BookstoreDataPopulator::populate();
-        BookPeer::clearInstancePool();
-        AuthorPeer::clearInstancePool();
-        PublisherPeer::clearInstancePool();
-        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
-        $author = AuthorPeer::doSelectOne(new Criteria(), $con);
-        // populate book instance pool
-        $books = $author->getBooksJoinPublisher(null, $con);
-        $sql = $con->getLastExecutedQuery();
-        $publisher = $books[0]->getPublisher($con);
-        $this->assertEquals($sql, $con->getLastExecutedQuery(), 'refFK getter uses instance pool if possible');
-    }
-
     public function testRefFKAddReturnsCurrentObject()
     {
         $author = new Author();

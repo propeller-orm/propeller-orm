@@ -4,6 +4,14 @@
 
 - [#1](https://github.com/propeller-orm/propeller-orm/pull/1) Switch to external autoloader (i.e. composer.json) instead of requiring files explicitly
 
+## 2022-11-28: Version 3.0.0
+
+- [#6](https://github.com/propeller-orm/propeller-orm/pull/8) Drop all sorts of `doSomethingJoinSomething()` methods
+
+## 2020-10-01: Version 2.1.2
+
+- [#5](https://github.com/propeller-orm/propeller-orm/pull/5) Fix default value handling for array type columns (Fixes #2)
+
 ## 2020-06-22: Version 2.0.2
 
 - [#18](https://github.com/rock-symphony/propel-orm/pull/18) Fix schema parser for Postgres expression-based indexes

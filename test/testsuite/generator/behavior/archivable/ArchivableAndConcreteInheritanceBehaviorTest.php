@@ -56,5 +56,7 @@ EOF;
         $archived_page = ArchivableConcretePageArchivePeer::doSelectOne(new Criteria());
         $new_page      = new ArchivableConcretePage();
         $new_page->populateFromArchive($archived_page);
+
+        $this->expectNotToPerformAssertions();
     }
 }

@@ -910,6 +910,8 @@ XML;
         $b2->save();
         $b1->setFoobar('test1');
         $b1->save();
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testWithInheritance()

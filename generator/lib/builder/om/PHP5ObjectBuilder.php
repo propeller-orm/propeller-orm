@@ -3597,75 +3597,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 ";
     } // addFKByKeyMutator()
 
-    /**
-     * Adds the method that fetches fkey-related (referencing) objects but also joins in data from another table.
-     *
-     * @param string &$script The script will be modified in this method.
-     */
-    protected function addRefFKGetJoinMethods(&$script, ForeignKey $refFK)
-    {
-        $table = $this->getTable();
-        $tblFK = $refFK->getTable();
-        $join_behavior = $this->getGeneratorConfig()->getBuildProperty('useLeftJoinsInDoJoinMethods') ? 'Criteria::LEFT_JOIN' : 'Criteria::INNER_JOIN';
-
-        $peerClassname = $this->getStubPeerBuilder()->getClassname();
-        $fkQueryClassname = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-        $collName = $this->getRefFKCollVarName($refFK);
-
-        $fkPeerBuilder = $this->getNewPeerBuilder($tblFK);
-        $className = $fkPeerBuilder->getObjectClassname();
-
-        $lastTable = "";
-        foreach ($tblFK->getForeignKeys() as $fk2) {
-
-            $tblFK2 = $this->getForeignTable($fk2);
-            $doJoinGet = !$tblFK2->isForReferenceOnly();
-
-            // it doesn't make sense to join in rows from the current table, since we are fetching
-            // objects related to *this* table (i.e. the joined rows will all be the same row as current object)
-            if ($this->getTable()->getPhpName() == $tblFK2->getPhpName()) {
-                $doJoinGet = false;
-            }
-
-            $relCol2 = $this->getFKPhpNameAffix($fk2, $plural = false);
-
-            if ($this->getRelatedBySuffix($refFK) != "" && ($this->getRelatedBySuffix($refFK) == $this->getRelatedBySuffix($fk2))) {
-                $doJoinGet = false;
-            }
-
-            if ($doJoinGet) {
-                $script .= "
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this " . $table->getPhpName() . " is new, it will return
-     * an empty collection; or if this " . $table->getPhpName() . " has previously
-     * been saved, it will retrieve related $relCol from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in " . $table->getPhpName() . ".
-     *
-     * @param Criteria \$criteria optional Criteria object to narrow the query
-     * @param PropelPDO \$con optional connection object
-     * @param string \$join_behavior optional join type to use (defaults to $join_behavior)
-     * @return PropelObjectCollection|{$className}[] List of $className objects
-     */
-    public function get" . $relCol . "Join" . $relCol2 . "(\$criteria = null, \$con = null, \$join_behavior = $join_behavior)
-    {";
-                $script .= "
-        \$query = $fkQueryClassname::create(null, \$criteria);
-        \$query->joinWith('" . $this->getFKPhpNameAffix($fk2, $plural = false) . "', \$join_behavior);
-
-        return \$this->get" . $relCol . "(\$query, \$con);
-    }
-";
-            } /* end if ($doJoinGet) */
-        } /* end foreach ($tblFK->getForeignKeys() as $fk2) { */
-    } // function
-
     // ----------------------------------------------------------------
     //
     // R E F E R R E R    F K    M E T H O D S
@@ -3729,7 +3660,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                 $this->addRefFKAdd($script, $refFK);
                 $this->addRefFKDoAdd($script, $refFK);
                 $this->addRefFKRemove($script, $refFK);
-                $this->addRefFKGetJoinMethods($script, $refFK);
             }
         }
     }

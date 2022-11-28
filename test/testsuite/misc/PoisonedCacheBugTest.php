@@ -63,12 +63,12 @@ class PoisonedCacheBugTest extends BookstoreTestBase
     /**
      * Very common use case where fetching a book, and showing other books by the author
      */
-    public function testPoisonedCacheWhenDoSelectJoinAuthor()
+    public function testPoisonedCacheWhenSelectJoinAuthor()
     {
-        $c = new Criteria();
-        $c->add(BookPeer::ID, $this->books[0]->getId());
-
-        $books = BookPeer::doSelectJoinAuthor($c);
+        $books = BookQuery::create()
+            ->joinAuthor()
+            ->filterById($this->books[0]->getId())
+            ->find();
 
         $this->assertEquals(2, count($books[0]->getAuthor()->getBooks()));
         $this->assertEquals(2, $books[0]->getAuthor()->countBooks());
@@ -81,7 +81,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
     {
         Propel::disableInstancePooling();
 
-        $this->testPoisonedCacheWhenDoSelectJoinAuthor();
+        $this->testPoisonedCacheWhenSelectJoinAuthor();
     }
 
     public function testPoisonedCacheWhenSavingABook()
@@ -115,10 +115,10 @@ class PoisonedCacheBugTest extends BookstoreTestBase
 
     public function testModifiedObjectsRemainInTheCollection()
     {
-        $c = new Criteria();
-        $c->add(BookPeer::ID, $this->books[0]->getId());
-
-        $books = BookPeer::doSelectJoinAuthor($c);
+        $books = BookQuery::create()
+            ->joinAuthor()
+            ->filterById($this->books[0]->getId())
+            ->find();
         $books[0]->setTitle('Modified');
 
         $books2 = $books[0]->getAuthor()->getBooks();

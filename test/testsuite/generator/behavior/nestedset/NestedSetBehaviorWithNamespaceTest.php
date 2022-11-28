@@ -50,5 +50,7 @@ EOF;
         $obj1->save();
 
         $obj1->addChild(new \My\NestedSet1());
+
+        $this->expectNotToPerformAssertions();
     }
 }

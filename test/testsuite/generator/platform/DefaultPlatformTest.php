@@ -71,21 +71,22 @@ class DefaultPlatformTest extends \PHPUnit\Framework\TestCase
 
     public function getColumnDefaultValueDDLDataProvider()
     {
-        return array(
-            array($this->createColumn(PropelTypes::INTEGER, 0), "DEFAULT 0"),
-            array($this->createColumn(PropelTypes::INTEGER, '0'), "DEFAULT 0"),
-            array($this->createColumn(PropelTypes::VARCHAR, 'foo'), "DEFAULT 'foo'"),
-            array($this->createColumn(PropelTypes::VARCHAR, 0), "DEFAULT '0'"),
-            array($this->createColumn(PropelTypes::BOOLEAN, true), "DEFAULT 1"),
-            array($this->createColumn(PropelTypes::BOOLEAN, false), "DEFAULT 0"),
-            array($this->createColumn(PropelTypes::BOOLEAN, 'true'), "DEFAULT 1"),
-            array($this->createColumn(PropelTypes::BOOLEAN, 'false'), "DEFAULT 0"),
-            array($this->createColumn(PropelTypes::BOOLEAN, 'TRUE'), "DEFAULT 1"),
-            array($this->createColumn(PropelTypes::BOOLEAN, 'FALSE'), "DEFAULT 0"),
-            array($this->createEnumColumn(array('foo', 'bar', 'baz'), 'foo'), "DEFAULT 0"),
-            array($this->createEnumColumn(array('foo', 'bar', 'baz'), 'bar'), "DEFAULT 1"),
-            array($this->createEnumColumn(array('foo', 'bar', 'baz'), 'baz'), "DEFAULT 2"),
-        );
+        return [
+            [$this->createColumn(PropelTypes::INTEGER, 0), "DEFAULT 0"],
+            [$this->createColumn(PropelTypes::INTEGER, '0'), "DEFAULT 0"],
+            [$this->createColumn(PropelTypes::VARCHAR, 'foo'), "DEFAULT 'foo'"],
+            [$this->createColumn(PropelTypes::VARCHAR, 0), "DEFAULT '0'"],
+            [$this->createColumn(PropelTypes::BOOLEAN, true), "DEFAULT 1"],
+            [$this->createColumn(PropelTypes::BOOLEAN, false), "DEFAULT 0"],
+            [$this->createColumn(PropelTypes::BOOLEAN, 'true'), "DEFAULT 1"],
+            [$this->createColumn(PropelTypes::BOOLEAN, 'false'), "DEFAULT 0"],
+            [$this->createColumn(PropelTypes::BOOLEAN, 'TRUE'), "DEFAULT 1"],
+            [$this->createColumn(PropelTypes::BOOLEAN, 'FALSE'), "DEFAULT 0"],
+            [$this->createEnumColumn(['foo', 'bar', 'baz'], 'foo'), "DEFAULT 0"],
+            [$this->createEnumColumn(['foo', 'bar', 'baz'], 'bar'), "DEFAULT 1"],
+            [$this->createEnumColumn(['foo', 'bar', 'baz'], 'baz'), "DEFAULT 2"],
+            [$this->createColumn(PropelTypes::PHP_ARRAY, ''), "DEFAULT ''"],
+        ];
     }
 
     /**

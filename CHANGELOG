@@ -1,5 +1,9 @@
 # Changelog Of The Propel 1.x Branch #
 
+## 2022-11-28: Version 3.0.0
+
+- [#6](https://github.com/propeller-orm/propeller-orm/pull/8) Drop all sorts of `doSomethingJoinSomething()` methods
+
 ## 2020-10-01: Version 2.1.2
 
 - [#5](https://github.com/propeller-orm/propeller-orm/pull/5) Fix default value handling for array type columns (Fixes #2)

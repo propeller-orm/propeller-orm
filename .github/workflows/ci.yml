@@ -35,5 +35,8 @@ jobs:
       - name: Install Dependencies
         run: composer install
 
+      - name: Init Database
+        run: mysql --host=127.0.0.1 --user=root --password='' < ./test/reset_database.sql
+
       - name: Test
         run: make test

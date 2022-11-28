@@ -7,7 +7,7 @@ services:
     container_name: propel_mysql
     network_mode: host
     expose:
-      - 3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: "test"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

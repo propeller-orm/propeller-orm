@@ -308,12 +308,13 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         AuthorPeer::clearInstancePool();
         PublisherPeer::clearInstancePool();
 
-        $c = new Criteria();
-        $c->add(BookPeer::TITLE, 'Don Juan');
-        $books = BookPeer::doSelectJoinAuthor($c);
+        $books = BookQuery::create()
+            ->filterByTitle('Don Juan')
+            ->joinWith('Author')
+            ->find();
         $book = $books[0];
 
-        $arr1 = $book->toArray(BasePeer::TYPE_PHPNAME, null, array(), true);
+        $arr1 = $book->toArray(BasePeer::TYPE_PHPNAME, null, [], true);
         $expectedKeys = array(
             'Id',
             'Title',
@@ -326,13 +327,15 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         $this->assertEquals($expectedKeys, array_keys($arr1), 'toArray() can return sub arrays for hydrated related objects');
         $this->assertEquals('George', $arr1['Author']['FirstName'], 'toArray() can return sub arrays for hydrated related objects');
 
-        $c = new Criteria();
-        $c->add(BookPeer::TITLE, 'Don Juan');
-        $books = BookPeer::doSelectJoinAll($c);
+        $books = BookQuery::create()
+            ->filterByTitle('Don Juan')
+            ->joinWith('Author')
+            ->joinWith('Publisher')
+            ->find();
         $book = $books[0];
 
-        $arr2 = $book->toArray(BasePeer::TYPE_PHPNAME, null, array(), true);
-        $expectedKeys = array(
+        $arr2 = $book->toArray(BasePeer::TYPE_PHPNAME, null, [], true);
+        $expectedKeys = [
             'Id',
             'Title',
             'ISBN',
@@ -340,8 +343,8 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
             'PublisherId',
             'AuthorId',
             'Publisher',
-            'Author'
-        );
+            'Author',
+        ];
         $this->assertEquals($expectedKeys, array_keys($arr2), 'toArray() can return sub arrays for hydrated related objects');
     }
 

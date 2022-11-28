@@ -178,7 +178,7 @@ EOF;
 
     public function testDatabaseLevelBehavior()
     {
-            $schema = <<<EOF
+        $schema = <<<EOF
 <database name="archivable_behavior_test_0">
     <behavior name="archivable" />
     <table name="archivable_test_01">
@@ -188,9 +188,11 @@ EOF;
     </table>
 </database>
 EOF;
-            $builder = new PropelQuickBuilder();
-            $builder->setSchema($schema);
-            $builder->getSQL();
+        $builder = new PropelQuickBuilder();
+        $builder->setSchema($schema);
+        $builder->getSQL();
+
+        $this->expectNotToPerformAssertions();
     }
 
 }

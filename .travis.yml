@@ -3,7 +3,6 @@ language: php
 dist: trusty
 
 php:
-  - 7.0
   - 7.1
   - 7.2
   - 7.3
@@ -23,11 +22,6 @@ cache:
 
 install:
   - composer self-update
-  - >
-    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; \
-      then wget https://phar.phpunit.de/phpunit-7.5.15.phar -O phpunit.phar; \
-      else wget https://phar.phpunit.de/phpunit-6.5.14.phar -O phpunit.phar; \
-    fi
 
 before_script:
   # MySQL
@@ -40,7 +34,7 @@ before_script:
 
   - ./test/reset_tests.sh
 
-script: php phpunit.phar
+script: php vendor/bin/phpunit
 
 matrix:
   allow_failures:

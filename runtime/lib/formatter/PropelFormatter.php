@@ -85,11 +85,18 @@ abstract class PropelFormatter
         return $this->peer;
     }
 
+    /**
+     * @param ModelWith[] $withs
+     * @return void
+     */
     public function setWith($withs = array())
     {
         $this->with = $withs;
     }
 
+    /**
+     * @return ModelWith[]
+     */
     public function getWith()
     {
         return $this->with;

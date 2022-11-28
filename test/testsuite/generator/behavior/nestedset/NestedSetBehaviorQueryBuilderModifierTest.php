@@ -166,6 +166,8 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->find();
         $coll = $this->buildCollection(array($t1, $t3, $t5));
         $this->assertEquals($coll, $objs, 'childrenOf() filters by ancestors');
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testRootsOf()
@@ -198,6 +200,8 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->find();
         $coll = $this->buildCollection(array($t1, $t3, $t5, $t7));
         $this->assertEquals($coll, $objs, 'rootsOf() filters by ancestors  and includes the node passed as parameter');
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testOrderByBranch()
@@ -221,6 +225,8 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->orderByBranch(true)
             ->find();
         $coll = $this->buildCollection(array($t4, $t7, $t6, $t5, $t3, $t2, $t1), 'orderByBranch(true) orders by branch right to left');
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testOrderByLevel()
@@ -244,6 +250,8 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->orderByLevel(true)
             ->find();
         $coll = $this->buildCollection(array($t7, $t6, $t4, $t5, $t2, $t1), 'orderByLevel(true) orders by level, from the leaf to the root');
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testFindRoot()

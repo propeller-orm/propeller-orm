@@ -18,6 +18,7 @@ jobs:
           - 3306:3306
         # Set health checks to wait until database has started
         options: >-
+          --entrypoint="'docker-entrypoint.sh --default-authentication-plugin=mysql_native_password'"
           --health-cmd "mysqladmin ping -h 127.0.0.1 --silent"
           --health-interval 10s
           --health-timeout 5s

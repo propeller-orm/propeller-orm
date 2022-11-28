@@ -1,0 +1,42 @@
+on: push
+name: Test
+jobs:
+  test:
+    name:    Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '7.1', '7.2', '7.3', '7.4' ]
+
+    services:
+      propel_mysql:
+        image: ghcr.io/propeller-orm/propeller-orm/mysql-test-image
+        env:
+          MYSQL_DATABASE: "test"
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+          - 3306:3306
+        # Set health checks to wait until database has started
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Init Database
+        run: mysql --host=127.0.0.1 --user=root --password='' < ./test/reset_database.sql
+
+      - name: Test
+        run: make test

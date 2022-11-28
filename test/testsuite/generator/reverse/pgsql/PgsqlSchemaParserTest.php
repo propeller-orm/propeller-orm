@@ -19,7 +19,7 @@ set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../../../
  */
 class PgsqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestSkipped('PGSQL unit test');
 
@@ -37,7 +37,7 @@ class PgsqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         $this->con->beginTransaction();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if ($this->con) {
             $this->con->rollback();

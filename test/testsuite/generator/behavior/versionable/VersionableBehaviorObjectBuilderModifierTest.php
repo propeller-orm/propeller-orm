@@ -18,7 +18,7 @@
  */
 class VersionableBehaviorObjectBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('VersionableBehaviorTest1')) {
             $schema = <<<XML

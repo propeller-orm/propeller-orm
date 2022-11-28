@@ -16,7 +16,10 @@
  */
 class PropelTablePkColumnComparatorTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    /** @var MysqlPlatform */
+    private $platform;
+
+    public function setUp(): void
     {
         $this->platform = new MysqlPlatform();
     }

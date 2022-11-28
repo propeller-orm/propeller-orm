@@ -18,7 +18,7 @@
  */
 class SortableBehaviorObjectBuilderModifierTest extends BookstoreSortableTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->populateTable11();

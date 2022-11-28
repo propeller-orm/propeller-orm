@@ -10,7 +10,7 @@
 
 class NestedSetBehaviorWithNamespaceTest extends BookstoreTestBase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

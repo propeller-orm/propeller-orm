@@ -15,7 +15,7 @@ class ArchivableAndConcreteInheritanceBehaviorTest extends \PHPUnit\Framework\Te
 {
     protected static $generatedSQL;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ArchivableConcretePagePeer')) {
             $schema = <<<EOF

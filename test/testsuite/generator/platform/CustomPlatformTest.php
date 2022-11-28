@@ -7,7 +7,7 @@ class CustomPlatformTest extends \PHPUnit\Framework\TestCase
      */
     protected $generatorConfig;
 
-    public function setUp()
+    public function setUp(): void
     {
         $projectDir = realpath(__DIR__ . '/../../../fixtures/generator/platform/');
         $props = [

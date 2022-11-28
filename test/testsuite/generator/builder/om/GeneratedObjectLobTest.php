@@ -38,7 +38,7 @@ class GeneratedObjectLobTest extends BookstoreEmptyTestBase
      */
     protected $sampleLobFiles = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         BookstoreDataPopulator::populate();

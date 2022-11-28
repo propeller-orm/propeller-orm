@@ -20,7 +20,7 @@ class ArchivableBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     protected static $generatedSQL;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ArchivableTest1')) {
             $schema = <<<EOF

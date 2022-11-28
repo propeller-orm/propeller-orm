@@ -17,7 +17,7 @@
  */
 class GeneratedObjectObjectColumnTypeTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ComplexColumnTypeEntity1')) {
             $schema = <<<EOF

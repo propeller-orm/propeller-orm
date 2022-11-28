@@ -23,7 +23,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
      */
     private $books;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -30,7 +30,7 @@ class DefaultPlatformTest extends \PHPUnit\Framework\TestCase
         return $this->platform;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->platform = null;
     }

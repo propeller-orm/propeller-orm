@@ -16,7 +16,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__
 abstract class NamespacesTestBase extends \PHPUnit\Framework\TestCase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         if (!file_exists(dirname(__FILE__) . '/../../../fixtures/namespaced/build/conf/bookstore_namespaced-conf.php')) {
@@ -25,7 +25,7 @@ abstract class NamespacesTestBase extends \PHPUnit\Framework\TestCase
         Propel::init(dirname(__FILE__) . '/../../../fixtures/namespaced/build/conf/bookstore_namespaced-conf.php');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Propel::init(dirname(__FILE__) . '/../../../fixtures/bookstore/build/conf/bookstore-conf.php');

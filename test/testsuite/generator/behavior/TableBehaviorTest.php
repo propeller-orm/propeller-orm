@@ -16,7 +16,7 @@
  */
 class TableBehaviorTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         set_include_path(get_include_path() . PATH_SEPARATOR . "fixtures/bookstore/build/classes");

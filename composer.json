@@ -12,6 +12,7 @@
     "homepage": "http://www.willdurand.fr"
   }],
   "autoload": {
+    "files": ["runtime/lib/connection/PropelPDO.php"],
     "classmap": ["runtime/lib", "generator/lib"]
   },
   "autoload-dev": {

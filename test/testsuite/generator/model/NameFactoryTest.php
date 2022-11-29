@@ -34,18 +34,18 @@ class NameFactoryTest extends BaseTestCase
      * fully qualified class names to <code>NameGenerator</code>
      * implementations.
      */
-    private static $ALGORITHMS = array(NameFactory::CONSTRAINT_GENERATOR, NameFactory::PHP_GENERATOR);
+    private static $ALGORITHMS = [NameFactory::CONSTRAINT_GENERATOR, NameFactory::PHP_GENERATOR];
 
     /**
-     * Two dimensional arrays of inputs for each algorithm.
+     * Two-dimensional arrays of inputs for each algorithm.
      */
-    private static $INPUTS = array();
+    private static $INPUTS = [];
 
 
     /**
      * Given the known inputs, the expected name outputs.
      */
-    private static $OUTPUTS = array();
+    private static $OUTPUTS = [];
 
     /**
      * Used as an input.
@@ -53,32 +53,34 @@ class NameFactoryTest extends BaseTestCase
      */
     private $database;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        self::$INPUTS = array(
-                array( array(self::makeString(61), "I", 1),
-                        array(self::makeString(61), "I", 2),
-                        array(self::makeString(65), "I", 3),
-                        array(self::makeString(4), "FK", 1),
-                        array(self::makeString(5), "FK", 2)
-                    ),
-                array(
-                        array("MY_USER", NameGenerator::CONV_METHOD_UNDERSCORE),
-                        array("MY_USER", NameGenerator::CONV_METHOD_PHPNAME),
-                        array("MY_USER", NameGenerator::CONV_METHOD_NOCHANGE)
-                    )
-                );
+        self::$INPUTS = [
+            [
+                [self::makeString(61), "I", 1],
+                [self::makeString(61), "I", 2],
+                [self::makeString(65), "I", 3],
+                [self::makeString(4), "FK", 1],
+                [self::makeString(5), "FK", 2],
+            ],
+            [
+                ["MY_USER", NameGenerator::CONV_METHOD_UNDERSCORE],
+                ["MY_USER", NameGenerator::CONV_METHOD_PHPNAME],
+                ["MY_USER", NameGenerator::CONV_METHOD_NOCHANGE],
+            ],
+        ];
 
 
-        self::$OUTPUTS = array(
-                        array(
-                            self::makeString(60) . "_I_1",
-                            self::makeString(60) . "_I_2",
-                            self::makeString(60) . "_I_3",
-                            self::makeString(4) . "_FK_1",
-                            self::makeString(5) . "_FK_2"),
-                        array("MyUser", "MYUSER", "MY_USER")
-                    );
+        self::$OUTPUTS = [
+            [
+                self::makeString(60) . "_I_1",
+                self::makeString(60) . "_I_2",
+                self::makeString(60) . "_I_3",
+                self::makeString(4) . "_FK_1",
+                self::makeString(5) . "_FK_2",
+            ],
+            ["MyUser", "MYUSER", "MY_USER"],
+        ];
 
     }
 
@@ -87,7 +89,8 @@ class NameFactoryTest extends BaseTestCase
      * the character <code>A</code>.  Useful for simulating table
      * names, etc.
      *
-     * @param  int $len the number of characters to include in the string
+     * @param int  $len the number of characters to include in the string
+     *
      * @return string of length <code>len</code> with every character an 'A'
      */
     private static function makeString($len)
@@ -129,11 +132,11 @@ class NameFactoryTest extends BaseTestCase
      * Creates the list of arguments to pass to the specified type of
      * <code>NameGenerator</code> implementation.
      *
-     * @param      algo The class name of the <code>NameGenerator</code> to
-     * create an argument list for.
-     * @param      inputs The (possibly partial) list inputs from which to
-     * generate the final list.
-     * @return the list of arguments to pass to the <code>NameGenerator</code>
+     * @param string  $algo   The class name of the <code>NameGenerator</code> to
+     *                        create an argument list for.
+     * @param string  $inputs The (possibly partial) list inputs from which to
+     *                        generate the final list.
+     * @return array the list of arguments to pass to the <code>NameGenerator</code>
      */
     private function makeInputs($algo, $inputs)
     {

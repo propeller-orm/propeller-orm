@@ -7,7 +7,7 @@ test/reset_tests.sh:
 	./test/reset_tests.sh
 
 test: vendor test/reset_tests.sh
-	php -d max_execution_time=60s vendor/bin/phpunit
+	php vendor/bin/phpunit --default-time-limit=5 --enforce-time-limit --verbose --debug
 
 docker:
 	docker build test/ --tag=ghcr.io/propeller-orm/propeller-orm/mysql-test-image:latest

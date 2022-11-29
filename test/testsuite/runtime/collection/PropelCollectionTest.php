@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
-
 /**
  * Test class for PropelCollection.
  *
@@ -21,7 +19,7 @@ class PropelCollectionTest extends BookstoreTestBase
 {
     public function testArrayAccess()
     {
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar1', $col[0], 'PropelCollection allows access via $foo[$index]');
         $this->assertEquals('bar2', $col[1], 'PropelCollection allows access via $foo[$index]');
@@ -31,8 +29,8 @@ class PropelCollectionTest extends BookstoreTestBase
     public function testGetData()
     {
         $col = new PropelCollection();
-        $this->assertEquals(array(), $col->getData(), 'getData() returns an empty array for empty collections');
-        $data = array('bar1', 'bar2', 'bar3');
+        $this->assertEquals([], $col->getData(), 'getData() returns an empty array for empty collections');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals($data, $col->getData(), 'getData() returns the collection data');
         $col[0] = 'bar4';
@@ -41,7 +39,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
     public function testCloneContainingScalar()
     {
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
 
         $clone = clone $col;
@@ -55,14 +53,14 @@ class PropelCollectionTest extends BookstoreTestBase
     public function testCloneContainingObjects()
     {
         $a = new Author();
-        $b= new Book();
+        $b = new Book();
         $b->setAuthor($a);
         $b->setISBN('ISBN1');
 
         $b1 = new Book();
         $b1->setPrice(5.55);
 
-        $col = new PropelCollection(array($b, $b1));
+        $col = new PropelCollection([$b, $b1]);
         $clone = clone $col;
 
         $orgCount = $col->getIterator()->count();
@@ -79,10 +77,10 @@ class PropelCollectionTest extends BookstoreTestBase
     public function testSetData()
     {
         $col = new PropelCollection();
-        $col->setData(array());
-        $this->assertEquals(array(), $col->getArrayCopy(), 'setData() can set data to an empty array');
+        $col->setData([]);
+        $this->assertEquals([], $col->getArrayCopy(), 'setData() can set data to an empty array');
 
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection();
         $col->setData($data);
         $this->assertEquals($data, $col->getArrayCopy(), 'setData() sets the collection data');
@@ -92,9 +90,9 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertEquals(0, $col->getPosition(), 'getPosition() returns 0 on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
-        $expectedPositions = array(0, 1, 2);
+        $expectedPositions = [0, 1, 2];
         foreach ($col as $element) {
             $this->assertEquals(array_shift($expectedPositions), $col->getPosition(), 'getPosition() returns the current position');
             $this->assertEquals($element, $col->getCurrent(), 'getPosition() does not change the current position');
@@ -105,7 +103,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->getFirst(), 'getFirst() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar1', $col->getFirst(), 'getFirst() returns value of the first element in the collection');
     }
@@ -114,9 +112,9 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertTrue($col->isFirst(), 'isFirst() returns true on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
-        $expectedRes = array(true, false, false);
+        $expectedRes = [true, false, false];
         foreach ($col as $element) {
             $this->assertEquals(array_shift($expectedRes), $col->isFirst(), 'isFirst() returns true only for the first element');
             $this->assertEquals($element, $col->getCurrent(), 'isFirst() does not change the current position');
@@ -127,7 +125,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->getPrevious(), 'getPrevious() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertNull($col->getPrevious(), 'getPrevious() returns null when the internal pointer is at the beginning of the list');
         $col->getNext();
@@ -139,7 +137,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->getCurrent(), 'getCurrent() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar1', $col->getCurrent(), 'getCurrent() returns the value of the first element when the internal pointer is at the beginning of the list');
         foreach ($col as $key => $value) {
@@ -151,7 +149,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->getNext(), 'getNext() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar2', $col->getNext(), 'getNext() returns the second element when the internal pointer is at the beginning of the list');
         $this->assertEquals('bar2', $col->getCurrent(), 'getNext() increments the internal pointer');
@@ -163,7 +161,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->getLast(), 'getLast() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar3', $col->getLast(), 'getLast() returns the last element');
         $this->assertEquals('bar3', $col->getCurrent(), 'getLast() moves the internal pointer to the last element');
@@ -173,9 +171,9 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertTrue($col->isLast(), 'isLast() returns true on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
-        $expectedRes = array(false, false, true);
+        $expectedRes = [false, false, true];
         foreach ($col as $element) {
             $this->assertEquals(array_shift($expectedRes), $col->isLast(), 'isLast() returns true only for the last element');
             $this->assertEquals($element, $col->getCurrent(), 'isLast() does not change the current position');
@@ -186,7 +184,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertTrue($col->isEmpty(), 'isEmpty() returns true on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertFalse($col->isEmpty(), 'isEmpty() returns false on a non empty collection');
     }
@@ -195,11 +193,11 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertFalse($col->isOdd(), 'isOdd() returns false on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection();
         $col->setData($data);
         foreach ($col as $key => $value) {
-            $this->assertEquals((boolean) ($key % 2), $col->isOdd(), 'isOdd() returns true only when the key is odd');
+            $this->assertEquals((boolean)($key % 2), $col->isOdd(), 'isOdd() returns true only when the key is odd');
         }
     }
 
@@ -207,17 +205,17 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertTrue($col->isEven(), 'isEven() returns true on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection();
         $col->setData($data);
         foreach ($col as $key => $value) {
-            $this->assertEquals(!(boolean) ($key % 2), $col->isEven(), 'isEven() returns true only when the key is even');
+            $this->assertEquals(!(boolean)($key % 2), $col->isEven(), 'isEven() returns true only when the key is even');
         }
     }
 
     public function testGet()
     {
-        $col = new PropelCollection(array('foo', 'bar'));
+        $col = new PropelCollection(['foo', 'bar']);
         $this->assertEquals('foo', $col->get(0), 'get() returns an element from its key');
     }
 
@@ -234,42 +232,44 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertNull($col->pop(), 'pop() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar3', $col->pop(), 'pop() returns the last element of the collection');
-        $this->assertEquals(array('bar1', 'bar2'), $col->getData(), 'pop() removes the last element of the collection');
+        $this->assertEquals(['bar1', 'bar2'], $col->getData(), 'pop() removes the last element of the collection');
     }
 
     public function testShift()
     {
         $col = new PropelCollection();
         $this->assertNull($col->shift(), 'shift() returns null on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals('bar1', $col->shift(), 'shift() returns the first element of the collection');
-        $this->assertEquals(array('bar2', 'bar3'), $col->getData(), 'shift() removes the first element of the collection');
+        $this->assertEquals(['bar2', 'bar3'], $col->getData(), 'shift() removes the first element of the collection');
     }
 
     public function testPrepend()
     {
         $col = new PropelCollection();
         $this->assertEquals(1, $col->prepend('a'), 'prepend() returns 1 on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals(4, $col->prepend('bar4'), 'prepend() returns the new number of elements in the collection when adding a variable');
-        $this->assertEquals(array('bar4', 'bar1', 'bar2', 'bar3'), $col->getData(), 'prepend() adds new element to the beginning of the collection');
+        $this->assertEquals([
+            'bar4', 'bar1', 'bar2', 'bar3',
+        ], $col->getData(), 'prepend() adds new element to the beginning of the collection');
     }
 
     public function testSet()
     {
         $col = new PropelCollection();
         $col->set(4, 'bar');
-        $this->assertEquals(array(4 => 'bar'), $col->getData(), 'set() adds an element to the collection with a key');
+        $this->assertEquals([4 => 'bar'], $col->getData(), 'set() adds an element to the collection with a key');
 
         $col = new PropelCollection();
         $col->set(null, 'foo');
         $col->set(null, 'bar');
-        $this->assertEquals(array('foo', 'bar'), $col->getData(), 'set() adds an element to the collection without a key');
+        $this->assertEquals(['foo', 'bar'], $col->getData(), 'set() adds an element to the collection without a key');
     }
 
     public function testRemove()
@@ -278,7 +278,7 @@ class PropelCollectionTest extends BookstoreTestBase
         $col[0] = 'bar';
         $col[1] = 'baz';
         $col->remove(1);
-        $this->assertEquals(array('bar'), $col->getData(), 'remove() removes an element from its key');
+        $this->assertEquals(['bar'], $col->getData(), 'remove() removes an element from its key');
     }
 
     /**
@@ -294,18 +294,18 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $col->clear();
-        $this->assertEquals(array(), $col->getData(), 'clear() empties the collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $this->assertEquals([], $col->getData(), 'clear() empties the collection');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $col->clear();
-        $this->assertEquals(array(), $col->getData(), 'clear() empties the collection');
+        $this->assertEquals([], $col->getData(), 'clear() empties the collection');
     }
 
     public function testContains()
     {
         $col = new PropelCollection();
         $this->assertFalse($col->contains('foo_1'), 'contains() returns false on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertTrue($col->contains('bar1'), 'contains() returns true when the key exists');
         $this->assertFalse($col->contains('bar4'), 'contains() returns false when the key does not exist');
@@ -315,7 +315,7 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $col = new PropelCollection();
         $this->assertFalse($col->search('bar1'), 'search() returns false on an empty collection');
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $this->assertEquals(1, $col->search('bar2'), 'search() returns the key when the element exists');
         $this->assertFalse($col->search('bar4'), 'search() returns false when the element does not exist');
@@ -323,7 +323,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
     public function testSerializable()
     {
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $col->setModel('Foo');
         $serializedCol = serialize($col);
@@ -334,7 +334,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
     public function testGetIterator()
     {
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $it1 = $col->getIterator();
         $it2 = $col->getIterator();
@@ -343,7 +343,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
     public function testGetInternalIterator()
     {
-        $data = array('bar1', 'bar2', 'bar3');
+        $data = ['bar1', 'bar2', 'bar3'];
         $col = new PropelCollection($data);
         $it1 = $col->getInternalIterator();
         $it2 = $col->getINternalIterator();
@@ -397,7 +397,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $result = $col1->diff($col2);
 
-        $this->assertInstanceOf('PropelCollection', $result);
+        $this->assertInstanceOf(PropelCollection::class, $result);
         $this->assertEquals(1, count($result));
         $this->assertSame($b, $result[0]);
     }
@@ -409,7 +409,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $result = $col1->diff($col2);
 
-        $this->assertInstanceOf('PropelCollection', $result);
+        $this->assertInstanceOf(PropelCollection::class, $result);
         $this->assertEquals(0, count($result));
     }
 
@@ -424,7 +424,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $result = $col1->diff($col2);
 
-        $this->assertInstanceOf('PropelCollection', $result);
+        $this->assertInstanceOf(PropelCollection::class, $result);
         $this->assertEquals(0, count($result));
     }
 
@@ -433,7 +433,7 @@ class PropelCollectionTest extends BookstoreTestBase
         $col1 = new PropelCollection();
         $col2 = new PropelCollection();
 
-        $b  = new Book();
+        $b = new Book();
         $b1 = new Book();
         $col1[] = $b;
         $col1[] = $b1;
@@ -441,7 +441,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $result = $col1->diff($col2);
 
-        $this->assertInstanceOf('PropelCollection', $result);
+        $this->assertInstanceOf(PropelCollection::class, $result);
         $this->assertCount(1, $result);
         $this->assertSame($b1, $result[0]);
     }
@@ -456,7 +456,7 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $result = $col1->diff($col2);
 
-        $this->assertInstanceOf('PropelCollection', $result);
+        $this->assertInstanceOf(PropelCollection::class, $result);
         $this->assertEquals(0, count($result));
     }
 }

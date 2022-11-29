@@ -9,10 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/DelegateBehavior.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
-
 /**
  * Tests for DelegateBehavior class
  *
@@ -118,7 +114,7 @@ EOF;
         $main = new DelegateMain();
         $main->setSubtitle('foo');
         $delegate = $main->getDelegateDelegate();
-        $this->assertInstanceOf('DelegateDelegate', $delegate);
+        $this->assertInstanceOf(DelegateDelegate::class, $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('foo', $delegate->getSubtitle());
         $this->assertEquals('foo', $main->getSubtitle());
@@ -129,7 +125,7 @@ EOF;
         $main = new DelegateMain();
         $main->setSummary('foo');
         $delegate = $main->getSecondDelegateDelegate();
-        $this->assertInstanceOf('SecondDelegateDelegate', $delegate);
+        $this->assertInstanceOf(SecondDelegateDelegate::class, $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('foo', $delegate->getSummary());
         $this->assertEquals('foo', $main->getSummary());
@@ -159,12 +155,12 @@ EOF;
         $main->setSubtitle('foo');
         $main->setSummary('bar');
         $delegate = $main->getDelegateDelegate();
-        $this->assertInstanceOf('DelegateDelegate', $delegate);
+        $this->assertInstanceOf(DelegateDelegate::class, $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('foo', $delegate->getSubtitle());
         $this->assertEquals('foo', $main->getSubtitle());
         $delegate = $main->getSecondDelegateDelegate();
-        $this->assertInstanceOf('SecondDelegateDelegate', $delegate);
+        $this->assertInstanceOf(SecondDelegateDelegate::class, $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('bar', $delegate->getSummary());
         $this->assertEquals('bar', $main->getSummary());
@@ -261,7 +257,7 @@ EOF;
         $main = new TestTablePrefixSameDatabaseMain();
         $main->setSubtitle('bar');
         $delegate = $main->getTestTablePrefixSameDatabaseDelegate();
-        $this->assertInstanceOf('TestTablePrefixSameDatabaseDelegate', $delegate);
+        $this->assertInstanceOf(TestTablePrefixSameDatabaseDelegate::class, $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('bar', $delegate->getSubtitle());
         $this->assertEquals('bar', $main->getSubtitle());

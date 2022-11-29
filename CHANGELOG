@@ -1,5 +1,9 @@
 # Changelog Of The Propel 1.x Branch #
 
+## Unreleased
+
+- [#1](https://github.com/propeller-orm/propeller-orm/pull/1) Switch to external autoloader (i.e. composer.json) instead of requiring files explicitly
+
 ## 2022-11-28: Version 3.0.0
 
 - [#6](https://github.com/propeller-orm/propeller-orm/pull/8) Drop all sorts of `doSomethingJoinSomething()` methods

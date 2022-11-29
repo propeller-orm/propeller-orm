@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
-
 /**
  * Generates the empty PHP5 stub object class for use with inheritance in the user object model (OM).
  *
@@ -73,37 +71,17 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
     }
 
     /**
-     * Returns classpath to parent class.
-     *
-     * @return string
-     */
-    protected function getParentClasspath()
-    {
-        if ($this->getChild()->getAncestor()) {
-            return $this->getChild()->getAncestor();
-        } else {
-            return $this->getObjectBuilder()->getClasspath();
-        }
-    }
-
-    /**
      * Returns classname of parent class.
      *
      * @return string
      */
     protected function getParentClassname()
     {
-        return ClassTools::classname($this->getParentClasspath());
-    }
-
-    /**
-     * Gets the file path to the parent class.
-     *
-     * @return string
-     */
-    protected function getParentClassFilePath()
-    {
-        return ClassTools::getFilePath($this->getParentClasspath());
+        if ($this->getChild()->getAncestor()) {
+            return $this->getChild()->getAncestor();
+        } else {
+            return $this->getObjectBuilder()->getClassname();
+        }
     }
 
     /**

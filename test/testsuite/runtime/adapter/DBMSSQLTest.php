@@ -7,9 +7,6 @@
  *
  * @license    MIT License
  */
-require_once dirname(__FILE__) . '/../../../../runtime/lib/adapter/DBAdapter.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/adapter/DBMSSQL.php';
-require_once dirname(__FILE__) . '/DBAdapterTestAbstract.php';
 
 /**
  * Tests the DBMSSQL adapter

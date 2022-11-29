@@ -8,9 +8,6 @@
  * @license		MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../runtime/lib/util/PropelDateTime.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelException.php';
-
 /**
  * Test for DateTime subclass to support serialization.
  *

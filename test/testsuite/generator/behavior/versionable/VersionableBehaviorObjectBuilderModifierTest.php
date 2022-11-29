@@ -9,10 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/versionable/VersionableBehavior.php';
-require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
-
 /**
  * Tests for VersionableBehavior class
  *
@@ -969,10 +965,10 @@ XML;
         $this->assertEquals(1, $bar->getVersion());
 
         $foo = VersionableBehaviorTest13Query::create()->findOne();
-        $this->assertInstanceOf('VersionableBehaviorTest13', $foo);
+        $this->assertInstanceOf(VersionableBehaviorTest13::class, $foo);
 
         $bar = $foo->getVersionableBehaviorTest14();
-        $this->assertInstanceOf('VersionableBehaviorTest14', $bar);
+        $this->assertInstanceOf(VersionableBehaviorTest14::class, $bar);
 
         $this->assertFalse($foo->isVersioningNecessary());
 

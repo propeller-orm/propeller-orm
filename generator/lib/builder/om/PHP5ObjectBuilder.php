@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
-
 /**
  * Generates a PHP5 base Object class for user object model (OM).
  *
@@ -260,7 +258,19 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
-        $this->declareClasses('Propel', 'PropelException', 'PDO', 'PropelPDO', 'PropelQuery', 'Criteria', 'Persistent', 'BasePeer', 'PropelCollection', 'PropelObjectCollection', 'Exception');
+        $this->declareClasses([
+            Propel::class,
+            PropelException::class,
+            PDO::class,
+            PropelPDO::class,
+            PropelQuery::class,
+            Criteria::class,
+            Persistent::class,
+            BasePeer::class,
+            PropelCollection::class,
+            PropelObjectCollection::class,
+            Exception::class,
+        ]);
 
         $table = $this->getTable();
         if (!$table->isAlias()) {
@@ -942,7 +952,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!$dateTimeClass) {
             $dateTimeClass = 'DateTime';
         }
-        $this->declareClasses($dateTimeClass);
+        $this->declareClasses([$dateTimeClass]);
         $defaultfmt = null;
 
         // Default date/time formatter strings are specified in build.properties
@@ -1688,7 +1698,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!$dateTimeClass) {
             $dateTimeClass = 'DateTime';
         }
-        $this->declareClasses($dateTimeClass, 'DateTimeZone', 'PropelDateTime');
+        $this->declareClasses([$dateTimeClass, DateTimeZone::class, PropelDateTime::class]);
 
         $this->addTemporalMutatorComment($script, $col);
         $this->addMutatorOpenOpen($script, $col);
@@ -4922,7 +4932,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addDoInsertBodyRaw()
     {
-        $this->declareClasses('Propel', 'PDO');
+        $this->declareClasses([Propel::class, PDO::class]);
         $table = $this->getTable();
         $peerClassname = $this->getPeerClassname();
         $platform = $this->getPlatform();

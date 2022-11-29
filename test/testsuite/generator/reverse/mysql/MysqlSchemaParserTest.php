@@ -8,16 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
-
-require_once dirname(__FILE__) . '/../../../../../generator/lib/reverse/mysql/MysqlSchemaParser.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/config/QuickGeneratorConfig.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/PropelTypes.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/DefaultPlatform.php';
-
 set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../../../../../generator/lib');
-require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConvertConfTask.php';
 
 /**
  * Tests for Mysql database schema parser.

@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 /**
  * Tests the generated Object classes.
  *
@@ -24,12 +22,6 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
  */
 class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-        require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/TestAuthor.php';
-    }
-
     /**
      * Test the reload() method.
      */
@@ -154,9 +146,9 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         $this->assertInternalType('integer', $r2->getId(), "Expected getId() to return an integer.");
         $this->assertInternalType('string', $r2->getReviewedBy(), "Expected getReviewedBy() to return a string.");
         $this->assertInternalType('boolean', $r2->getRecommended(), "Expected getRecommended() to return a boolean.");
-        $this->assertInstanceOf('Book', $r2->getBook(), "Expected getBook() to return a Book.");
+        $this->assertInstanceOf(Book::class, $r2->getBook(), "Expected getBook() to return a Book.");
         $this->assertInternalType('float', $r2->getBook()->getPrice(), "Expected Book->getPrice() to return a float.");
-        $this->assertInstanceOf('DateTime', $r2->getReviewDate(null), "Expected Book->getReviewDate() to return a DateTime.");
+        $this->assertInstanceOf(DateTime::class, $r2->getReviewDate(null), "Expected Book->getReviewDate() to return a DateTime.");
 
     }
 
@@ -199,6 +191,8 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         }
 
         $this->con->beginTransaction();
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -252,7 +246,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         $reviews = $book->getReviews();
 
         $b2 = $book->copy(true);
-        $this->assertInstanceOf('Book', $b2);
+        $this->assertInstanceOf(Book::class, $b2);
         $this->assertNull($b2->getId());
 
         $r2 = $b2->getReviews();
@@ -263,7 +257,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         $emp = BookstoreEmployeePeer::doSelectOne(new Criteria());
         $e2 = $emp->copy(true);
 
-        $this->assertInstanceOf('BookstoreEmployee', $e2);
+        $this->assertInstanceOf(BookstoreEmployee::class, $e2);
         $this->assertNull($e2->getId());
 
         $this->assertEquals($emp->getBookstoreEmployeeAccount()->getLogin(), $e2->getBookstoreEmployeeAccount()->getLogin());

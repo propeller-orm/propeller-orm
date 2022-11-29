@@ -9,8 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/BookstoreNestedSetTestBase.php';
-
 /**
  * Tests for NestedSetBehaviorQueryBuilderModifier class with scope enabled
  *
@@ -178,8 +176,10 @@ class NestedSetBehaviorQueryBuilderModifierWithScopeTest extends BookstoreNested
 
     public function testAncestorsOf()
     {
-        list($t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10) = $this->initTreeWithScope();
+        [$t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10] = $this->initTreeWithScope();
+
         /* Tree used for tests
+
          Scope 1
          t1
          |  \
@@ -188,21 +188,27 @@ class NestedSetBehaviorQueryBuilderModifierWithScopeTest extends BookstoreNested
             t4 t5
                |  \
                t6 t7
+
          Scope 2
          t8
          | \
          t9 t10
+
         */
+
         $objs = Table10Query::create()
             ->ancestorsOf($t5)
             ->orderByBranch()
             ->find();
-        $coll = $this->buildCollection(array($t1, $t3), 'ancestorsOf() filters by ancestors of the same scope');
+
+        $coll = $this->buildCollection([$t1, $t3]); // ancestorsOf() filters by ancestors of the same scope
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testRootsOf()
     {
-        list($t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10) = $this->initTreeWithScope();
+        [$t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10] = $this->initTreeWithScope();
         /* Tree used for tests
          Scope 1
          t1
@@ -221,7 +227,10 @@ class NestedSetBehaviorQueryBuilderModifierWithScopeTest extends BookstoreNested
             ->rootsOf($t5)
             ->orderByBranch()
             ->find();
-        $coll = $this->buildCollection(array($t1, $t3, $t5), 'rootsOf() filters by ancestors of the same scope');
+
+        $coll = $this->buildCollection([$t1, $t3, $t5]); // rootsOf() filters by ancestors of the same scope
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testFindRoot()

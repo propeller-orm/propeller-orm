@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreEmptyTestBase.php';
-
 /**
  * Tests the delete methods of the generated Peer classes.
  *
@@ -464,6 +462,8 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
         } catch (Exception $x) {
             $this->fail("Expected to get no exception when removing an instance from the pool.");
         }
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**

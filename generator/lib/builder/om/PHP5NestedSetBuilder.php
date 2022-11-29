@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
-
 /**
  * Generates a PHP5 tree node Object class for user object model (OM) using Nested Set way.
  *
@@ -49,9 +47,6 @@ class PHP5NestedSetBuilder extends ObjectBuilder
      */
     protected function addIncludes(&$script)
     {
-        $script .= "
-require '" . $this->getObjectBuilder()->getClassFilePath() . "';
-";
     } // addIncludes()
 
     /**

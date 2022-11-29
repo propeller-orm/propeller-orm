@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/XMLElement.php';
-
 /**
  * Data about a validation rule used in an application.
  *
@@ -25,6 +23,7 @@ class Rule extends XMLElement
     private $value;
     private $message;
     private $validator;
+    /** @var class-string|null */
     private $classname;
 
     /**
@@ -83,11 +82,11 @@ class Rule extends XMLElement
     }
 
     /**
-     * Sets the dot-path name of class to use for rule.
+     * Sets the class name to use for rule.
      * If no class is specified in XML, then a classname will
      * be built based on the 'name' attrib.
      *
-     * @param string $classname dot-path classname (e.g. myapp.propel.MyValidator)
+     * @param class-string|null $classname
      */
     public function setClass($classname)
     {
@@ -95,19 +94,42 @@ class Rule extends XMLElement
     }
 
     /**
-     * Gets the dot-path name of class to use for rule.
+     * Gets the class name to use for rule.
      * If no class was specified, this method will build a default classname
-     * based on the 'name' attribute.  E.g. 'maxLength' -> 'propel.validator.MaxLengthValidator'
+     * based on the 'name' attribute.  E.g. 'maxLength' -> 'MaxLengthValidator'
      *
-     * @return string dot-path classname (e.g. myapp.propel.MyValidator)
+     * @return class-string
      */
     public function getClass()
     {
-        if ($this->classname === null && $this->name !== null) {
-            return "propel.validator." . ucfirst($this->name) . "Validator";
+        if ($this->classname) {
+            return $this->classname;
         }
 
-        return $this->classname;
+        switch (strtolower($this->name)) {
+            case 'match':
+                return MatchValidator::class;
+            case 'maxlength':
+                return MaxLengthValidator::class;
+            case 'maxvalue':
+                return MaxValueValidator::class;
+            case 'minlength':
+                return MinLengthValidator::class;
+            case 'minvalue':
+                return MinValueValidator::class;
+            case 'notmatch':
+                return NotMatchValidator::class;
+            case 'required':
+                return RequiredValidator::class;
+            case 'type':
+                return TypeValidator::class;
+            case 'unique':
+                return UniqueValidator::class;
+            case 'validvalues':
+                return ValidValuesValidator::class;
+            default:
+                return null;
+        }
     }
 
     /**

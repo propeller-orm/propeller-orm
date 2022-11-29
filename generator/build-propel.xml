@@ -173,7 +173,7 @@
                 <warn>This driver is no longer supported by Propel because Propel now uses PDO for database
                     connections.
                 </warn>
-                <warn>Please use mysqli driver instead.</warn>
+                <warn>Please use mysql driver instead.</warn>
                 <fail>Use 'mysql' instead of 'mysqli' for your propel.database property.</fail>
             </then>
         </if>
@@ -571,7 +571,6 @@
                 xmlConfFile="${propel.conf.dir}/${propel.runtime.conf.file}"
                 outputDirectory="${propel.phpconf.dir}"
                 outputFile="${propel.runtime.phpconf.file}"
-                outputClassmapFile="${propel.runtime.phpconf-classmap.file}"
                 packageObjectModel="${propel.packageObjectModel}">
             <schemafileset dir="${propel.schema.dir}"
                            includes="${propel.schema.sql.includes}"

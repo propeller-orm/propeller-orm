@@ -47,13 +47,6 @@
 		<echo> +++++ Running Propel unit tests</echo>
 		<echo>-------------------------------------------------</echo>
 		<define name="TESTS_BASE_DIR" value="${tests.dir.resolved}" />
-		<adhoc>
-			<![CDATA[
-			// initializes the Propel runtime autoload
-			require_once '${propel-runtime.classes.dir.resolved}/Propel.php';
-		]]>
-		</adhoc>
-
 		<fileset dir="${tests.classes.dir.resolved}" id="relevant-tests">
 			<include name="**/*${test.class}Test.php" />
 		</fileset>

@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PlatformTestProvider.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/platform/SqlitePlatform.php';
-
 /**
  *
  * @package    generator.platform

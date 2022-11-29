@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
-
 /**
  * Tests the generated objects for array column types accessor & mutator
  *
@@ -217,7 +214,6 @@ EOF;
         $builder->setClassTargets(array('tablemap', 'peer', 'object', 'query', 'peerstub', 'querystub'));
         $builder->build();
 
-        require_once dirname(__FILE__) . '/fixtures/ComplexColumnTypeEntityWithConstructor.php';
         Propel::disableInstancePooling(); // need to be disabled to test the hydrate() method
 
         $obj = new ComplexColumnTypeEntityWithConstructor();

@@ -270,7 +270,7 @@ public function findList(" . ($useScope ? "$methodSignature, " : "") . "\$con = 
 
     protected function addGetMaxRank(&$script)
     {
-        $this->builder->declareClasses('Propel');
+        $this->builder->declareClasses([Propel::class]);
         $useScope = $this->behavior->useScope();
 
         if ($useScope) {
@@ -313,7 +313,7 @@ public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "Propel
 
     protected function addGetMaxRankArray(&$script)
     {
-        $this->builder->declareClasses('Propel');
+        $this->builder->declareClasses([Propel::class]);
         $useScope = $this->behavior->useScope();
 
         $script .= "
@@ -351,7 +351,7 @@ public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO 
 
     protected function addReorder(&$script)
     {
-        $this->builder->declareClasses('Propel');
+        $this->builder->declareClasses([Propel::class]);
         $peerClassname = $this->peerClassname;
         $columnGetter = 'get' . $this->behavior->getColumnForParameter('rank_column')->getPhpName();
         $columnSetter = 'set' . $this->behavior->getColumnForParameter('rank_column')->getPhpName();

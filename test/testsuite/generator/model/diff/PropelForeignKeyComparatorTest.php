@@ -9,8 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/diff/PropelForeignKeyComparator.php';
-
 /**
  * Tests for the PropelColumnComparator service class.
  *

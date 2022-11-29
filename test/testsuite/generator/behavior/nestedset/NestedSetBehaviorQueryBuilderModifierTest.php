@@ -9,8 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/BookstoreNestedSetTestBase.php';
-
 /**
  * Tests for NestedSetBehaviorQueryBuilderModifier class
  *
@@ -138,7 +136,7 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
 
     public function testAncestorsOf()
     {
-        list($t1, $t2, $t3, $t4, $t5, $t6, $t7) = $this->initTree();
+        [$t1, $t2, $t3, $t4, $t5, $t6, $t7] = $this->initTree();
         /* Tree used for tests
          t1
          |  \
@@ -166,13 +164,11 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->find();
         $coll = $this->buildCollection(array($t1, $t3, $t5));
         $this->assertEquals($coll, $objs, 'childrenOf() filters by ancestors');
-
-        $this->expectNotToPerformAssertions();
     }
 
     public function testRootsOf()
     {
-        list($t1, $t2, $t3, $t4, $t5, $t6, $t7) = $this->initTree();
+        [$t1, $t2, $t3, $t4, $t5, $t6, $t7] = $this->initTree();
         /* Tree used for tests
          t1
          |  \
@@ -186,22 +182,22 @@ class NestedSetBehaviorQueryBuilderModifierTest extends BookstoreNestedSetTestBa
             ->rootsOf($t1)
             ->orderByBranch()
             ->find();
-        $coll = $this->buildCollection(array($t1));
+        $coll = $this->buildCollection([$t1]);
         $this->assertEquals($coll, $objs, 'rootsOf() returns the root node for root node');
+
         $objs = Table9Query::create()
             ->rootsOf($t3)
             ->orderByBranch()
             ->find();
-        $coll = $this->buildCollection(array($t1, $t3));
+        $coll = $this->buildCollection([$t1, $t3]);
         $this->assertEquals($coll, $objs, 'rootsOf() filters by ancestors and includes the node passed as parameter');
+
         $objs = Table9Query::create()
             ->rootsOf($t7)
             ->orderByBranch()
             ->find();
-        $coll = $this->buildCollection(array($t1, $t3, $t5, $t7));
+        $coll = $this->buildCollection([$t1, $t3, $t5, $t7]);
         $this->assertEquals($coll, $objs, 'rootsOf() filters by ancestors  and includes the node passed as parameter');
-
-        $this->expectNotToPerformAssertions();
     }
 
     public function testOrderByBranch()

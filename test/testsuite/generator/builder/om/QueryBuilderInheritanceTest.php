@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreDataPopulator.php';
-
 /**
  * Test class for MultiExtensionQueryBuilder.
  *
@@ -105,13 +102,13 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $cashier2 = new BookstoreCashier();
         $cashier2->save($this->con);
 
-        $this->assertInstanceOf('BookstoreEmployee', BookstoreEmployeeQuery::create()->findPk($employee->getId()),
+        $this->assertInstanceOf(BookstoreEmployee::class, BookstoreEmployeeQuery::create()->findPk($employee->getId()),
             'findPk() return right object : BookstoreEmployee');
-        $this->assertInstanceOf('BookstoreManager', BookstoreEmployeeQuery::create()->findPk($manager->getId()),
+        $this->assertInstanceOf(BookstoreManager::class, BookstoreEmployeeQuery::create()->findPk($manager->getId()),
             'findPk() return right object : BookstoreManager');
-        $this->assertInstanceOf('BookstoreCashier', BookstoreEmployeeQuery::create()->findPk($cashier1->getId()),
+        $this->assertInstanceOf(BookstoreCashier::class, BookstoreEmployeeQuery::create()->findPk($cashier1->getId()),
             'findPk() return right object : BookstoreCashier');
-        $this->assertInstanceOf('BookstoreCashier', BookstoreEmployeeQuery::create()->findPk($cashier2->getId()),
+        $this->assertInstanceOf(BookstoreCashier::class, BookstoreEmployeeQuery::create()->findPk($cashier2->getId()),
             'findPk() return right object : BookstoreCashier');
 
         Propel::enableInstancePooling();
@@ -120,7 +117,7 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
     public function testGetCorrectTableMapClassWithAbstractSingleTableInheritance()
     {
         Propel::initialize();
-        $this->assertInstanceOf('DistributionTableMap', DistributionPeer::getTableMap(), 'getTableMap should return the right table map');
+        $this->assertInstanceOf(DistributionTableMap::class, DistributionPeer::getTableMap(), 'getTableMap should return the right table map');
     }
 
     /**
@@ -132,6 +129,8 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $manager->setName('test');
         $manager->save();
         $manager->delete();
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testFindPkSimpleWithAbstractSingleTableInheritanceReturnCorrectClass()
@@ -152,9 +151,9 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $distributionVirtualStore->setDistributionManager($manager);
         $distributionVirtualStore->save();
 
-        $this->assertInstanceOf('DistributionStore', DistributionQuery::create()->findPk($distributionStore->getId()),
+        $this->assertInstanceOf(DistributionStore::class, DistributionQuery::create()->findPk($distributionStore->getId()),
             'findPk() return right object : DistributionStore');
-        $this->assertInstanceOf('DistributionVirtualStore', DistributionQuery::create()->findPk($distributionVirtualStore->getId()),
+        $this->assertInstanceOf(DistributionVirtualStore::class, DistributionQuery::create()->findPk($distributionVirtualStore->getId()),
             'findPk() return right object : DistributionVirtualStore');
 
         Propel::enableInstancePooling();
@@ -166,11 +165,11 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $cashier1->save($this->con);
 
         $cashier2 = BookstoreCashierQuery::create()->findOneOrCreate($this->con);
-        $this->assertInstanceOf('BookstoreCashier', $cashier2, 'findOneOrCreate return right object when find one : BookstoreCashier');
+        $this->assertInstanceOf(BookstoreCashier::class, $cashier2, 'findOneOrCreate return right object when find one : BookstoreCashier');
 
         BookstoreCashierQuery::create()->deleteAll($this->con);
 
         $cashier3 = BookstoreCashierQuery::create()->findOneOrCreate($this->con);
-        $this->assertInstanceOf('BookstoreCashier', $cashier3, 'findOneOrCreate return right object when create one : BookstoreCashier');
+        $this->assertInstanceOf(BookstoreCashier::class, $cashier3, 'findOneOrCreate return right object when create one : BookstoreCashier');
     }
 }

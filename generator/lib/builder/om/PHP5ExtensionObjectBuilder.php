@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
-
 /**
  * Generates the empty PHP5 stub object class for user object model (OM).
  *
@@ -39,21 +37,6 @@ class PHP5ExtensionObjectBuilder extends ObjectBuilder
      */
     protected function addIncludes(&$script)
     {
-        switch ($this->getTable()->treeMode()) {
-            case 'NestedSet':
-                $requiredClassFilePath = $this->getNestedSetBuilder()->getClassFilePath();
-                break;
-
-            case 'MaterializedPath':
-            case 'AdjacencyList':
-            default:
-                $requiredClassFilePath = $this->getObjectBuilder()->getClassFilePath();
-                break;
-        }
-
-        $script .= "
-require '" . $requiredClassFilePath . "';
-";
     } // addIncludes()
 
     /**

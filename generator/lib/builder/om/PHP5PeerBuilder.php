@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PeerBuilder.php';
-require_once dirname(__FILE__) . '/ClassTools.php';
 
 /**
  * Generates a PHP5 base Peer class for user object model (OM).
@@ -140,7 +138,15 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         parent::addClassBody($script);
-        $this->declareClasses('Propel', 'PropelException', 'PropelPDO', 'BasePeer', 'Criteria', 'PDO', 'PDOStatement');
+        $this->declareClasses([
+            Propel::class,
+            PropelException::class,
+            PropelPDO::class,
+            BasePeer::class,
+            Criteria::class,
+            PDO::class,
+            PDOStatement::class,
+        ]);
     }
 
     /**

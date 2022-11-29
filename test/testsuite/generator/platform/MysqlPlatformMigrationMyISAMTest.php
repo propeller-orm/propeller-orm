@@ -8,12 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PlatformMigrationTestProvider.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/platform/MysqlPlatform.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/Column.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/VendorInfo.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorConfig.php';
-
 /**
  *
  * @package    generator.platform

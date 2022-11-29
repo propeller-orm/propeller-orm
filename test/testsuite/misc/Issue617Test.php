@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../tools/helpers/PlatformDatabaseBuildTimeBase.php';
-
 /**
  * This test proves the bug described in https://github.com/propelorm/Propel/issues/617.
  * Since the build property `addVendorInfo` is per default not set (= false), the `MysqlSchemaParser` **did**

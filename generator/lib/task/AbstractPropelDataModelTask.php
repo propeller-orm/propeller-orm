@@ -8,14 +8,6 @@
  * @license    MIT License
  */
 
-//include_once 'phing/tasks/ext/CapsuleTask.php';
-require_once 'task/AbstractPropelTask.php';
-include_once 'config/GeneratorConfig.php';
-include_once 'model/AppData.php';
-include_once 'model/Database.php';
-include_once 'builder/util/XmlToAppData.php';
-include_once 'util/PropelSchemaValidator.php';
-
 /**
  * An abstract base Propel task to perform work related to the XML schema file.
  *
@@ -459,7 +451,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
                 // normalize (or transform) the XML document using XSLT
                 if ($this->getGeneratorConfig()->getBuildProperty('schemaTransform') && $this->xslFile) {
                     $this->log("Transforming " . $dmFilename . " using stylesheet " . $this->xslFile->getPath(), Project::MSG_VERBOSE);
-                    if (!class_exists('XSLTProcessor')) {
+                    if (!class_exists(XSLTProcessor::class)) {
                         $this->log("Could not perform XLST transformation. Make sure PHP has been compiled/configured to support XSLT.", Project::MSG_ERR);
                     } else {
                         // normalize the document using normalizer stylesheet

@@ -7,8 +7,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
-
 /**
  * Abstract for DB adapter tests
  *

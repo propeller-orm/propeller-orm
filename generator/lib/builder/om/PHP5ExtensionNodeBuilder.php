@@ -8,7 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
 
 /**
  * Generates the empty PHP5 stub node object class for user object model (OM).
@@ -39,9 +38,6 @@ class PHP5ExtensionNodeBuilder extends ObjectBuilder
      */
     protected function addIncludes(&$script)
     {
-        $script .= "
-require '" . $this->getNodeBuilder()->getClassFilePath() . "';
-";
     } // addIncludes()
 
     /**

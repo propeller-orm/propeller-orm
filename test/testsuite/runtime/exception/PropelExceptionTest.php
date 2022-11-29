@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelException.php';
-
 /**
  * Test for PropelException class
  *

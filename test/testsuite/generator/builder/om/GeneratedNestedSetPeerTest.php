@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/cms/CmsTestBase.php';
-
 /**
  * Tests the generated nested-set Object classes.
  *

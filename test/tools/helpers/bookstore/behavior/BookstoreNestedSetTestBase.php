@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../BookstoreTestBase.php';
-
 abstract class BookstoreNestedSetTestBase extends BookstoreTestBase
 {
     public function dumpNodes($nodes)

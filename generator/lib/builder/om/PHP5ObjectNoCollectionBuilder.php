@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PHP5ObjectBuilder.php';
-
 /**
  * Generates a PHP5 base Object class for user object model (OM).
  *
@@ -24,7 +22,7 @@ require_once dirname(__FILE__) . '/PHP5ObjectBuilder.php';
  * This class is not used by default. You must override
  * the propel.builder.object.class setting in build.properties to use it:
  * <code>
- * propel.builder.object.class = builder.om.PHP5ObjectNoCollectionBuilder
+ * propel.builder.object.class = PHP5ObjectNoCollectionBuilder
  * </code>
  *
  * @deprecated Since Propel 1.5

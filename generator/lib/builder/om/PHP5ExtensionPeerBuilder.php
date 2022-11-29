@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PeerBuilder.php';
-
 /**
  * Generates the empty PHP5 stub peer class for user object model (OM).
  *
@@ -39,21 +37,6 @@ class PHP5ExtensionPeerBuilder extends PeerBuilder
      */
     protected function addIncludes(&$script)
     {
-        switch ($this->getTable()->treeMode()) {
-            case 'NestedSet':
-                $requiredClassFilePath = $this->getNestedSetPeerBuilder()->getClassFilePath();
-                break;
-
-            case 'MaterializedPath':
-            case 'AdjacencyList':
-            default:
-                $requiredClassFilePath = $this->getPeerBuilder()->getClassFilePath();
-                break;
-        }
-
-        $script .= "
-require '" . $requiredClassFilePath . "';
-";
     } // addIncludes()
 
     /**

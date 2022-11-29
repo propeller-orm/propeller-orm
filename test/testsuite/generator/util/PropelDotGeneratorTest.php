@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelDotGenerator.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
-
 /**
  *
  * @package    generator.util

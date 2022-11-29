@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreDataPopulator.php';
-
 /**
  * Test class for ModelCriteria select() method.
  *
@@ -413,11 +410,11 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         BookstoreDataPopulator::populate($this->con);
 
         $pager =  BookQuery::create()
-            ->select(array('Id', 'Title', 'ISBN', 'Price'))
+            ->select(['Id', 'Title', 'ISBN', 'Price'])
             ->paginate(1, 10, $this->con);
-        $this->assertInstanceOf('PropelModelPager', $pager);
+        $this->assertInstanceOf(PropelModelPager::class, $pager);
         foreach ($pager as $result) {
-            $this->assertEquals(array('Id', 'Title', 'ISBN', 'Price'), array_keys($result));
+            $this->assertEquals(['Id', 'Title', 'ISBN', 'Price'], array_keys($result));
         }
     }
 
@@ -437,22 +434,25 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
     public function testGetSelectReturnsArrayWhenSelectingSeveralColumns()
     {
         $c = new ModelCriteria('bookstore', 'Book');
-        $c->select(array('Id', 'Title'));
-        $this->assertEquals(array('Id', 'Title'), $c->getSelect());
+        $c->select(['Id', 'Title']);
+        $this->assertEquals(['Id', 'Title'], $c->getSelect());
     }
 
     public function testGetSelectReturnsArrayWhenSelectingASingleColumnAsArray()
     {
         $c = new ModelCriteria('bookstore', 'Book');
-        $c->select(array('Title'));
-        $this->assertEquals(array('Title'), $c->getSelect());
+        $c->select(['Title']);
+        $this->assertEquals(['Title'], $c->getSelect());
     }
 
     public function testGetSelectReturnsArrayWhenSelectingAllColumns()
     {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->select('*');
-        $this->assertEquals(array('Book.Id', 'Book.Title', 'Book.ISBN', 'Book.Price', 'Book.PublisherId', 'Book.AuthorId'), $c->getSelect());
+        $this->assertEquals(
+            ['Book.Id', 'Book.Title', 'Book.ISBN', 'Book.Price', 'Book.PublisherId', 'Book.AuthorId'],
+            $c->getSelect()
+        );
     }
 
     public function testQuotingAliases()

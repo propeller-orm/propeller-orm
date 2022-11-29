@@ -8,11 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../model/Table.php';
-require_once dirname(__FILE__) . '/../model/Column.php';
-require_once dirname(__FILE__) . '/PropelSQLParser.php';
-require_once dirname(__FILE__) . '/../../../runtime/lib/Propel.php';
-
 /**
  * Service class for preparing and executing migrations
  *
@@ -73,10 +68,6 @@ class PropelMigrationManager
         $params = $this->getConnection($datasource);
         $adapter = $params['adapter'];
         $adapterClass = ucfirst($adapter) . 'Platform';
-        require_once sprintf('%s/../platform/%s.php',
-            dirname(__FILE__),
-            $adapterClass
-        );
 
         return new $adapterClass();
     }

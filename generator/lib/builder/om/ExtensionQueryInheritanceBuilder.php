@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/OMBuilder.php';
-
 /**
  * Generates the empty PHP5 stub query class for use with single table inheritance.
  *
@@ -80,11 +78,6 @@ class ExtensionQueryInheritanceBuilder extends OMBuilder
      */
     protected function addIncludes(&$script)
     {
-        $requiredClassFilePath = $this->getStubQueryBuilder()->getClassFilePath();
-
-        $script .= "
-require '" . $requiredClassFilePath . "';
-";
     } // addIncludes()
 
     /**

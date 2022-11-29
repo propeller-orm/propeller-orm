@@ -41,38 +41,34 @@ abstract class DBAdapter
      *
      * @var array
      */
-    private static $adapters = array(
-        'mysql'  => 'DBMySQL',
-        'mysqli' => 'DBMySQLi',
-        'mssql'  => 'DBMSSQL',
-        'sqlsrv' => 'DBSQLSRV',
-        'oracle' => 'DBOracle',
-        'oci'    => 'DBOracle',
-        'pgsql'  => 'DBPostgres',
-        'sqlite' => 'DBSQLite',
-        ''       => 'DBNone',
-    );
+    private static $adapters = [
+        'mysql'  => DBMySQL::class,
+        'mssql'  => DBMSSQL::class,
+        'sqlsrv' => DBSQLSRV::class,
+        'oracle' => DBOracle::class,
+        'oci'    => DBOracle::class,
+        'pgsql'  => DBPostgres::class,
+        'sqlite' => DBSQLite::class,
+        ''       => DBNone::class,
+    ];
 
     /**
      * Creates a new instance of the database adapter associated
      * with the specified Propel driver.
      *
      * @param string $driver The name of the Propel driver to create a new adapter instance
-     *                            for or a shorter form adapter key.
+     *                       for or a shorter form adapter key.
      *
      * @throws PropelException If the adapter could not be instantiated.
      * @return DBAdapter       An instance of a Propel database adapter.
      */
-    public static function factory($driver)
+    public static function factory(string $driver): DBAdapter
     {
-        $adapterClass = isset(self::$adapters[$driver]) ? self::$adapters[$driver] : null;
-        if ($adapterClass !== null) {
-            $a = new $adapterClass();
-
-            return $a;
-        } else {
+        $adapterClass = self::$adapters[$driver] ?? null;
+        if (!$adapterClass) {
             throw new PropelException("Unsupported Propel driver: " . $driver . ": Check your configuration file");
         }
+        return new $adapterClass();
     }
 
     /**

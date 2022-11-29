@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
-
 /**
  * Generates a PHP5 tree node Object class for user object model (OM).
  *
@@ -262,14 +260,12 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     public function getIterator(\$type = null, \$opts = null)
     {
         if (\$type === null)
-            \$type = (isset(\$this->itType) ? \$this->itType : 'Pre');
+            \$type = \$this->itType ?? 'Pre';
 
         if (\$opts === null)
-            \$opts = (isset(\$this->itOpts) ? \$this->itOpts : array());
+            \$opts = \$this->itOpts ?? [];
 
         \$itclass = ucfirst(strtolower(\$type)) . 'OrderNodeIterator';
-
-    require_once 'propel/om/'. \$itclass . '.php');
 
         return new \$itclass(\$this, \$opts);
     }

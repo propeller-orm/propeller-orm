@@ -14,13 +14,22 @@
   "autoload": {
       "classmap": ["runtime/lib", "generator/lib"]
   },
+  "autoload-dev": {
+      "classmap": ["test/testsuite", "test/tools"]
+  },
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
     "php": "~7.1",
+    "ext-dom": "*",
+    "ext-pdo": "*",
     "phing/phing": "~2.16.3"
   },
+  "suggest": {
+    "ext-xsl": "Required for using using the optional schemaTransform functionality."
+  },
   "require-dev": {
-    "phpunit/phpunit": "~7.5"
+    "phpunit/phpunit": "~7.5",
+    "nette/robot-loader": "^3.4"
   },
   "replace": {
     "rock-symphony/propel-orm": "2.0",

@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-
 class GeneratedObjectWithInterfaceTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
@@ -36,11 +34,11 @@ EOF;
 
     public function testClassHasInterface()
     {
-        $this->assertInstanceOf('Foo\MyInterface', new \Foo\MyClassWithInterface());
+        $this->assertInstanceOf(\Foo\MyInterface::class, new \Foo\MyClassWithInterface());
     }
 
     public function testClassHasDefaultInterface()
     {
-        $this->assertInstanceOf('Persistent', new \Foo\MyClassWithoutInterface());
+        $this->assertInstanceOf(Persistent::class, new \Foo\MyClassWithoutInterface());
     }
 }

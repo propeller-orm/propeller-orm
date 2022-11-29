@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/OMBuilder.php';
-
 /**
  * Base class for Peer-building classes.
  *
@@ -114,31 +112,26 @@ abstract class ObjectBuilder extends OMBuilder
 
     /**
      * Gets the baseClass path if specified for table/db.
-     * If not, will return 'propel.om.BaseObject'
+     * If not, will return 'BaseObject'
      *
-     * @return string
+     * @return class-string
      */
     protected function getBaseClass()
     {
-        $class = $this->getTable()->getBaseClass();
-        if ($class === null) {
-            $class = "propel.om.BaseObject";
-        }
-
-        return $class;
+        return $this->getTable()->getBaseClass() ?: BaseObject::class;
     }
 
     /**
      * Gets the interface path if specified for current table.
-     * If not, will return 'propel.om.Persistent'.
+     * If not, will return 'Persistent'.
      *
-     * @return string
+     * @return class-string|null
      */
     protected function getInterface()
     {
         $interface = $this->getTable()->getInterface();
         if ($interface === null && !$this->getTable()->isReadOnly()) {
-            $interface = "propel.om.Persistent";
+            $interface = Persistent::class;
         }
 
         return $interface;

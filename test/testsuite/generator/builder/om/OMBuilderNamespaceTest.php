@@ -8,11 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Table.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/OMBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPlatform.php';
-
 /**
  * Test class for OMBuilder.
  *
@@ -123,12 +118,12 @@ class OMBuilderNamespaceTest extends \PHPUnit\Framework\TestCase
     public function testDeclareClasses()
     {
         $builder = new TestableOMBuilder2(new Table('fooTable'));
-        $builder->declareClasses('Foo', '\\Bar', 'Baz\\Baz', 'Hello\\Cruel\\World');
-        $expected = array(
-            ''             => array('Foo', 'Bar'),
-            'Baz'          => array('Baz'),
-            'Hello\\Cruel' => array('World')
-        );
+        $builder->declareClasses(['Foo', '\\Bar', 'Baz\\Baz', 'Hello\\Cruel\\World']);
+        $expected = [
+            ''             => ['Foo', 'Bar'],
+            'Baz'          => ['Baz'],
+            'Hello\\Cruel' => ['World'],
+        ];
         $this->assertEquals($expected, $builder->getDeclaredClasses());
     }
 }

@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreTestBase.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-
 /**
  * Tests the generated Object classes.
  *
@@ -29,12 +26,6 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
  */
 class GeneratedObjectTest extends BookstoreTestBase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-        require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/TestAuthor.php';
-    }
-
     /**
      * Test saving an object after setting default values for it.
      */
@@ -504,6 +495,8 @@ class GeneratedObjectTest extends BookstoreTestBase
         $super->addSubordinate($e2);
 
         $affected = $super->save();
+
+        $this->assertNotEquals(0, $affected);
 
     }
 
@@ -991,7 +984,7 @@ EOF;
             $b->save();
             $this->fail("Expected setting auto-increment primary key to result in Exception");
         } catch (Exception $x) {
-            $this->assertInstanceOf('PropelException', $x);
+            $this->assertInstanceOf(PropelException::class, $x);
         }
 
         // ... but we should silently ignore NULL values, since these are really
@@ -1303,7 +1296,7 @@ EOF;
         $a->setBooks($coll);
         $a->save();
 
-        $this->assertInstanceOf('PropelObjectCollection', $a->getBooks());
+        $this->assertInstanceOf(PropelObjectCollection::class, $a->getBooks());
         $this->assertEquals(3, $a->getBooks()->count());
         $this->assertEquals(1, AuthorQuery::create()->count());
         $this->assertEquals(3, BookQuery::create()->count());
@@ -1387,7 +1380,7 @@ EOF;
         $b->setIsbn('12242');
         $b->save();
 
-        $this->assertInstanceOf('PropelObjectCollection', $b->getBookSummarys());
+        $this->assertInstanceOf(PropelObjectCollection::class, $b->getBookSummarys());
         $this->assertEquals(3, $b->getBookSummarys()->count());
         $this->assertEquals(1, BookQuery::create()->count());
         $this->assertEquals(3, BookSummaryQuery::create()->count());

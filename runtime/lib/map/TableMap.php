@@ -534,11 +534,11 @@ class TableMap
     /**
      * Add a validator to a table's column
      *
-     * @param string $columnName The name of the validator's column
-     * @param string $name       The rule name of this validator
-     * @param string $classname  The dot-path name of class to use (e.g. myapp.propel.MyValidator)
-     * @param string $value
-     * @param string $message    The error message which is returned on invalid values
+     * @param string        $columnName The name of the validator's column
+     * @param string        $name       The rule name of this validator
+     * @param class-string  $classname  The name of class to use (e.g. `MyValidator`)
+     * @param string        $value
+     * @param string        $message    The error message which is returned on invalid values
      *
      * @return void
      */

@@ -876,10 +876,9 @@ class BasePeer
     }
 
     /**
-     * This function searches for the given validator $name under propel/validator/$name.php,
-     * imports and caches it.
+     * This function constructs a validator instance and caches it by the given validator class name.
      *
-     * @param string $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
+     * @param class-string $classname The name of class (e.g. MyValidator)
      *
      * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */
@@ -888,14 +887,13 @@ class BasePeer
         try {
             $v = isset(self::$validatorMap[$classname]) ? self::$validatorMap[$classname] : null;
             if ($v === null) {
-                $cls = Propel::importClass($classname);
-                $v = new $cls();
+                $v = new $classname();
                 self::$validatorMap[$classname] = $v;
             }
 
             return $v;
         } catch (Exception $e) {
-            Propel::log("BasePeer::getValidator(): failed trying to instantiate " . $classname . ": " . $e->getMessage(), Propel::LOG_ERR);
+            Propel::log("BasePeer::getValidator(): failed trying to instantiate {$classname}: {$e->getMessage()}", Propel::LOG_ERR);
         }
 
         return null;

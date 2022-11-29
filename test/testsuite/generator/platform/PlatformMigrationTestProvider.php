@@ -8,11 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/PlatformTestBase.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/diff/PropelDatabaseComparator.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/diff/PropelTableComparator.php';
-require_once dirname(__FILE__) . '/../../../../generator/lib/model/diff/PropelColumnComparator.php';
-
 /**
  * provider for platform migration unit tests
  * @package    generator.platform

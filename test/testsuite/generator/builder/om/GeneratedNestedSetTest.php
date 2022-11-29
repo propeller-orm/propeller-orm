@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../tools/helpers/cms/CmsTestBase.php';
-
 /**
  * Tests the generated nested-set Object classes.
  *
@@ -115,6 +113,8 @@ class GeneratedNestedSetTest extends CmsTestBase
         $startId = $db->query('SELECT MIN(Id) FROM Page')->fetchColumn();
         $this->addNewChildPage($startId + 10);
         $this->assertPageTreeIntegrity();
+
+        $this->expectNotToPerformAssertions();
     }
 
 }

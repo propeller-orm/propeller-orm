@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../DataModelBuilder.php';
-
 /**
  * Baseclass for OM-building classes.
  *
@@ -28,7 +26,7 @@ abstract class OMBuilder extends DataModelBuilder
      *
      * @var array
      */
-    protected $declaredClasses = array();
+    protected $declaredClasses = [];
 
     /**
      * Builds the PHP source for current class and returns it as a string.
@@ -127,22 +125,6 @@ abstract class OMBuilder extends DataModelBuilder
     }
 
     /**
-     * Gets the dot-path representation of current class being built.
-     *
-     * @return string
-     */
-    public function getClasspath()
-    {
-        if ($this->getPackage()) {
-            $path = $this->getPackage() . '.' . $this->getClassname();
-        } else {
-            $path = $this->getClassname();
-        }
-
-        return $path;
-    }
-
-    /**
      * Gets the full path to the file for the current class.
      *
      * @return string
@@ -223,10 +205,13 @@ abstract class OMBuilder extends DataModelBuilder
         $this->declareClassNamespace($builder->getClassname(), $builder->getNamespace());
     }
 
-    public function declareClasses()
+    /**
+     * @param class-string[]  $classes
+     * @return void
+     */
+    public function declareClasses(array $classes)
     {
-        $args = func_get_args();
-        foreach ($args as $class) {
+        foreach ($classes as $class) {
             $this->declareClass($class);
         }
     }
@@ -309,8 +294,8 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Get the column constant name (e.g. PeerName::COLUMN_NAME).
      *
-     * @param Column $col       The column we need a name for.
-     * @param string $classname The Peer classname to use.
+     * @param Column  $col       The column we need a name for.
+     * @param string  $classname The Peer classname to use.
      *
      * @return string If $classname is provided, then will return $classname::COLUMN_NAME; if not, then the peername is looked up for current table to yield $currTablePeer::COLUMN_NAME.
      *
@@ -355,8 +340,8 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Convenience method to get the foreign Table object for an fkey.
      *
-     * @deprecated use ForeignKey::getForeignTable() instead
      * @return Table
+     * @deprecated use ForeignKey::getForeignTable() instead
      */
     protected function getForeignTable(ForeignKey $fk)
     {
@@ -368,7 +353,7 @@ abstract class OMBuilder extends DataModelBuilder
      * If the key is required, an INNER JOIN will be returned, else a LEFT JOIN will be suggested,
      * unless the schema is provided with the DefaultJoin attribute, which overrules the default Join Type
      *
-     * @param ForeignKey $fk
+     * @param ForeignKey  $fk
      *
      * @return string
      */
@@ -390,8 +375,8 @@ abstract class OMBuilder extends DataModelBuilder
      * The difference between this method and the getRefFKPhpNameAffix() method is that in this method the
      * classname in the affix is the foreign table classname.
      *
-     * @param ForeignKey $fk     The local FK that we need a name for.
-     * @param boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     * @param ForeignKey  $fk     The local FK that we need a name for.
+     * @param boolean     $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
      *
      * @return string
      */
@@ -434,8 +419,8 @@ abstract class OMBuilder extends DataModelBuilder
                 throw new Exception("Could not fetch column: $localColumnName in table " . $localTable->getName());
             }
             if (count($localTable->getForeignKeysReferencingTable($fk->getForeignTableName())) > 1
-             || count($fk->getForeignTable()->getForeignKeysReferencingTable($fk->getTableName())) > 0
-             || $fk->getForeignTableName() == $fk->getTableName()) {
+                || count($fk->getForeignTable()->getForeignKeysReferencingTable($fk->getTableName())) > 0
+                || $fk->getForeignTableName() == $fk->getTableName()) {
                 // self referential foreign key, or several foreign keys to the same table, or cross-reference fkey
                 $relCol .= $localColumn->getPhpName();
             }
@@ -454,8 +439,8 @@ abstract class OMBuilder extends DataModelBuilder
      * The difference between this method and the getFKPhpNameAffix() method is that in this method the
      * classname in the affix is the classname of the local fkey table.
      *
-     * @param ForeignKey $fk     The referrer FK that we need a name for.
-     * @param boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     * @param ForeignKey  $fk     The referrer FK that we need a name for.
+     * @param boolean     $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
      *
      * @return string
      */
@@ -519,8 +504,8 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
-     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param string $modifier The name of the modifier object providing the method in the behavior
+     * @param string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param string  $modifier The name of the modifier object providing the method in the behavior
      *
      * @return boolean
      */
@@ -539,10 +524,10 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
-     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param string $modifier The name of the modifier object providing the method in the behavior
-     * @param string &$script  The script will be modified in this method.
-     * @param string $tab
+     * @param string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param string  $modifier The name of the modifier object providing the method in the behavior
+     * @param string &$script   The script will be modified in this method.
+     * @param string  $tab
      */
     public function applyBehaviorModifierBase($hookName, $modifier, &$script, $tab = "		")
     {
@@ -572,8 +557,8 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Checks whether any registered behavior content creator on that table exists a contentName
      *
-     * @param string $contentName The name of the content as called from one of this class methods, e.g. "parentClassname"
-     * @param string $modifier    The name of the modifier object providing the method in the behavior
+     * @param string  $contentName The name of the content as called from one of this class methods, e.g. "parentClassname"
+     * @param string  $modifier    The name of the modifier object providing the method in the behavior
      */
     public function getBehaviorContentBase($contentName, $modifier)
     {
@@ -595,7 +580,7 @@ abstract class OMBuilder extends DataModelBuilder
         $content = preg_replace('/[ \t]*$/m', '', $content);
 
         // indentation
-        $content = preg_replace_callback('/^([ \t]+)/m', array($this, 'fixTrailingWhitespaces'), $content);
+        $content = preg_replace_callback('/^([ \t]+)/m', [$this, 'fixTrailingWhitespaces'], $content);
 
         // line feed
         $content = str_replace("\r\n", "\n", $content);

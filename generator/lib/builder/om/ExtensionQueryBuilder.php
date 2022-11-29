@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/OMBuilder.php';
-
 /**
  * Generates the empty PHP5 stub class for object query
  *
@@ -39,11 +37,6 @@ class ExtensionQueryBuilder extends OMBuilder
      */
     protected function addIncludes(&$script)
     {
-        $requiredClassFilePath = $this->getQueryBuilder()->getClassFilePath();
-
-        $script .= "
-require '" . $requiredClassFilePath . "';
-";
     } // addIncludes()
 
     /**

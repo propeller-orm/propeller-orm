@@ -8,9 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/BaseTestCase.php';
-require_once dirname(__FILE__) . '/../../../../runtime/lib/util/PropelConditionalProxy.php';
-
 /**
  * Test class for PropelConditionalProxy.
  *
@@ -59,7 +56,7 @@ class PropelConditionalProxyTest extends BaseTestCase
 
     $this->assertEquals($p->getCriteria(), $criteria, 'main object is the given one');
 
-    $this->assertInstanceOf('PropelConditionalProxy', $p2 = $p->_if(true), '_if returns fluid interface');
+    $this->assertInstanceOf(PropelConditionalProxy::class, $p2 = $p->_if(true), '_if returns fluid interface');
 
     $this->assertEquals($p2->getCriteria(), $criteria, 'main object is the given one, even with nested proxies');
 

@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/OMBuilder.php';
-
 /**
  * Generates the PHP5 table map class for user object model (OM).
  *
@@ -103,7 +101,7 @@ class " . $this->getClassname() . " extends TableMap
      */
     protected function addClassBody(&$script)
     {
-        $this->declareClasses('TableMap', 'RelationMap');
+        $this->declareClasses([TableMap::class, RelationMap::class]);
         $this->addConstants($script);
         $this->addAttributes($script);
         $this->addInitialize($script);
@@ -118,12 +116,6 @@ class " . $this->getClassname() . " extends TableMap
      */
     protected function addConstants(&$script)
     {
-        $script .= "
-    /**
-     * The (dot-path) name of this class
-     */
-    const CLASS_NAME = '" . $this->getClasspath() . "';
-";
     }
 
     /**

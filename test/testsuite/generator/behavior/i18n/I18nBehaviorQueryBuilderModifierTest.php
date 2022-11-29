@@ -9,10 +9,6 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
-require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/i18n/I18nBehavior.php';
-require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
-
 /**
  * Tests for I18nBehavior class query modifier
  *
@@ -241,7 +237,7 @@ EOF;
             ->joinWithI18n('en_US')
             ->limit(2)
             ->find();
-        $this->assertInstanceOf('PropelObjectCollection', $res);
+        $this->assertInstanceOf(PropelObjectCollection::class, $res);
     }
 
     // This is not a desired behavior, but there is no way to overcome it

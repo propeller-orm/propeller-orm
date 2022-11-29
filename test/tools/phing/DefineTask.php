@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once 'phing/Task.php';
-
 /**
  * Defines a constant using PHP define() method.
  *

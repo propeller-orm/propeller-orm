@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <database name="treetest" defaultIdMethod="native">
-	<table name="test" treeMode="NestedSet" description="Test">
+	<table name="nested_set_tree" treeMode="NestedSet" description="Test">
 		<column
 			name="id"
 			required="true"

@@ -8,8 +8,6 @@
  * @license    MIT License
  */
 
-require_once 'ConcreteInheritanceParentBehavior.php';
-
 /**
  * Makes a model inherit another one. The model with this behavior gets a copy
  * of the structure of the parent model. In addition, both the ActiveRecord and

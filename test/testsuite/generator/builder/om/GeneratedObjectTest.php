@@ -982,7 +982,7 @@ EOF;
             $b->save();
             $this->fail("Expected setting auto-increment primary key to result in Exception");
         } catch (Exception $x) {
-            $this->assertInstanceOf('PropelException', $x);
+            $this->assertInstanceOf(PropelException::class, $x);
         }
 
         // ... but we should silently ignore NULL values, since these are really
@@ -1294,7 +1294,7 @@ EOF;
         $a->setBooks($coll);
         $a->save();
 
-        $this->assertInstanceOf('PropelObjectCollection', $a->getBooks());
+        $this->assertInstanceOf(PropelObjectCollection::class, $a->getBooks());
         $this->assertEquals(3, $a->getBooks()->count());
         $this->assertEquals(1, AuthorQuery::create()->count());
         $this->assertEquals(3, BookQuery::create()->count());
@@ -1378,7 +1378,7 @@ EOF;
         $b->setIsbn('12242');
         $b->save();
 
-        $this->assertInstanceOf('PropelObjectCollection', $b->getBookSummarys());
+        $this->assertInstanceOf(PropelObjectCollection::class, $b->getBookSummarys());
         $this->assertEquals(3, $b->getBookSummarys()->count());
         $this->assertEquals(1, BookQuery::create()->count());
         $this->assertEquals(3, BookSummaryQuery::create()->count());

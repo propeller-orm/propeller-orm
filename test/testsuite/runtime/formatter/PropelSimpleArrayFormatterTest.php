@@ -25,7 +25,7 @@ class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
         $formatter->init(new ModelCriteria('bookstore', 'Book'));
 
         $books = $formatter->format($stmt);
-        $this->assertInstanceOf('PropelCollection', $books);
+        $this->assertInstanceOf(PropelCollection::class, $books);
         $this->assertCount(4, $books);
         $this->assertEquals('1', $books[0]);
     }
@@ -39,7 +39,7 @@ class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
         $formatter->init(new ModelCriteria('bookstore', 'Book'));
 
         $books = $formatter->format($stmt);
-        $this->assertInstanceOf('PropelCollection', $books);
+        $this->assertInstanceOf(PropelCollection::class, $books);
         $this->assertCount(4, $books);
         $this->assertEquals('0', $books[0]);
     }
@@ -90,7 +90,7 @@ class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
         $formatter->init(new ModelCriteria('bookstore', 'Book'));
 
         $books = $formatter->format($stmt);
-        $this->assertInstanceOf('PropelCollection', $books);
+        $this->assertInstanceOf(PropelCollection::class, $books);
         $this->assertCount(4, $books);
         $this->assertSame(false, (bool) $books[0]);
     }

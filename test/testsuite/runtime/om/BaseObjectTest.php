@@ -62,21 +62,21 @@ class BaseObjectTest extends \PHPUnit\Framework\TestCase
     public function testSetNewReturnsSelf()
     {
         $b = new TestableBaseObject();
-        $this->assertInstanceOf('TestableBaseObject', $b->setNew(false));
-        $this->assertInstanceOf('TestableBaseObject', $b->setNew(true));
+        $this->assertInstanceOf(TestableBaseObject::class, $b->setNew(false));
+        $this->assertInstanceOf(TestableBaseObject::class, $b->setNew(true));
     }
 
     public function testSetDeletedReturnsSelf()
     {
         $b = new TestableBaseObject();
-        $this->assertInstanceOf('TestableBaseObject', $b->setDeleted(false));
-        $this->assertInstanceOf('TestableBaseObject', $b->setDeleted(true));
+        $this->assertInstanceOf(TestableBaseObject::class, $b->setDeleted(false));
+        $this->assertInstanceOf(TestableBaseObject::class, $b->setDeleted(true));
     }
 
     public function testResetModifiedReturnsSelf()
     {
         $b = new TestableBaseObject();
-        $this->assertInstanceOf('TestableBaseObject', $b->resetModified());
+        $this->assertInstanceOf(TestableBaseObject::class, $b->resetModified());
     }
 }
 

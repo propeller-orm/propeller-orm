@@ -98,7 +98,7 @@ EOF;
         $archive = ArchivableTest100ArchiveQuery::create()
             ->filterById($a->getId())
             ->findOne();
-        $this->assertInstanceOf('ArchivableTest100Archive', $archive);
+        $this->assertInstanceOf(ArchivableTest100Archive::class, $archive);
         $this->assertEquals('foo', $archive->getTitle());
         $this->assertEquals(12, $archive->getAge());
     }

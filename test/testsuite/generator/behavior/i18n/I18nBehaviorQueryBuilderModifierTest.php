@@ -237,7 +237,7 @@ EOF;
             ->joinWithI18n('en_US')
             ->limit(2)
             ->find();
-        $this->assertInstanceOf('PropelObjectCollection', $res);
+        $this->assertInstanceOf(PropelObjectCollection::class, $res);
     }
 
     // This is not a desired behavior, but there is no way to overcome it

@@ -22,9 +22,9 @@ class CustomPlatformTest extends \PHPUnit\Framework\TestCase
         $this->generatorConfig = new GeneratorConfig($props);
     }
 
-    public function testGetPLatform()
+    public function testGetPlatform()
     {
-        $this->assertInstanceOf('CustomPlatform', $this->generatorConfig->getConfiguredPlatform());
-        $this->assertInstanceOf('CustomPlatform', $this->generatorConfig->getConfiguredPlatform(null, 'default'));
+        $this->assertInstanceOf(CustomPlatform::class, $this->generatorConfig->getConfiguredPlatform());
+        $this->assertInstanceOf(CustomPlatform::class, $this->generatorConfig->getConfiguredPlatform(null, 'default'));
     }
 }

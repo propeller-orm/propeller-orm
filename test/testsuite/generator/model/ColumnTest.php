@@ -172,11 +172,11 @@ EOF;
         $this->assertNull($table1->getColumn('id')->getValidator());
         $title1Column = $table1->getColumn('title1');
         $title1Validator = $title1Column->getValidator();
-        $this->assertInstanceOf('Validator', $title1Validator);
+        $this->assertInstanceOf(Validator::class, $title1Validator);
         $this->assertEquals(1, count($title1Validator->getRules()));
         $title2Column = $table1->getColumn('title2');
         $title2Validator = $title2Column->getValidator();
-        $this->assertInstanceOf('Validator', $title2Validator);
+        $this->assertInstanceOf(Validator::class, $title2Validator);
         $this->assertEquals(2, count($title2Validator->getRules()));
     }
 

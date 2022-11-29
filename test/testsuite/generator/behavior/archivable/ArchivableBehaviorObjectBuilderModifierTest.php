@@ -128,7 +128,7 @@ EOF;
         $archive = ArchivableTest10ArchiveQuery::create()
             ->filterById($a->getId())
             ->findOne();
-        $this->assertInstanceOf('ArchivableTest10Archive', $archive);
+        $this->assertInstanceOf(ArchivableTest10Archive::class, $archive);
         $this->assertEquals('foo', $archive->getTitle());
         $this->assertEquals(12, $archive->getAge());
     }
@@ -168,7 +168,7 @@ EOF;
         $a->setTitle('foo');
         $a->save();
         $ret = $a->archive();
-        $this->assertInstanceOf('ArchivableTest10Archive', $ret);
+        $this->assertInstanceOf(ArchivableTest10Archive::class, $ret);
         $this->assertEquals($a->getPrimaryKey(), $ret->getPrimaryKey());
         $this->assertEquals($a->getTitle(), $ret->getTitle());
     }
@@ -184,7 +184,7 @@ EOF;
 
     public function testHasRestoreFromArchiveMethod()
     {
-        $this->assertTrue(method_exists('ArchivableTest10', 'restoreFromArchive'));
+        $this->assertTrue(method_exists(ArchivableTest10::class, 'restoreFromArchive'));
     }
 
     /**
@@ -268,7 +268,7 @@ EOF;
         $archive = MyOldArchivableTest30Query::create()
             ->filterById($a->getId())
             ->findOne();
-        $this->assertInstanceOf('MyOldArchivableTest30', $archive);
+        $this->assertInstanceOf(MyOldArchivableTest30::class, $archive);
         $this->assertEquals('foo', $archive->getTitle());
         $this->assertEquals(12, $archive->getAge());
     }
@@ -298,7 +298,7 @@ EOF;
         $archive = MyOldArchivableTest30Query::create()
             ->filterById($a->getId())
             ->findOne();
-        $this->assertInstanceOf('MyOldArchivableTest30', $archive);
+        $this->assertInstanceOf(MyOldArchivableTest30::class, $archive);
         $this->assertEquals('bar', $archive->getTitle());
         $this->assertEquals(12, $archive->getAge());
     }
@@ -315,7 +315,7 @@ EOF;
         $archive = ArchivableTest10ArchiveQuery::create()
             ->filterById($a->getId())
             ->findOne();
-        $this->assertInstanceOf('ArchivableTest10Archive', $archive);
+        $this->assertInstanceOf(ArchivableTest10Archive::class, $archive);
         $this->assertEquals('foo', $archive->getTitle());
         $this->assertEquals(12, $archive->getAge());
     }

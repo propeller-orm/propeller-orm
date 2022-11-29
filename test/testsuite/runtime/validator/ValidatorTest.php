@@ -89,11 +89,11 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $this->assertEquals(3, count($failures), "");
 
         /* Make sure correct columns failed */
-        $expectedCols = array(
-        AuthorPeer::LAST_NAME,
-        BookPeer::TITLE,
-        ReviewPeer::REVIEWED_BY
-        );
+        $expectedCols = [
+            AuthorPeer::LAST_NAME,
+            BookPeer::TITLE,
+            ReviewPeer::REVIEWED_BY,
+        ];
         $returnedCols = array_keys($failures);
 
         /* implode for readability */
@@ -117,7 +117,10 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $book->setAuthor($author);
         $book->addReview($review);
 
-        $cols = array(AuthorPeer::LAST_NAME, ReviewPeer::REVIEWED_BY);
+        $cols = [
+            AuthorPeer::LAST_NAME,
+            ReviewPeer::REVIEWED_BY,
+        ];
 
         $res = $book->validate($cols);
 
@@ -129,10 +132,10 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $this->assertEquals(2, count($failures), "");
 
         /* Make sure correct columns failed */
-        $expectedCols = array(
-        AuthorPeer::LAST_NAME,
-        ReviewPeer::REVIEWED_BY
-        );
+        $expectedCols = [
+            AuthorPeer::LAST_NAME,
+            ReviewPeer::REVIEWED_BY,
+        ];
 
         $returnedCols = array_keys($failures);
 
@@ -163,7 +166,7 @@ class ValidatorTest extends BookstoreEmptyTestBase
 
         $failures = $author->getValidationFailures();
         $this->assertEquals(1, count($failures), "Expected 1 column to fail validation.");
-        $this->assertEquals(array(AuthorPeer::EMAIL), array_keys($failures), "Expected EMAIL to fail validation.");
+        $this->assertEquals([AuthorPeer::EMAIL], array_keys($failures), "Expected EMAIL to fail validation.");
 
     }
 
@@ -181,7 +184,7 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $failures = $author->getValidationFailures();
 
         $this->assertEquals(1, count($failures), "Expected 1 column to fail validation.");
-        $this->assertEquals(array(AuthorPeer::EMAIL), array_keys($failures), "Expected EMAIL to fail validation.");
+        $this->assertEquals([AuthorPeer::EMAIL], array_keys($failures), "Expected EMAIL to fail validation.");
 
         $validator = $failures[AuthorPeer::EMAIL]->getValidator();
         $this->assertTrue($validator instanceof MatchValidator, "Expected validator that failed to be MatchValidator");
@@ -201,10 +204,10 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $failures = $book->getValidationFailures();
 
         $this->assertEquals(1, count($failures), "Expected 1 column to fail validation.");
-        $this->assertEquals(array(BookPeer::ISBN), array_keys($failures), "Expected EMAIL to fail validation.");
+        $this->assertEquals([BookPeer::ISBN], array_keys($failures), "Expected EMAIL to fail validation.");
 
         $validator = $failures[BookPeer::ISBN]->getValidator();
-        $this->assertInstanceOf('ISBNValidator', $validator, "Expected validator that failed to be ISBNValidator");
+        $this->assertInstanceOf(ISBNValidator::class, $validator, "Expected validator that failed to be ISBNValidator");
     }
 
     protected function assertSingleValidation($ret, $expectedMsg)

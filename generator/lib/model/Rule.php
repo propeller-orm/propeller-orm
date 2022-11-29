@@ -97,15 +97,38 @@ class Rule extends XMLElement
      * If no class was specified, this method will build a default classname
      * based on the 'name' attribute.  E.g. 'maxLength' -> 'propel.validator.MaxLengthValidator'
      *
-     * @return string dot-path classname (e.g. myapp.propel.MyValidator)
+     * @return class-string
      */
     public function getClass()
     {
-        if ($this->classname === null && $this->name !== null) {
-            return "propel.validator." . ucfirst($this->name) . "Validator";
+        if ($this->classname) {
+            return $this->classname;
         }
 
-        return $this->classname;
+        switch (strtolower($this->name)) {
+            case 'match':
+                return MatchValidator::class;
+            case 'maxlength':
+                return MaxLengthValidator::class;
+            case 'maxvalue':
+                return MaxValueValidator::class;
+            case 'minlength':
+                return MinLengthValidator::class;
+            case 'minvalue':
+                return MinValueValidator::class;
+            case 'notmatch':
+                return NotMatchValidator::class;
+            case 'required':
+                return RequiredValidator::class;
+            case 'type':
+                return TypeValidator::class;
+            case 'unique':
+                return UniqueValidator::class;
+            case 'validvalues':
+                return ValidValuesValidator::class;
+            default:
+                return null;
+        }
     }
 
     /**

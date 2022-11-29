@@ -187,7 +187,7 @@ class ValidatorTest extends BookstoreEmptyTestBase
         $this->assertEquals([AuthorPeer::EMAIL], array_keys($failures), "Expected EMAIL to fail validation.");
 
         $validator = $failures[AuthorPeer::EMAIL]->getValidator();
-        $this->assertTrue($validator instanceof MatchValidator, "Expected validator that failed to be MatchValidator");
+        $this->assertInstanceOf(MatchValidator::class, $validator, "Expected validator that failed to be MatchValidator");
 
     }
 

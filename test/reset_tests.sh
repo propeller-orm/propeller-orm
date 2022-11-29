@@ -10,8 +10,8 @@ function rebuild
 
     echo "[ $dir ]"
 
-    if [ -d "$dir/build" ] ; then
-        rm -rf "$dir/build"
+    if [ -d "$FIXTURES_DIR/$dir/build" ] ; then
+        rm -rf "$FIXTURES_DIR/$dir/build"
     fi
 
     $ROOT/generator/bin/propel-gen $FIXTURES_DIR/$dir main > /dev/null

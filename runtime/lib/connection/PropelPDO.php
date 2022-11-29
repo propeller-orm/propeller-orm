@@ -9,7 +9,6 @@
  */
 
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 
 /**
  * PDO connection subclass that provides the basic fixes to PDO that are required by Propel.
@@ -106,7 +105,7 @@ class PropelPDO extends PDO
      *
      * @var       string
      */
-    private $logLevel = LogLevel::DEBUG;
+    private $logLevel = Propel::LOG_DEBUG;
 
     /**
      * The runtime configuration

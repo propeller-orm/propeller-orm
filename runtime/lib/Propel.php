@@ -8,6 +8,9 @@
  * @license    MIT License
  */
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+
 /**
  * Propel's main resource pool and initialization & configuration class.
  *
@@ -39,57 +42,57 @@ class Propel
     /**
      * A constant defining 'System is unusuable' logging level
      */
-    const LOG_EMERG = 0;
+    const LOG_EMERG = LogLevel::EMERGENCY;
 
     /**
      * A constant defining 'Immediate action required' logging level
      */
-    const LOG_ALERT = 1;
+    const LOG_ALERT = LogLevel::ALERT;
 
     /**
      * A constant defining 'Critical conditions' logging level
      */
-    const LOG_CRIT = 2;
+    const LOG_CRIT = LogLevel::CRITICAL;
 
     /**
      * A constant defining 'Error conditions' logging level
      */
-    const LOG_ERR = 3;
+    const LOG_ERR = LogLevel::ERROR;
 
     /**
      * A constant defining 'Warning conditions' logging level
      */
-    const LOG_WARNING = 4;
+    const LOG_WARNING = LogLevel::WARNING;
 
     /**
      * A constant defining 'Normal but significant' logging level
      */
-    const LOG_NOTICE = 5;
+    const LOG_NOTICE = LogLevel::NOTICE;
 
     /**
      * A constant defining 'Informational' logging level
      */
-    const LOG_INFO = 6;
+    const LOG_INFO = LogLevel::INFO;
 
     /**
      * A constant defining 'Debug-level messages' logging level
      */
-    const LOG_DEBUG = 7;
+    const LOG_DEBUG = LogLevel::DEBUG;
 
     /**
      * The class name for a PDO object.
      */
-    const CLASS_PDO = 'PDO';
+    const CLASS_PDO = PDO::class;
 
     /**
      * The class name for a PropelPDO object.
      */
-    const CLASS_PROPEL_PDO = 'PropelPDO';
+    const CLASS_PROPEL_PDO = PropelPDO::class;
 
     /**
      * The class name for a DebugPDO object.
      */
-    const CLASS_DEBUG_PDO = 'DebugPDO';
+    const CLASS_DEBUG_PDO = DebugPDO::class;
 
     /**
      * Constant used to request a READ connection (applies to replication).
@@ -132,7 +135,7 @@ class Propel
     private static $isInit = false;
 
     /**
-     * @var        Log optional logger
+     * @var        LoggerInterface optional logger
      */
     private static $logger = null;
 
@@ -162,8 +165,6 @@ class Propel
         if (self::$configuration === null) {
             throw new PropelException("Propel cannot be initialized without a valid configuration. Please check the log files for further details.");
         }
-
-        self::configureLogging();
 
         // check whether the generated model has the same version as the runtime, see gh-#577
         // we need to check for existance first, because tasks which rely on the runtime.xml conf will not provide a generator_version
@@ -197,25 +198,6 @@ class Propel
             throw new PropelException("Unable to open configuration file: " . var_export($configFile, true));
         }
         self::setConfiguration($configuration);
-    }
-
-    /**
-     * Configure the logging system, if config is specified in the runtime configuration.
-     */
-    protected static function configureLogging()
-    {
-        if (self::$logger === null) {
-            if (isset(self::$configuration['log']) && is_array(self::$configuration['log']) && count(self::$configuration['log'])) {
-                include_once 'Log.php'; // PEAR Log class
-                $c = self::$configuration['log'];
-                $type = $c['type'] ?? 'file';
-                $name = $c['name'] ?? './propel.log';
-                $ident = $c['ident'] ?? 'propel';
-                $conf = $c['conf'] ?? [];
-                $level = $c['level'] ?? PEAR_LOG_DEBUG;
-                self::$logger = Log::singleton($type, $name, $ident, $conf, $level);
-            } // if isset()
-        }
     }
 
     /**
@@ -280,24 +262,19 @@ class Propel
      * This is primarily for things like unit tests / debugging where
      * you want to change the logger without altering the configuration file.
      *
-     * You can use any logger class that implements the propel.logger.BasicLogger
-     * interface.  This interface is based on PEAR::Log, so you can also simply pass
-     * a PEAR::Log object to this method.
-     *
-     * @param      object The new logger to use. ([PEAR] Log or BasicLogger)
+     * @param LoggerInterface|null  $logger
      */
-    public static function setLogger($logger)
+    public static function setLogger(?LoggerInterface $logger): void
     {
         self::$logger = $logger;
     }
 
     /**
-     * Returns true if a logger, for example PEAR::Log, has been configured,
-     * otherwise false.
+     * Returns true if a logger has been configured, otherwise false.
      *
      * @return bool True if Propel uses logging
      */
-    public static function hasLogger()
+    public static function hasLogger(): bool
     {
         return (self::$logger !== null);
     }
@@ -305,9 +282,9 @@ class Propel
     /**
      * Get the configured logger.
      *
-     * @return object Configured log class ([PEAR] Log or BasicLogger).
+     * @return LoggerInterface|null Configured logger
      */
-    public static function logger()
+    public static function logger(): ?LoggerInterface
     {
         return self::$logger;
     }
@@ -317,36 +294,15 @@ class Propel
      * If a logger has been configured, the logger will be used, otherwrise the
      * logging message will be discarded without any further action
      *
-     * @param      string The message that will be logged.
-     * @param      string The logging level.
-     *
-     * @return bool True if the message was logged successfully or no logger was used.
+     * @param string  $message The message that will be logged.
+     * @param string  $level   The logging level.
      */
-    public static function log($message, $level = self::LOG_DEBUG)
+    public static function log(string $message, string $level = LogLevel::DEBUG): void
     {
         if (self::hasLogger()) {
             $logger = self::logger();
-            switch ($level) {
-                case self::LOG_EMERG:
-                    return $logger->log($message, $level);
-                case self::LOG_ALERT:
-                    return $logger->alert($message);
-                case self::LOG_CRIT:
-                    return $logger->crit($message);
-                case self::LOG_ERR:
-                    return $logger->err($message);
-                case self::LOG_WARNING:
-                    return $logger->warning($message);
-                case self::LOG_NOTICE:
-                    return $logger->notice($message);
-                case self::LOG_INFO:
-                    return $logger->info($message);
-                default:
-                    return $logger->debug($message);
-            }
+            $logger->log($level, $message);
         }
-
-        return true;
     }
 
     /**

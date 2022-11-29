@@ -8,6 +8,9 @@
  * @license    MIT License
  */
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+
 /**
  * PDO connection subclass that provides the basic fixes to PDO that are required by Propel.
  *
@@ -92,18 +95,18 @@ class PropelPDO extends PDO
     public $useDebug = false;
 
     /**
-     * Configured BasicLogger (or compatible) logger.
+     * Configured logger.
      *
-     * @var       BasicLogger
+     * @var       LoggerInterface|null
      */
-    protected $logger;
+    protected $logger = null;
 
     /**
      * The log level to use for logging.
      *
-     * @var       integer
+     * @var       string
      */
-    private $logLevel = Propel::LOG_DEBUG;
+    private $logLevel = LogLevel::DEBUG;
 
     /**
      * The runtime configuration
@@ -138,7 +141,7 @@ class PropelPDO extends PDO
      * Add PropelPDO::__construct to $defaultLogMethods to see this message
      *
      * @param string $dsn            Connection DSN.
-     * @param string $username       The user name for the DSN string.
+     * @param string $username       The username for the DSN string.
      * @param string $password       The password for the DSN string.
      * @param array  $driver_options A key=>value array of driver-specific connection options.
      *
@@ -570,9 +573,9 @@ class PropelPDO extends PDO
     /**
      * Sets the logging level to use for logging method calls and SQL statements.
      *
-     * @param integer $level Value of one of the Propel::LOG_* class constants.
+     * @param string $level Value of one of the `LogLevel` class constants.
      */
-    public function setLogLevel($level)
+    public function setLogLevel(string $level)
     {
         $this->logLevel = $level;
     }
@@ -582,9 +585,9 @@ class PropelPDO extends PDO
      *
      * The logger will be used by this class to log various method calls and their properties.
      *
-     * @param BasicLogger $logger A Logger with an API compatible with BasicLogger (or PEAR Log).
+     * @param LoggerInterface|null $logger
      */
-    public function setLogger($logger)
+    public function setLogger(?LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -592,9 +595,9 @@ class PropelPDO extends PDO
     /**
      * Gets the logger in use.
      *
-     * @return BasicLogger A Logger with an API compatible with BasicLogger (or PEAR Log).
+     * @return LoggerInterface|null
      */
-    public function getLogger()
+    public function getLogger(): ?LoggerInterface
     {
         return $this->logger;
     }
@@ -605,12 +608,12 @@ class PropelPDO extends PDO
      * @uses      self::getLogPrefix()
      * @see       self::setLogger()
      *
-     * @param string  $msg           Message to log.
-     * @param integer $level         Log level to use; will use self::setLogLevel() specified level by default.
-     * @param string  $methodName    Name of the method whose execution is being logged.
-     * @param array   $debugSnapshot Previous return value from self::getDebugSnapshot().
+     * @param string       $msg           Message to log.
+     * @param string|null  $level         Log level to use; will use self::setLogLevel() specified level by default.
+     * @param string|null  $methodName    Name of the method whose execution is being logged.
+     * @param array|null   $debugSnapshot Previous return value from self::getDebugSnapshot().
      */
-    public function log($msg, $level = null, $methodName = null, array $debugSnapshot = null)
+    public function log(string $msg, string $level = null, string $methodName = null, array $debugSnapshot = null): void
     {
         // If logging has been specifically disabled, this method won't do anything
         if (!$this->getLoggingConfig('enabled', true)) {
@@ -645,11 +648,10 @@ class PropelPDO extends PDO
             return;
         }
 
+        $logger = $this->logger ?: Propel::logger();
         // Delegate the actual logging forward
-        if ($this->logger) {
-            $this->logger->log($msg, $level);
-        } else {
-            Propel::log($msg, $level);
+        if ($logger) {
+            $logger->log($msg, $level);
         }
     }
 

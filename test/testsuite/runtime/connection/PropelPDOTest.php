@@ -8,6 +8,8 @@
  * @license    MIT License
  */
 
+use Psr\Log\AbstractLogger;
+
 /**
  * Test for PropelPDO subclass.
  *
@@ -654,12 +656,12 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
     }
 }
 
-class myLogger
+class myLogger extends AbstractLogger
 {
     public $latestMessage = '';
 
-    public function __call($method, $arguments)
+    public function log($level, $message, array $context = [])
     {
-        $this->latestMessage = $method . ': ' . array_shift($arguments);
+        $this->latestMessage = $level . ': ' . $message;
     }
 }

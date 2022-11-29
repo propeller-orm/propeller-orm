@@ -173,7 +173,7 @@
                 <warn>This driver is no longer supported by Propel because Propel now uses PDO for database
                     connections.
                 </warn>
-                <warn>Please use mysqli driver instead.</warn>
+                <warn>Please use mysql driver instead.</warn>
                 <fail>Use 'mysql' instead of 'mysqli' for your propel.database property.</fail>
             </then>
         </if>

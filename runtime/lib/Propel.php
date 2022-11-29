@@ -645,7 +645,7 @@ class Propel
      *
      * @throws PropelException If unable to find DBdapter for specified db.
      */
-    public static function getDB($name = null)
+    public static function getDB($name = null): DBAdapter
     {
         if ($name === null) {
             $name = self::getDefaultDB();

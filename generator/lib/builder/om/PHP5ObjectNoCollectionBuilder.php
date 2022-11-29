@@ -22,7 +22,7 @@
  * This class is not used by default. You must override
  * the propel.builder.object.class setting in build.properties to use it:
  * <code>
- * propel.builder.object.class = builder.om.PHP5ObjectNoCollectionBuilder
+ * propel.builder.object.class = PHP5ObjectNoCollectionBuilder
  * </code>
  *
  * @deprecated Since Propel 1.5

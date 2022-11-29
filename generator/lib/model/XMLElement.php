@@ -167,7 +167,7 @@ abstract class XMLElement
      *
      * @param string $bname behavior name, e.g. 'timestampable'
      *
-     * @return string behavior class name, e.g. 'TimestampableBehavior'
+     * @return class-string behavior class name, e.g. 'TimestampableBehavior'
      *
      * @throws InvalidArgumentException
      */
@@ -180,11 +180,12 @@ abstract class XMLElement
         }
         // fallback: maybe the behavior is loaded or autoloaded
         $gen = new PhpNameGenerator();
-        if (class_exists($class = $gen->generateName(array($bname, PhpNameGenerator::CONV_METHOD_PHPNAME)) . 'Behavior')) {
-            return $class;
-        }
+        $class = $gen->generateName([$bname, PhpNameGenerator::CONV_METHOD_PHPNAME]) . 'Behavior';
 
-        throw new InvalidArgumentException(sprintf('Unknown behavior "%s"; make sure you configured the propel.behavior.%s.class setting in your build.properties', $bname, $bname));
+        if (!class_exists($class)) {
+            throw new InvalidArgumentException("Unknown behavior \"{$bname}\"; make sure you configured the propel.behavior.{$bname}.class setting in your build.properties");
+        }
+        return $class;
     }
 
     /**

@@ -10,5 +10,5 @@
 
 class AddClassBehavior extends Behavior
 {
-    protected $additionalBuilders = array('AddClassBehaviorBuilder');
+    protected $additionalBuilders = [AddClassBehaviorBuilder::class];
 }

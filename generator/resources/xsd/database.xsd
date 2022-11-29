@@ -755,8 +755,7 @@
         <xs:attribute name="baseClass" type="php_class" use="optional">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
-                    Allows you to specify a class that the generated Propel objects should extend (in place of
-                    propel.om.BaseObject)
+                    Allows you to specify a class that the generated Propel objects should extend (in place of BaseObject)
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
@@ -930,8 +929,7 @@
         <xs:attribute name="baseClass" type="php_class" use="optional">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
-                    Allows to specify a default base class that all generated Propel objects should extend (in place of
-                    propel.om.BaseObject)
+                    Allows to specify a default base class that all generated Propel objects should extend (in place of BaseObject)
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>

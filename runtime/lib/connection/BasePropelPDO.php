@@ -29,7 +29,7 @@ use Psr\Log\LoggerInterface;
  * @since      2006-09-22
  * @package    propel.runtime.connection
  */
-class PropelPDO extends PDO
+class BasePropelPDO extends PDO
 {
 
     /**
@@ -445,7 +445,7 @@ class PropelPDO extends PDO
      *
      * @return PDOStatement|false
      */
-    public function query(...$args)
+    protected function executeQuery(...$args)
     {
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();

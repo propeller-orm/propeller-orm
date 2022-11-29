@@ -221,10 +221,13 @@ abstract class OMBuilder extends DataModelBuilder
         $this->declareClassNamespace($builder->getClassname(), $builder->getNamespace());
     }
 
-    public function declareClasses()
+    /**
+     * @param class-string[]  $classes
+     * @return void
+     */
+    public function declareClasses(array $classes)
     {
-        $args = func_get_args();
-        foreach ($args as $class) {
+        foreach ($classes as $class) {
             $this->declareClass($class);
         }
     }

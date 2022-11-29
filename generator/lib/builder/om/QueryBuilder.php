@@ -183,7 +183,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
     protected function addClassBody(&$script)
     {
         // namespaces
-        $this->declareClasses('ModelCriteria', 'Criteria', 'ModelJoin', 'Exception');
+        $this->declareClasses([ModelCriteria::class, Criteria::class, ModelJoin::class, Exception::class]);
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
 
@@ -500,7 +500,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         $peerClassname = $this->getPeerClassname();
         $ARClassname = $this->getObjectClassname();
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
-        $this->declareClasses('PDO', 'PropelException', 'PropelObjectCollection');
+        $this->declareClasses([PDO::class, PropelException::class, PropelObjectCollection::class]);
         $selectColumns = array();
         foreach ($table->getColumns() as $column) {
             if (!$column->isLazyLoad()) {
@@ -584,7 +584,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         $table = $this->getTable();
         $pks = $table->getPrimaryKey();
         $class = $this->getStubObjectBuilder()->getClassname();
-        $this->declareClasses('PropelPDO');
+        $this->declareClasses([PropelPDO::class]);
         $script .= "
     /**
      * Find object by primary key.
@@ -614,7 +614,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addFindPks(&$script)
     {
-        $this->declareClasses('PropelPDO', 'Propel');
+        $this->declareClasses([PropelPDO::class, Propel::class]);
         $table = $this->getTable();
         $pks = $table->getPrimaryKey();
         $count = count($pks);
@@ -1001,7 +1001,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addFilterByFk(&$script, $fk)
     {
-        $this->declareClasses('PropelObjectCollection', 'PropelCollection', 'PropelException');
+        $this->declareClasses([PropelObjectCollection::class, PropelCollection::class, PropelException::class]);
         $table = $this->getTable();
         $queryClass = $this->getStubQueryBuilder()->getClassname();
         $fkTable = $this->getForeignTable($fk);
@@ -1073,7 +1073,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addFilterByRefFk(&$script, $fk)
     {
-        $this->declareClasses('PropelObjectCollection', 'PropelCollection', 'PropelException');
+        $this->declareClasses([PropelObjectCollection::class, PropelCollection::class, PropelException::class]);
         $table = $this->getTable();
         $queryClass = $this->getStubQueryBuilder()->getClassname();
         $fkTable = $this->getTable()->getDatabase()->getTable($fk->getTableName());

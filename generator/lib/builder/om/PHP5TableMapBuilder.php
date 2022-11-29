@@ -101,7 +101,7 @@ class " . $this->getClassname() . " extends TableMap
      */
     protected function addClassBody(&$script)
     {
-        $this->declareClasses('TableMap', 'RelationMap');
+        $this->declareClasses([TableMap::class, RelationMap::class]);
         $this->addConstants($script);
         $this->addAttributes($script);
         $this->addInitialize($script);

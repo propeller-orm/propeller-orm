@@ -44,9 +44,9 @@ class QueryCacheBehavior extends Behavior
         return $script;
     }
 
-    public function queryMethods($builder)
+    public function queryMethods(OMBuilder $builder)
     {
-        $builder->declareClasses('BasePeer');
+        $builder->declareClasses([BasePeer::class]);
         $this->peerClassname = $builder->getStubPeerBuilder()->getClassname();
         $script = '';
         $this->addSetQueryKey($script);

@@ -13,9 +13,6 @@
  *
  *  Example Usage:
  *
- *  require_once 'propel/util/PropelPager.php';
- *  require_once 'PEACH/Propel/Poem/poemPeer.php';
- *
  *  $c = new Criteria();
  *  $c->addDescendingOrderByColumn(poemPeer::SID);
  *

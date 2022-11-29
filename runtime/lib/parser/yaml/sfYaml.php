@@ -18,8 +18,7 @@
  */
 class sfYaml
 {
-  static protected
-    $spec = '1.2';
+  static protected $spec = '1.2';
 
   /**
    * Sets the YAML specification version to use.
@@ -84,8 +83,6 @@ class sfYaml
       return $input;
     }
 
-    require_once dirname(__FILE__).'/sfYamlParser.php';
-
     $yaml = new sfYamlParser();
 
     try {
@@ -110,20 +107,9 @@ class sfYaml
    */
   public static function dump($array, $inline = 2)
   {
-    require_once dirname(__FILE__).'/sfYamlDumper.php';
-
     $yaml = new sfYamlDumper();
 
     return $yaml->dump($array, $inline);
   }
 }
 
-/**
- * Wraps echo to automatically provide a newline.
- *
- * @param string $string The string to echo with new line
- */
-function echoln($string)
-{
-  echo $string."\n";
-}

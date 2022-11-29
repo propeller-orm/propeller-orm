@@ -8,10 +8,6 @@
  * @license    MIT License
  */
 
-if (!class_exists('sfYaml')) {
-    require_once dirname(__FILE__) . '/yaml/sfYaml.php';
-}
-
 /**
  * YAML parser. Converts data between associative array and YAML formats
  *

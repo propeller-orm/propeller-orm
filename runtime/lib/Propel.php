@@ -760,7 +760,3 @@ class Propel
         return self::$instancePoolingEnabled;
     }
 }
-
-if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-    require_once dirname(__FILE__) . '/../stubs/functions.php';
-}

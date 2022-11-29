@@ -20,6 +20,7 @@
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
     "php": "~7.1",
+    "ext-pdo": "*",
     "phing/phing": "~2.16.3"
   },
   "require-dev": {

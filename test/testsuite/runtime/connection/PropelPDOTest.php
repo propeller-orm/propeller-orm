@@ -413,24 +413,24 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
 
         // test transaction log
         $con->beginTransaction();
-        $this->assertEquals('log: Begin transaction', $testLog->latestMessage, 'PropelPDO logs begin transation in debug mode');
+        $this->assertEquals('log: Begin transaction', $testLog->latestMessage, 'PropelPDO logs begin transaction in debug mode');
 
         $con->commit();
-        $this->assertEquals('log: Commit transaction', $testLog->latestMessage, 'PropelPDO logs commit transation in debug mode');
+        $this->assertEquals('log: Commit transaction', $testLog->latestMessage, 'PropelPDO logs commit transaction in debug mode');
 
         $con->beginTransaction();
         $con->rollBack();
-        $this->assertEquals('log: Rollback transaction', $testLog->latestMessage, 'PropelPDO logs rollback transation in debug mode');
+        $this->assertEquals('log: Rollback transaction', $testLog->latestMessage, 'PropelPDO logs rollback transaction in debug mode');
 
         $con->beginTransaction();
         $testLog->latestMessage = '';
         $con->beginTransaction();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested begin transation in debug mode');
+        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested begin transaction in debug mode');
         $con->commit();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested commit transation in debug mode');
+        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested commit transaction in debug mode');
         $con->beginTransaction();
         $con->rollBack();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested rollback transation in debug mode');
+        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested rollback transaction in debug mode');
         $con->rollback();
 
         // test query log

@@ -23,7 +23,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @return integer
      */
-    public function beginTransaction()
+    public function beginTransaction(): bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();
@@ -49,7 +49,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @throws PropelException
      */
-    public function commit()
+    public function commit(): bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();
@@ -78,7 +78,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @return integer
      */
-    public function rollBack()
+    public function rollBack(): bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();
@@ -106,7 +106,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @return integer
      */
-    public function forceRollBack()
+    public function forceRollBack(): bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();

@@ -109,11 +109,6 @@ class QueryInheritanceBuilder extends OMBuilder
      */
     protected function addIncludes(&$script)
     {
-        $requiredClassFilePath = $this->getStubQueryBuilder()->getClassFilePath();
-
-        $script .= "
-require '" . $requiredClassFilePath . "';
-";
     } // addIncludes()
 
     /**

@@ -47,9 +47,6 @@ class PHP5NestedSetBuilder extends ObjectBuilder
      */
     protected function addIncludes(&$script)
     {
-        $script .= "
-require '" . $this->getObjectBuilder()->getClassFilePath() . "';
-";
     } // addIncludes()
 
     /**

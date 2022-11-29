@@ -47,9 +47,6 @@ class PHP5NestedSetPeerBuilder extends PeerBuilder
      */
     protected function addIncludes(&$script)
     {
-        $script .= "
-require '" . $this->getPeerBuilder()->getClassFilePath() . "';
-";
     } // addIncludes()
 
     /**

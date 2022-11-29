@@ -116,12 +116,6 @@ class " . $this->getClassname() . " extends TableMap
      */
     protected function addConstants(&$script)
     {
-        $script .= "
-    /**
-     * The (dot-path) name of this class
-     */
-    const CLASS_NAME = '" . $this->getClasspath() . "';
-";
     }
 
     /**

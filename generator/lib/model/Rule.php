@@ -23,6 +23,7 @@ class Rule extends XMLElement
     private $value;
     private $message;
     private $validator;
+    /** @var class-string|null */
     private $classname;
 
     /**
@@ -81,11 +82,11 @@ class Rule extends XMLElement
     }
 
     /**
-     * Sets the dot-path name of class to use for rule.
+     * Sets the class name to use for rule.
      * If no class is specified in XML, then a classname will
      * be built based on the 'name' attrib.
      *
-     * @param string $classname dot-path classname (e.g. myapp.propel.MyValidator)
+     * @param class-string|null $classname
      */
     public function setClass($classname)
     {
@@ -93,9 +94,9 @@ class Rule extends XMLElement
     }
 
     /**
-     * Gets the dot-path name of class to use for rule.
+     * Gets the class name to use for rule.
      * If no class was specified, this method will build a default classname
-     * based on the 'name' attribute.  E.g. 'maxLength' -> 'propel.validator.MaxLengthValidator'
+     * based on the 'name' attribute.  E.g. 'maxLength' -> 'MaxLengthValidator'
      *
      * @return class-string
      */

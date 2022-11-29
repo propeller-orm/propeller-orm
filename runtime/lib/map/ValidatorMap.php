@@ -24,9 +24,15 @@
  */
 class ValidatorMap
 {
-    /** rule name of this validator */
+    /**
+     * Rule name of this validator
+     * @var string
+     */
     private $name;
-    /** the dot-path to class to use for validator */
+    /**
+     * Class name to use for validator
+     * @var class-string
+     */
     private $classname;
     /** value to check against */
     private $value;

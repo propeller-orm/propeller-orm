@@ -91,8 +91,7 @@ propel.home = .
 # -------------------------------------------------------------------
 
 # classes will be put in (and  included from) this directory
-# e.g. if package is "bookstore" then om will expect include('bookstore/Book.php'); to work.
-# use dot-path notation -- e.g. my.bookstore -> my/bookstore.
+# e.g. if package is "bookstore" then the file will be located in 'bookstore/Book.php'.
 #
 propel.targetPackage = ${propel.project}
 

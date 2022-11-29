@@ -126,7 +126,7 @@ class GeneratorConfig implements GeneratorConfigInterface
         //First try to load platform from the user provided build properties
         if ($this->getBuildProperty('platformClass')) {
             // propel.platform.class = ${propel.database}Platform by default
-            $class = $this->getBuildProperty('platformClass');
+            $class = ucfirst($this->getBuildProperty('platformClass'));
         } elseif (null !== $buildConnection['adapter']) {
             $class = ucfirst($buildConnection['adapter']) . 'Platform';
         } else {

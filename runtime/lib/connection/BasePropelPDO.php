@@ -389,17 +389,17 @@ class BasePropelPDO extends PDO
      *
      * @return PDOStatement|false
      */
-    public function prepare($sql, array $options = [])
+    protected function prepareStatement(string $sql, array $options = []): ?PDOStatement
     {
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();
         }
 
         if ($this->cachePreparedStatements) {
-            $this->preparedStatements[$sql] = $this->preparedStatements[$sql] ?? parent::prepare($sql, $options);
+            $this->preparedStatements[$sql] = $this->preparedStatements[$sql] ?? parent::prepare($sql, $options) ?: null;
             $return = $this->preparedStatements[$sql];
         } else {
-            $return = parent::prepare($sql, $options);
+            $return = parent::prepare($sql, $options) ?: null;
         }
 
         if ($this->useDebug) {

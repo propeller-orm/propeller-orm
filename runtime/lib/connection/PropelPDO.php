@@ -16,6 +16,11 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
      */
     class PropelPDO extends BasePropelPDO
     {
+        public function prepare(string $query, array $options = [])
+        {
+            return parent::prepareStatement($query, $options);
+        }
+
         public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args)
         {
             return parent::executeQuery($statement, $mode, $fetch_mode_args);
@@ -37,6 +42,11 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
      */
     class PropelPDO extends BasePropelPDO
     {
+        public function prepare($query, array $options = null)
+        {
+            return parent::prepareStatement($query, $options ?? []);
+        }
+
         public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = [])
         {
             return parent::executeQuery(...func_get_args());

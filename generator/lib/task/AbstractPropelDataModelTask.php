@@ -451,7 +451,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
                 // normalize (or transform) the XML document using XSLT
                 if ($this->getGeneratorConfig()->getBuildProperty('schemaTransform') && $this->xslFile) {
                     $this->log("Transforming " . $dmFilename . " using stylesheet " . $this->xslFile->getPath(), Project::MSG_VERBOSE);
-                    if (!class_exists('XSLTProcessor')) {
+                    if (!class_exists(XSLTProcessor::class)) {
                         $this->log("Could not perform XLST transformation. Make sure PHP has been compiled/configured to support XSLT.", Project::MSG_ERR);
                     } else {
                         // normalize the document using normalizer stylesheet

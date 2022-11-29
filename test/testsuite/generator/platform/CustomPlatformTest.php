@@ -10,12 +10,11 @@ class CustomPlatformTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $projectDir = realpath(__DIR__ . '/../../../fixtures/generator/platform/');
-        $platformClass = str_replace('/', '.', $projectDir) . '.CustomPlatform';
         $props = [
             "propel.project"             => "kfw-propel",
             "propel.database"            => "pgsql", // Or anything else
             "propel.projectDir"          => $projectDir,
-            "propel.platform.class"      => $platformClass,
+            "propel.platform.class"      => CustomPlatform::class,
             "propel.buildtime.conf.file" => "buildtime-conf.xml",
         ];
 

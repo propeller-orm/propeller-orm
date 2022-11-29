@@ -880,12 +880,12 @@ class BasePeer
      *
      * @param class-string $classname The name of class (e.g. MyValidator)
      *
-     * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
+     * @return BasicValidator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */
     public static function getValidator($classname)
     {
         try {
-            $v = isset(self::$validatorMap[$classname]) ? self::$validatorMap[$classname] : null;
+            $v = self::$validatorMap[$classname] ?? null;
             if ($v === null) {
                 $v = new $classname();
                 self::$validatorMap[$classname] = $v;

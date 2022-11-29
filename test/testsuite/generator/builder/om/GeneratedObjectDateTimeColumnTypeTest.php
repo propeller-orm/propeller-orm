@@ -44,5 +44,7 @@ EOF;
         $obj->setId(1);
         $obj->setPrimaryDate(new \DateTime());
         DateTimeColumnTypeEntityPeer::addInstanceToPool($obj);
+
+        $this->expectNotToPerformAssertions();
     }
 }

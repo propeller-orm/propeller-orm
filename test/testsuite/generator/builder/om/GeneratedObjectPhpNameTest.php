@@ -79,5 +79,7 @@ XML;
         // Should not result in "Fatal error: Class 'PhpNameTest\om\WriterQuery' not found"
         $page->removeAuthor($author);
         $page->save();
+
+        $this->expectNotToPerformAssertions();
     }
 }

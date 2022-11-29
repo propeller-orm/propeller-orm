@@ -113,6 +113,8 @@ class GeneratedNestedSetTest extends CmsTestBase
         $startId = $db->query('SELECT MIN(Id) FROM Page')->fetchColumn();
         $this->addNewChildPage($startId + 10);
         $this->assertPageTreeIntegrity();
+
+        $this->expectNotToPerformAssertions();
     }
 
 }

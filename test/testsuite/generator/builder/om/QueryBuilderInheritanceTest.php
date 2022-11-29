@@ -129,6 +129,8 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $manager->setName('test');
         $manager->save();
         $manager->delete();
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testFindPkSimpleWithAbstractSingleTableInheritanceReturnCorrectClass()

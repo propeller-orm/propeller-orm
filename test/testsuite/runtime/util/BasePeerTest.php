@@ -71,6 +71,8 @@ class BasePeerTest extends BookstoreTestBase
         } catch (Exception $e) {
             $this->fail('doCount() cannot deal with a criteria selecting duplicate column names ');
         }
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testBigIntIgnoreCaseOrderBy()

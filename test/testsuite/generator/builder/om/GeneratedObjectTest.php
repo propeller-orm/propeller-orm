@@ -496,6 +496,8 @@ class GeneratedObjectTest extends BookstoreTestBase
 
         $affected = $super->save();
 
+        $this->assertNotEquals(0, $affected);
+
     }
 
     public function testIsModifiedIsFalseForNewObjects()

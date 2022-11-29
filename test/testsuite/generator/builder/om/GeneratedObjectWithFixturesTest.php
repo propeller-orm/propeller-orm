@@ -191,6 +191,8 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
         }
 
         $this->con->beginTransaction();
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**

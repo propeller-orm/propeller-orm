@@ -462,6 +462,8 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
         } catch (Exception $x) {
             $this->fail("Expected to get no exception when removing an instance from the pool.");
         }
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**

@@ -22,7 +22,8 @@
     "php": "~7.1",
     "ext-dom": "*",
     "ext-pdo": "*",
-    "phing/phing": "~2.16.3"
+    "phing/phing": "~2.16.3",
+    "psr/log": "~1.0 || ~2.0 || ~3.0"
   },
   "suggest": {
     "ext-xsl": "Required for using using the optional schemaTransform functionality."

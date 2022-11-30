@@ -8,6 +8,8 @@
  * @license    MIT License
  */
 
+use Propeller\Tests\TestCase;
+
 /**
  * Tests the generated Object classes for lazy load columns.
  *

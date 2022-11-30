@@ -9,6 +9,8 @@
  * @license    MIT License
  */
 
+use Propeller\Tests\TestCase;
+
 /**
  * Tests for I18nBehavior class query modifier
  *

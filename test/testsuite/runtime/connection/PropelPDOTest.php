@@ -10,6 +10,7 @@
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
+use Propeller\Tests\TestCase;
 
 /**
  * Test for PropelPDO subclass.

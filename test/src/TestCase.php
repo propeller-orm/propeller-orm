@@ -1,5 +1,11 @@
 <?php
 
+namespace Propeller\Tests;
+
+use Propel;
+use PropelException;
+use PropelPDO;
+
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /** @var callable[] */
@@ -60,10 +66,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param callable  $callback
      * @return callable Revert the effect manually.
      */
-    protected function useEffect(callable $callback): callable {
+    protected function useEffect(callable $callback): callable
+    {
         $revert = $callback();
 
-        if (! is_callable($revert)) {
+        if (!is_callable($revert)) {
             throw new InvalidArgumentException('useEffect() callback should return a `revert` callable.');
         }
 

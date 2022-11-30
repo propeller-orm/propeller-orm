@@ -9,15 +9,15 @@
  */
 
 use Psr\Log\AbstractLogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Test for PropelPDO subclass.
  *
  * @package    runtime.connection
  */
-class PropelPDOTest extends \PHPUnit\Framework\TestCase
+class PropelPDOTest extends TestCase
 {
-
     public function testSetAttribute()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
@@ -43,15 +43,15 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
 
         $stmt->execute();
         $con->commit();
-        $authorArr = array(0 => 'Test', 1 => 'User');
+        $authorArr = [0 => 'Test', 1 => 'User'];
 
         $i = 0;
         try {
-            $row = $stmt->fetch( PDO::FETCH_NUM );
+            $row = $stmt->fetch(PDO::FETCH_NUM);
             $stmt->closeCursor();
             $this->assertEquals($authorArr, $row, 'PDO driver supports calling $stmt->fetch after the transaction has been closed');
         } catch (PDOException $e) {
-            $this->fail("PDO driver does not support calling \$stmt->fetch after the transaction has been closed.\nFails with error ".$e->getMessage());
+            $this->fail("PDO driver does not support calling \$stmt->fetch after the transaction has been closed.\nFails with error " . $e->getMessage());
         }
     }
 
@@ -68,10 +68,10 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $stmt = $con->prepare('SELECT author.FIRST_NAME, author.LAST_NAME FROM author');
 
         $stmt->execute();
-        $authorArr = array(0 => 'Test', 1 => 'User');
+        $authorArr = [0 => 'Test', 1 => 'User'];
 
         $i = 0;
-        $row = $stmt->fetch( PDO::FETCH_NUM );
+        $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         $con->commit();
         $this->assertEquals($authorArr, $row, 'PDO driver supports calling $stmt->fetch before the transaction has been closed');
@@ -292,7 +292,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         $c = new Criteria();
-        $c->add(BookPeer::ID, array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), Criteria::IN);
+        $c->add(BookPeer::ID, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], Criteria::IN);
         $books = BookPeer::doSelect($c, $con);
         $expected = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.id IN (1,1,1,1,1,1,1,1,1,1,1,1)";
         $this->assertEquals($expected, $con->getLastExecutedQuery(), 'PropelPDO correctly replaces arguments in queries');
@@ -309,25 +309,36 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
     public function testUseDebug()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
-        $con->useDebug(false);
-        $this->assertEquals(array('PDOStatement'), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'Statement is PDOStatement when debug is false');
-        $con->useDebug(true);
-        $this->assertEquals(array('DebugPDOStatement', array($con)), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'statement is DebugPDOStatement when debug is true');
+
+        assert($con instanceof PropelPDO);
+
+        $this->assertEquals([PDOStatement::class], $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'Statement is PDOStatement when debug is false');
+
+        $this->useDebug($con);
+
+        $this->assertEquals(
+            [DebugPDOStatement::class, [$con]],
+            $con->getAttribute(PDO::ATTR_STATEMENT_CLASS),
+            'statement is DebugPDOStatement when debug is true'
+        );
     }
 
     public function testDebugLatestQuery()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        assert($con instanceof PropelPDO);
+
         $c = new Criteria();
         $c->add(BookPeer::TITLE, 'Harry%s', Criteria::LIKE);
 
-        $con->useDebug(false);
         $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO reinitializes the latest query when debug is set to false');
 
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO does not update the last executed query when useLogging is false');
 
-        $con->useDebug(true);
+        $undebug = $this->useDebug($con);
+
         $books = BookPeer::doSelect($c, $con);
         $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
         if (!Propel::getDB(BookPeer::DATABASE_NAME)->useQuoteIdentifier()) {
@@ -352,25 +363,27 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $stmt->execute();
         $this->assertEquals("DELETE FROM book WHERE 1='2'", $con->getLastExecutedQuery(), 'PropelPDO updates the last executed query on prapared statements');
 
-        $con->useDebug(false);
-        $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO reinitializes the latest query when debug is set to false');
+        $undebug();
 
-        $con->useDebug(true);
+        $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO reinitializes the latest query when debug is set to false');
     }
 
     public function testDebugQueryCount()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        assert($con instanceof PropelPDO);
+
         $c = new Criteria();
         $c->add(BookPeer::TITLE, 'Harry%s', Criteria::LIKE);
 
-        $con->useDebug(false);
         $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO does not update the query count when useLogging is false');
 
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO does not update the query count when useLogging is false');
 
-        $con->useDebug(true);
+        $undebug = $this->useDebug($con);
+
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals(1, $con->getQueryCount(), 'PropelPDO updates the query count when useLogging is true');
 
@@ -390,47 +403,59 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $stmt->execute();
         $this->assertEquals(5, $con->getQueryCount(), 'PropelPDO updates the query count on prapared statements');
 
-        $con->useDebug(false);
-        $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO reinitializes the query count when debug is set to false');
+        $undebug();
 
-        $con->useDebug(true);
+        $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO reinitializes the query count when debug is set to false');
     }
 
     public function testDebugLog()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
-        $config = Propel::getConfiguration(PropelConfiguration::TYPE_OBJECT);
 
-        // save data to return to normal state after test
-        $logger = $con->getLogger();
+        assert($con instanceof PropelPDO);
 
-        $testLog = new myLogger();
-        $con->setLogger($testLog);
+        $this->useDebug($con);
 
-        $logEverything = array('PropelPDO::exec', 'PropelPDO::query', 'PropelPDO::beginTransaction', 'PropelPDO::commit', 'PropelPDO::rollBack', 'DebugPDOStatement::execute');
-        Propel::getConfiguration(PropelConfiguration::TYPE_OBJECT)->setParameter("debugpdo.logging.methods", $logEverything, false);
-        $con->useDebug(true);
+        $logger = new class extends AbstractLogger {
+            public $latestMessage = '';
+
+            public function log($level, $message, array $context = [])
+            {
+                $this->latestMessage = "{$level}: {$message}";
+            }
+        };
+
+        $this->useLogger($con, $logger);
+
+        $this->useConfiguration('debugpdo.logging.methods', [
+            'PropelPDO::exec',
+            'PropelPDO::query',
+            'PropelPDO::beginTransaction',
+            'PropelPDO::commit',
+            'PropelPDO::rollBack',
+            'DebugPDOStatement::execute',
+        ]);
 
         // test transaction log
         $con->beginTransaction();
-        $this->assertEquals('log: Begin transaction', $testLog->latestMessage, 'PropelPDO logs begin transaction in debug mode');
+        $this->assertEquals('log: Begin transaction', $logger->latestMessage, 'PropelPDO logs begin transaction in debug mode');
 
         $con->commit();
-        $this->assertEquals('log: Commit transaction', $testLog->latestMessage, 'PropelPDO logs commit transaction in debug mode');
+        $this->assertEquals('log: Commit transaction', $logger->latestMessage, 'PropelPDO logs commit transaction in debug mode');
 
         $con->beginTransaction();
         $con->rollBack();
-        $this->assertEquals('log: Rollback transaction', $testLog->latestMessage, 'PropelPDO logs rollback transaction in debug mode');
+        $this->assertEquals('log: Rollback transaction', $logger->latestMessage, 'PropelPDO logs rollback transaction in debug mode');
 
         $con->beginTransaction();
-        $testLog->latestMessage = '';
+        $logger->latestMessage = '';
         $con->beginTransaction();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested begin transaction in debug mode');
+        $this->assertEquals('', $logger->latestMessage, 'PropelPDO does not log nested begin transaction in debug mode');
         $con->commit();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested commit transaction in debug mode');
+        $this->assertEquals('', $logger->latestMessage, 'PropelPDO does not log nested commit transaction in debug mode');
         $con->beginTransaction();
         $con->rollBack();
-        $this->assertEquals('', $testLog->latestMessage, 'PropelPDO does not log nested rollback transaction in debug mode');
+        $this->assertEquals('', $logger->latestMessage, 'PropelPDO does not log nested rollback transaction in debug mode');
         $con->rollback();
 
         // test query log
@@ -441,21 +466,17 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
 
         $books = BookPeer::doSelect($c, $con);
         $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
-        $this->assertEquals('log: ' . $latestExecutedQuery, $testLog->latestMessage, 'PropelPDO logs queries and populates bound parameters in debug mode');
+        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs queries and populates bound parameters in debug mode');
 
         BookPeer::doDeleteAll($con);
         $latestExecutedQuery = "DELETE FROM `book`";
-        $this->assertEquals('log: ' . $latestExecutedQuery, $testLog->latestMessage, 'PropelPDO logs deletion queries in debug mode');
+        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs deletion queries in debug mode');
 
         $latestExecutedQuery = 'DELETE FROM book WHERE 1=1';
         $con->exec($latestExecutedQuery);
-        $this->assertEquals('log: ' . $latestExecutedQuery, $testLog->latestMessage, 'PropelPDO logs exec queries in debug mode');
+        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs exec queries in debug mode');
 
         $con->commit();
-
-        // return to normal state after test
-        $con->setLogger($logger);
-        $config->setParameter("debugpdo.logging.methods", array('PropelPDO::exec', 'PropelPDO::query', 'DebugPDOStatement::execute'));
     }
 
     /**
@@ -463,11 +484,11 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
      */
     public function testDebugExecutedQueryStringValue()
     {
-
-        /**
-         * @var DebugPDO $con
-         */
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        assert($con instanceof PropelPDO);
+
+        $this->useDebug($con);
 
         // different method must all result in this given querystring, using a string value
         $bindParamStringValue = "%Harry%";
@@ -489,7 +510,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':p1' => '%Harry%'));
+        $prepStmt->execute([':p1' => '%Harry%']);
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // statement with named placeholder, this one won't get substituted
@@ -504,7 +525,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':name' => '%Harry%'));
+        $prepStmt->execute([':name' => '%Harry%']);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
 
@@ -520,7 +541,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array('%Harry%'));
+        $prepStmt->execute(['%Harry%']);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
     }
 
@@ -529,10 +550,11 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
      */
     public function testDebugExecutedQueryIntegerValue()
     {
-        /**
-         * @var DebugPDO $con
-         */
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        assert($con instanceof PropelPDO);
+
+        $this->useDebug($con);
 
         // different method must all result in this given querystring, using an integer value
         $bindParamIntegerValue = 123;
@@ -554,7 +576,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':p1' => 123));
+        $prepStmt->execute([':p1' => 123]);
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // statement with named placeholder, this one won't get substituted
@@ -569,7 +591,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':name' => 123));
+        $prepStmt->execute([':name' => 123]);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
 
@@ -585,7 +607,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(123));
+        $prepStmt->execute([123]);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
     }
 
@@ -595,10 +617,11 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
      */
     public function testDebugExecutedQueryNumericValue()
     {
-        /**
-         * @var DebugPDO $con
-         */
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        assert($con instanceof PropelPDO);
+
+        $this->useDebug($con);
 
         // different method must all result in this given querystring, using an integer value
         $bindParamNumericValue = 0002000;
@@ -620,7 +643,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':p1' => 0002000));
+        $prepStmt->execute([':p1' => 0002000]);
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // statement with named placeholder, this one won't get substituted
@@ -635,7 +658,7 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(':name' => 0002000));
+        $prepStmt->execute([':name' => 0002000]);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
 
@@ -651,17 +674,38 @@ class PropelPDOTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
         // passing params directly
-        $prepStmt->execute(array(0002000));
+        $prepStmt->execute([0002000]);
         $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
     }
-}
 
-class myLogger extends AbstractLogger
-{
-    public $latestMessage = '';
-
-    public function log($level, $message, array $context = [])
+    private function useLogger(PropelPDO $con, LoggerInterface $logger): callable
     {
-        $this->latestMessage = $level . ': ' . $message;
+        return $this->useEffect(function () use ($con, $logger) {
+            // save data to return to normal state after test
+            $prevLogger = $con->getLogger();
+
+            $con->setLogger($logger);
+
+            return function () use ($prevLogger, $con) {
+                $con->setLogger($prevLogger);
+            };
+        });
+    }
+
+    private function useConfiguration(string $entry, $value): callable
+    {
+        return $this->useEffect(function () use ($entry, $value) {
+            $config = Propel::getConfiguration(PropelConfiguration::TYPE_OBJECT);
+
+            assert($config instanceof PropelConfiguration);
+
+            $prevValue = $config->getParameter($entry);
+
+            $config->setParameter($entry, $value, false);
+
+            return function () use ($config, $entry, $prevValue) {
+                $config->setParameter($entry, $prevValue, false);
+            };
+        });
     }
 }

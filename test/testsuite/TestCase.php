@@ -14,6 +14,34 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /**
+     * Get connection PDO object that will be automatically triggered
+     * to rollback unfinished transactions, if any, after the test.
+     *
+     * @param string  $name
+     * @return PropelPDO
+     * @throws PropelException
+     */
+    protected function getConnection(string $name): PropelPDO
+    {
+        $connection = Propel::getConnection($name);
+
+        assert($connection instanceof PropelPDO);
+
+        $this->rollbackOnTearDown($connection);
+
+        return $connection;
+    }
+
+    protected function rollbackOnTearDown(PropelPDO $con): void
+    {
+        $this->useEffect(function () use ($con) {
+            return function () use ($con) {
+                $con->rollback();
+            };
+        });
+    }
+
     protected function useDebug(PropelPDO $con): callable
     {
         return $this->useEffect(function () use ($con) {

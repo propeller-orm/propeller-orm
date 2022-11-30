@@ -42,7 +42,7 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
      */
     class PropelPDO extends BasePropelPDO
     {
-        public function prepare($query, array $options = null)
+        public function prepare($query, $options = null)
         {
             return parent::prepareStatement($query, $options ?? []);
         }

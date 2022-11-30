@@ -432,14 +432,14 @@ class PropelPDOTest extends TestCase
 
         // test transaction log
         $con->beginTransaction();
-        $this->assertEquals('log: Begin transaction', $logger->latestMessage, 'PropelPDO logs begin transaction in debug mode');
+        $this->assertEquals('debug: Begin transaction', $logger->latestMessage, 'PropelPDO logs begin transaction in debug mode');
 
         $con->commit();
-        $this->assertEquals('log: Commit transaction', $logger->latestMessage, 'PropelPDO logs commit transaction in debug mode');
+        $this->assertEquals('debug: Commit transaction', $logger->latestMessage, 'PropelPDO logs commit transaction in debug mode');
 
         $con->beginTransaction();
         $con->rollBack();
-        $this->assertEquals('log: Rollback transaction', $logger->latestMessage, 'PropelPDO logs rollback transaction in debug mode');
+        $this->assertEquals('debug: Rollback transaction', $logger->latestMessage, 'PropelPDO logs rollback transaction in debug mode');
 
         $con->beginTransaction();
         $logger->latestMessage = '';
@@ -460,15 +460,15 @@ class PropelPDOTest extends TestCase
 
         $books = BookPeer::doSelect($c, $con);
         $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
-        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs queries and populates bound parameters in debug mode');
+        $this->assertEquals('debug: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs queries and populates bound parameters in debug mode');
 
         BookPeer::doDeleteAll($con);
         $latestExecutedQuery = "DELETE FROM `book`";
-        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs deletion queries in debug mode');
+        $this->assertEquals('debug: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs deletion queries in debug mode');
 
         $latestExecutedQuery = 'DELETE FROM book WHERE 1=1';
         $con->exec($latestExecutedQuery);
-        $this->assertEquals('log: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs exec queries in debug mode');
+        $this->assertEquals('debug: ' . $latestExecutedQuery, $logger->latestMessage, 'PropelPDO logs exec queries in debug mode');
 
         $con->commit();
     }

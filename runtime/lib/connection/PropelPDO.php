@@ -657,7 +657,7 @@ class PropelPDO extends PDO
         $logger = $this->logger ?: Propel::logger();
         // Delegate the actual logging forward
         if ($logger) {
-            $logger->log($msg, $level);
+            $logger->log($level, $msg);
         }
     }
 

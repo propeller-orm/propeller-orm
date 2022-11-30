@@ -81,6 +81,9 @@ class DebugPDOStatement extends PDOStatement
                     $boundValue = trim($boundValue, "'");
                     $boundValue = $this->pdo->quote($boundValue);
                 }
+                if (is_resource($boundValue)) {
+                    $boundValue = '[resource]';
+                }
                 $sql = str_replace($pos, $boundValue, $sql);
             }
         }
@@ -101,7 +104,7 @@ class DebugPDOStatement extends PDOStatement
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
 
-        $sql = $this->getExecutedQueryString($input_parameters?$input_parameters:array());
+        $sql = $this->getExecutedQueryString($input_parameters ?: []);
         $this->pdo->log($sql, null, __METHOD__, $debug);
         $this->pdo->setLastExecutedQuery($sql);
         $this->pdo->incrementQueryCount();

@@ -614,12 +614,12 @@ class BasePropelPDO extends PDO
     public function log(string $msg, string $level = null, string $methodName = null, array $debugSnapshot = null): void
     {
         // If logging has been specifically disabled, this method won't do anything
-        if (!$this->getLoggingConfig('enabled', true)) {
+        if (!$this->isLoggingEnabled()) {
             return;
         }
 
         // If the method being logged isn't one of the ones to be logged, bail
-        if (!in_array($methodName, $this->getLoggingConfig('methods', self::$defaultLogMethods))) {
+        if (!$this->isMethodLogged($methodName)) {
             return;
         }
 
@@ -802,5 +802,18 @@ class BasePropelPDO extends PDO
         if ($this->useDebug) {
             $this->log('Closing connection', null, __METHOD__, $this->getDebugSnapshot());
         }
+    }
+
+    private function isMethodLogged(?string $methodName): bool
+    {
+        $methods = $this->getLoggingConfig('methods', self::$defaultLogMethods);
+
+        return in_array($methodName, $methods, true)
+            || in_array(preg_replace('/^BasePropelPDO::/', 'PropelPDO::', $methodName), $methods, true);
+    }
+
+    private function isLoggingEnabled(): bool
+    {
+        return (bool) $this->getLoggingConfig('enabled', true);
     }
 }

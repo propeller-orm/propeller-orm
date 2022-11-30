@@ -33,12 +33,12 @@ class BaseObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($b->hasVirtualColumn('foo'), 'hasVirtualColumn() returns true if the virtual column is set');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetVirtualColumnWrongKey()
     {
         $b = new TestableBaseObject();
+
+        $this->expectException(PropelException::class);
+
         $b->getVirtualColumn('foo');
     }
 

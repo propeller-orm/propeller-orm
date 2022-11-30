@@ -35,7 +35,6 @@ class DBMySQLTest extends DBAdapterTestAbstract
 
     /**
      * @dataProvider getConParams
-     * @expectedException PropelException
      */
     public function testPrepareParamsThrowsException($conparams)
     {
@@ -44,6 +43,9 @@ class DBMySQLTest extends DBAdapterTestAbstract
         }
 
         $db = new DBMySQL();
+
+        $this->expectException(PropelException::class);
+
         $db->prepareParams($conparams);
     }
 

@@ -173,11 +173,10 @@ EOF;
         $this->assertEquals($a->getTitle(), $ret->getTitle());
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testArchiveThrowsExceptionOnNewObjects()
     {
+        $this->expectException(PropelException::class);
+
         $a = new ArchivableTest10();
         $a->archive();
     }
@@ -187,11 +186,10 @@ EOF;
         $this->assertTrue(method_exists(ArchivableTest10::class, 'restoreFromArchive'));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testRestoreFromArchiveThrowsExceptionOnUnarchivedObjects()
     {
+        $this->expectException(PropelException::class);
+
         $a = new ArchivableTest10();
         $a->setTitle('foo');
         $a->setAge(12);

@@ -85,11 +85,10 @@ class NestedSetBehaviorObjectBuilderModifierTest extends BookstoreNestedSetTestB
         }
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testSaveRootInTreeWithExistingRoot()
     {
+        $this->expectException(PropelException::class);
+
         Table9Peer::doDeleteAll();
         $t1 = new Table9();
         $t1->makeRoot();

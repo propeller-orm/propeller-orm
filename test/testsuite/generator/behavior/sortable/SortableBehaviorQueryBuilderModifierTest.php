@@ -49,11 +49,10 @@ class SortableBehaviorQueryBuilderModifierTest extends BookstoreSortableTestBase
         $this->assertEquals($expectedQuery, $query, 'orderByRank() orders the query by rank, using the argument as sort direction');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testOrderByRankIncorrectDirection()
     {
+        $this->expectException(PropelException::class);
+
         Table11Query::create()->orderByRank('foo');
     }
 

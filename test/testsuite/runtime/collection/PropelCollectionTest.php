@@ -219,11 +219,9 @@ class PropelCollectionTest extends BookstoreTestBase
         $this->assertEquals('foo', $col->get(0), 'get() returns an element from its key');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetUnknownOffset()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelCollection();
         $bar = $col->get('foo');
     }
@@ -281,12 +279,12 @@ class PropelCollectionTest extends BookstoreTestBase
         $this->assertEquals(['bar'], $col->getData(), 'remove() removes an element from its key');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testRemoveUnknownOffset()
     {
         $col = new PropelCollection();
+
+        $this->expectException(PropelException::class);
+
         $col->remove(2);
     }
 
@@ -359,12 +357,12 @@ class PropelCollectionTest extends BookstoreTestBase
         $this->assertEquals('BookPeer', $col->getPeerClass(), 'getPeerClass() returns the Peer class for the collection model');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetPeerClassNoModel()
     {
         $col = new PropelCollection();
+
+        $this->expectException(PropelException::class);
+
         $col->getPeerClass();
     }
 
@@ -378,12 +376,12 @@ class PropelCollectionTest extends BookstoreTestBase
         $this->assertEquals($con, $col->getConnection(Propel::CONNECTION_WRITE), 'getConnection() accepts a connection type parameter');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetConnectionNoModel()
     {
         $col = new PropelCollection();
+
+        $this->expectException(PropelException::class);
+
         $col->getConnection();
     }
 

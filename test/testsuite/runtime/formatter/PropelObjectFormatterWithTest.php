@@ -279,9 +279,6 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         $this->assertEquals('J.K.', $author->getFirstName(), 'Related object is correctly hydrated');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testFindOneWithOneToManyAndLimit()
     {
         $c = new ModelCriteria('bookstore', 'Book');
@@ -289,6 +286,9 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         $c->leftJoin('Book.Review');
         $c->with('Review');
         $c->limit(5);
+
+        $this->expectException(PropelException::class);
+
         $books = $c->find();
     }
 

@@ -554,12 +554,12 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertCriteriaTranslation($c, $sql, $params, 'groupBy() accepts a column alias and adds a GROUP BY clause');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGroupByClassThrowsExceptionOnUnknownClass()
     {
         $c = new ModelCriteria('bookstore', 'Book');
+
+        $this->expectException(PropelException::class);
+
         $c->groupByClass('Author');
     }
 
@@ -1060,12 +1060,12 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertTrue($withs['Author'] instanceof ModelWith, 'with() references the ModelWith object');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testWithThrowsExceptionWhenJoinLacks()
     {
         $c = new ModelCriteria('bookstore', 'Book');
+
+        $this->expectException(PropelException::class);
+
         $c->with('Author');
     }
 
@@ -1078,13 +1078,13 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertTrue(array_key_exists('a', $withs), 'with() uses the alias for the index of the internal list of Withs');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testWithThrowsExceptionWhenNotUsingAlias()
     {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->join('Book.Author a');
+
+        $this->expectException(PropelException::class);
+
         $c->with('Author');
     }
 
@@ -1576,11 +1576,10 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals(125, $book->getPrice(), 'findOneOrCreate() returns a populated objects based on the conditions');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testFindOneOrCreateThrowsExceptionWhenQueryContainsJoin()
     {
+        $this->expectException(PropelException::class);
+
         $book = BookQuery::create('b')
             ->filterByPrice(125)
             ->useAuthorQuery()
@@ -1736,14 +1735,13 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals($bookListRelTest, $bookListRel, 'findPk() can find objects with composite primary keys');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testFindPksCompositeKey()
     {
         $c = new ModelCriteria('bookstore', 'BookListRel');
-        $bookListRel = $c->findPks(array(array(1, 2)));
 
+        $this->expectException(PropelException::class);
+
+        $bookListRel = $c->findPks([[1, 2]]);
     }
 
     public function testFindBy()

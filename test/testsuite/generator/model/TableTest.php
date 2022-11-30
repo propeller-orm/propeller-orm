@@ -155,9 +155,6 @@ CREATE TABLE `bar`
 
     }
 
-    /**
-     * @expectedException EngineException
-     */
     public function testUniqueColumnName()
     {
         $xmlToAppData = new XmlToAppData();
@@ -170,13 +167,13 @@ CREATE TABLE `bar`
     </table>
 </database>
 EOF;
+
+        $this->expectException(EngineException::class);
+
         // Parsing file with duplicate column names in one table throws exception
         $appData = $xmlToAppData->parseString($schema);
     }
 
-    /**
-     * @expectedException EngineException
-     */
     public function testUniqueTableName()
     {
         $xmlToAppData = new XmlToAppData();
@@ -192,6 +189,8 @@ EOF;
     </table>
 </database>
 EOF;
+        $this->expectException(EngineException::class);
+
         // Parsing file with duplicate table name throws exception
         $appData = $xmlToAppData->parseString($schema);
     }

@@ -65,11 +65,10 @@ EOF;
         $this->assertEquals($expected, ComplexColumnTypeEntity103Peer::getValueSet(ComplexColumnTypeEntity103Peer::BAR));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetValueSetInvalidColumn()
     {
+        $this->expectException(PropelException::class);
+
         ComplexColumnTypeEntity103Peer::getValueSet(ComplexColumnTypeEntity103Peer::ID);
     }
 

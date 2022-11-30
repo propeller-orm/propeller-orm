@@ -115,11 +115,10 @@ EOF;
         }
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testModifyTableNoCopyDataKeepsAutoIncrement()
     {
+        $this->expectException(PropelException::class);
+
         $content = new ConcreteContent();
         $content->save();
         $c = new Criteria;

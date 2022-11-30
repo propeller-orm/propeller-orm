@@ -158,12 +158,11 @@ class TableMapTest extends \PHPUnit\Framework\TestCase
     $this->assertEquals($expected, $this->tmap->getForeignKeys(), 'getForeignKeys() returns an array of the table foreign keys');
   }
 
-    /**
-     * @expectedException PropelException
-     */
   public function testLoadWrongRelations()
   {
-    $this->tmap->getRelation('Bar');
+      $this->expectException(PropelException::class);
+
+      $this->tmap->getRelation('Bar');
   }
 
   public function testLazyLoadRelations()

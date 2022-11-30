@@ -221,25 +221,25 @@ class BasePeerTest extends BookstoreTestBase
         $this->assertEquals($expectedSql, $sql);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDoDeleteNoCondition()
     {
         $con = Propel::getConnection();
         $c = new Criteria(BookPeer::DATABASE_NAME);
+
+        $this->expectException(PropelException::class);
+
         BasePeer::doDelete($c, $con);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDoDeleteJoin()
     {
         $con = Propel::getConnection();
         $c = new Criteria(BookPeer::DATABASE_NAME);
         $c->add(BookPeer::TITLE, 'War And Peace');
         $c->addJoin(BookPeer::AUTHOR_ID, AuthorPeer::ID);
+
+        $this->expectException(PropelException::class);
+
         BasePeer::doDelete($c, $con);
     }
 

@@ -38,15 +38,15 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
         }
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testSaveOnReadOnlyEntityThrowsException()
     {
         $col = new PropelArrayCollection();
         $col->setModel('ContestView');
         $cv = new ContestView();
         $col []= $cv;
+
+        $this->expectException(PropelException::class);
+
         $col->save();
     }
 
@@ -60,9 +60,6 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
         $this->assertEquals(0, count($books));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDeleteOnReadOnlyEntityThrowsException()
     {
         $col = new PropelArrayCollection();
@@ -70,6 +67,9 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
         $cv = new ContestView();
         $cv->setNew(false);
         $col []= $cv;
+
+        $this->expectException(PropelException::class);
+
         $col->delete();
     }
 
@@ -192,12 +192,12 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
         $this->assertEqual('bar', $col->getWorkerObject()->foo, 'getWorkerObject() returns always the same object');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetWorkerObjectNoModel()
     {
         $col = new TestablePropelArrayCollection();
+
+        $this->expectException(PropelException::class);
+
         $col->getWorkerObject();
     }
 

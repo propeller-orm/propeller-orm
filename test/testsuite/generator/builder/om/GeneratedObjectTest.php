@@ -1243,11 +1243,10 @@ EOF;
         $this->assertEquals('bar', $book->getFoo(), 'generated __call() catches getters for virtual columns starting with a lowercase character');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testMagicCallUndefined()
     {
+        $this->expectException(PropelException::class);
+
         $book = new Book();
         $book->fooMethodName();
     }
@@ -1683,11 +1682,10 @@ EOF;
         $this->assertEquals(1, $author->nbCallPreSave);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDoInsert()
     {
+        $this->expectException(PropelException::class);
+
         if (!class_exists('Unexistent')) {
             $schema = <<<EOF
 <database name="a-database">

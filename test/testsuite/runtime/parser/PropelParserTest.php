@@ -22,11 +22,10 @@ class PropelParserTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($parser instanceof PropelXMLParser);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testGetParserThrowsExceptionOnWrongParser()
     {
+        $this->expectException(PropelException::class);
+
         $parser = PropelParser::getParser('Foo');
     }
 

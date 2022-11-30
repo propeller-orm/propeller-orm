@@ -142,15 +142,15 @@ class CriteriaMergeTest extends BookstoreTestBase
         $this->assertEquals(array('foo' => BookPeer::TITLE, 'bar' => BookPeer::ID), $c1->getAsColumns(), 'mergeWith() merges the select columns after the existing as columns');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testMergeWithAsColumnsThrowsException()
     {
         $c1 = new Criteria();
         $c1->addAsColumn('foo', BookPeer::TITLE);
         $c2 = new Criteria();
         $c2->addAsColumn('foo', BookPeer::ID);
+
+        $this->expectException(PropelException::class);
+
         $c1->mergeWith($c2);
     }
 
@@ -381,15 +381,15 @@ class CriteriaMergeTest extends BookstoreTestBase
         $this->assertEquals(array('b' => BookPeer::TABLE_NAME, 'a' => AuthorPeer::TABLE_NAME), $c1->getAliases(), 'mergeWith() merge aliases to an existing alias');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testMergeWithAliasesThrowsException()
     {
         $c1 = new Criteria();
         $c1->addAlias('b', BookPeer::TABLE_NAME);
         $c2 = new Criteria();
         $c2->addAlias('b', AuthorPeer::TABLE_NAME);
+
+        $this->expectException(PropelException::class);
+
         $c1->mergeWith($c2);
     }
 

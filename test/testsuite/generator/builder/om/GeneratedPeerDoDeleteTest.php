@@ -410,7 +410,7 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
     public function testDoCountType()
     {
         $c = new Criteria();
-        $this->assertInternalType('integer', BookPeer::doCount($c), "Expected doCount() to return an integer.");
+        $this->assertIsInt(BookPeer::doCount($c), "Expected doCount() to return an integer.");
     }
 
     /**

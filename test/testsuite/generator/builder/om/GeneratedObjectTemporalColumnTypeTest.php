@@ -65,12 +65,12 @@ EOF;
         $this->assertEquals('1702-02-02', $r->getBar1(null)->format('Y-m-d'));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testInvalidValueThrowsPropelException()
     {
         $r = new ComplexColumnTypeEntity5();
+
+        $this->expectException(PropelException::class);
+
         $r->setBar1("Invalid Date");
     }
 

@@ -25,7 +25,7 @@
  */
 class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         BookstoreDataPopulator::populate();

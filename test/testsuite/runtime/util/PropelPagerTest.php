@@ -20,7 +20,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
   private $authorId;
   private $books;
 
-  protected function setUp()
+  protected function setUp(): void
   {
     parent::setUp();
         BookstoreDataPopulator::populate();
@@ -74,7 +74,7 @@ class PropelPagerTest extends BookstoreEmptyTestBase
     $this->books[] = $book->getId();
   }
 
-  protected function tearDown()
+  protected function tearDown(): void
   {
     parent::tearDown();
     $cr = new Criteria();

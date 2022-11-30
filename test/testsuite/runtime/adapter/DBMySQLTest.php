@@ -35,7 +35,6 @@ class DBMySQLTest extends DBAdapterTestAbstract
 
     /**
      * @dataProvider getConParams
-     * @expectedException PropelException
      */
     public function testPrepareParamsThrowsException($conparams)
     {
@@ -44,6 +43,9 @@ class DBMySQLTest extends DBAdapterTestAbstract
         }
 
         $db = new DBMySQL();
+
+        $this->expectException(PropelException::class);
+
         $db->prepareParams($conparams);
     }
 
@@ -76,10 +78,7 @@ class DBMySQLTest extends DBAdapterTestAbstract
         $db = new DBMySQL();
         $params = $db->prepareParams($conparams);
 
-        $settings = array();
-        if (isset($params['settings'])) {
-            $settings = $params['settings'];
-        }
+        $settings = $params['settings'] ?? [];
 
         $db->initConnection($this->getPdoMock(), $settings);
     }
@@ -90,7 +89,7 @@ class DBMySQLTest extends DBAdapterTestAbstract
 
         $con->expects($this->never())
             ->method('exec')
-            ->willReturn(null);
+            ->willReturn(false);
 
         return $con;
     }

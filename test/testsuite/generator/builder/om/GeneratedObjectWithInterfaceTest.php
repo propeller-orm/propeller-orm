@@ -10,7 +10,7 @@
 
 class GeneratedObjectWithInterfaceTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Foo\MyClassWithInterface')) {
             $schema = <<<EOF

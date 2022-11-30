@@ -37,12 +37,12 @@ class PropelExceptionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('this is an error [wrapped: real cause]', $e->getMessage());
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testIsThrowable()
     {
         $e = new PropelException('this is an error');
+
+        $this->expectException(PropelException::class);
+
         throw $e;
     }
 

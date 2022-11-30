@@ -54,7 +54,7 @@ CREATE TABLE [versionable_behavior_test_0]
     [version] INTEGER DEFAULT 0
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function testModifyTableAddsVersionColumnCustomName()
@@ -86,7 +86,7 @@ CREATE TABLE [versionable_behavior_test_0]
     [foo_ver] INTEGER DEFAULT 0
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function testModifyTableDoesNotAddVersionColumnIfExists()
@@ -117,7 +117,7 @@ CREATE TABLE [versionable_behavior_test_0]
     [version] BIGINT
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function foreignTableSchemaDataProvider()
@@ -166,7 +166,7 @@ CREATE TABLE [versionable_behavior_test_0]
     [version] INTEGER DEFAULT 0
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
         $expected = <<<EOF
 
 -----------------------------------------------------------------------
@@ -188,7 +188,7 @@ CREATE TABLE [versionable_behavior_test_0_version]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_0 ([id])
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     /**
@@ -212,7 +212,7 @@ CREATE TABLE [versionable_behavior_test_1]
     [version] INTEGER DEFAULT 0
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
         $expected = <<<EOF
 
 -----------------------------------------------------------------------
@@ -234,7 +234,7 @@ CREATE TABLE [versionable_behavior_test_1_version]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_1 ([id])
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     /**
@@ -262,7 +262,7 @@ CREATE TABLE [versionable_behavior_test_0_version]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_0 ([id])
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function testModifyTableAddsVersionTableCustomName()
@@ -298,7 +298,7 @@ CREATE TABLE [foo_ver]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_0 ([id])
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function testModifyTableDoesNotAddVersionTableIfExists()
@@ -392,7 +392,7 @@ CREATE TABLE [versionable_behavior_test_0]
     [version_comment] VARCHAR(255)
 );
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     /**
@@ -423,7 +423,7 @@ CREATE TABLE [versionable_behavior_test_0_version]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_0 ([id])
 EOF;
-        $this->assertContains($expected, $builder->getSQL());
+        $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
     public function testDatabaseLevelBehavior()
@@ -457,7 +457,7 @@ CREATE TABLE [versionable_behavior_test_0_version]
 -- SQLite does not support foreign keys; this is just for reference
 -- FOREIGN KEY ([id]) REFERENCES versionable_behavior_test_0 ([id])
 EOF;
-      $this->assertContains($expected, $builder->getSQL());
+      $this->assertStringContainsString($expected, $builder->getSQL());
     }
 
 }

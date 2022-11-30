@@ -18,7 +18,7 @@
  */
 class VersionableBehaviorObjectBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('VersionableBehaviorTest1')) {
             $schema = <<<XML
@@ -441,11 +441,10 @@ XML;
         $this->assertEquals(3, $o->getVersion());
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testToVersionThrowsExceptionOnIncorrectVersion()
     {
+        $this->expectException(PropelException::class);
+
         $o = new VersionableBehaviorTest1();
         $o->setBar(123); // version 1
         $o->save();

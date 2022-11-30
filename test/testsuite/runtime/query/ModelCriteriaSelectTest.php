@@ -17,22 +17,22 @@
  */
 class ModelCriteriaSelectTest extends BookstoreTestBase
 {
-    /**
-     * @expectedException PropelException
-     */
     public function testSelectThrowsExceptionWhenCalledWithAnEmptyString()
     {
         $c = new ModelCriteria('bookstore', 'Book');
+
+        $this->expectException(PropelException::class);
+
         $c->select('');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testSelectThrowsExceptionWhenCalledWithAnEmptyArray()
     {
         $c = new ModelCriteria('bookstore', 'Book');
-        $c->select(array());
+
+        $this->expectException(PropelException::class);
+
+        $c->select([]);
     }
 
     public function testSelectStringNoResult()
@@ -103,9 +103,6 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'select(string) accepts model Peer Constants');
     }
 
-    /**
-    * @expectedException PropelException
-    */
     public function testSelectStringFindCalledWithNonExistingColumn()
     {
         BookstoreDataPopulator::depopulate($this->con);
@@ -113,6 +110,9 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
 
         $c = new ModelCriteria('bookstore', 'Author');
         $c->select('author.NOT_EXISTING_COLUMN');
+
+        $this->expectException(PropelException::class);
+
         $author = $c->find($this->con);
     }
 

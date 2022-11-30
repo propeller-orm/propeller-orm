@@ -11,7 +11,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /** @var callable[] */
     private $teardown = [];
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

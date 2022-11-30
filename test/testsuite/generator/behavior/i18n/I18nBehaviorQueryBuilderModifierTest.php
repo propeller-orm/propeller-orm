@@ -20,7 +20,7 @@ use Propeller\Tests\TestCase;
  */
 class I18nBehaviorQueryBuilderModifierTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('I18nBehaviorTest11')) {
             $schema = <<<EOF

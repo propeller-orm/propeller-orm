@@ -17,7 +17,7 @@
  */
 class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         BookstoreDataPopulator::populate($this->con);
@@ -25,7 +25,7 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         $this->books = PropelQuery::from('Book')->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)->find();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Propel::enableInstancePooling();
@@ -37,11 +37,10 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         $this->assertEquals(4, count($this->books));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testClone()
     {
+        $this->expectException(PropelException::class);
+
         $clone = clone $this->books;
     }
 
@@ -54,35 +53,32 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         }
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testoffsetExists()
     {
+        $this->expectException(PropelException::class);
+
         $this->books->offsetExists(2);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testoffsetGet()
     {
+        $this->expectException(PropelException::class);
+
         $this->books->offsetGet(2);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testoffsetSet()
     {
+        $this->expectException(PropelException::class);
+
         $this->books->offsetSet(2, 'foo');
     }
 
-    /**
-     * @expectedException PropelException
-     */
+
     public function testoffsetUnset()
     {
+        $this->expectException(PropelException::class);
+
         $this->books->offsetUnset(2);
     }
 
@@ -92,11 +88,10 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         // since the code from toArray comes frmo PropelObjectCollection, we'll assume it's good
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testFromArray()
     {
+        $this->expectException(PropelException::class);
+
         $this->books->fromArray(array());
     }
 

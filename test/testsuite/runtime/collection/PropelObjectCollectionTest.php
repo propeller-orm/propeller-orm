@@ -33,21 +33,18 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         $this->assertFalse($col->contains($book2));
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testSaveOnReadOnlyEntityThrowsException()
     {
         $col = new PropelObjectCollection();
         $col->setModel('ContestView');
         $cv = new ContestView();
         $col []= $cv;
+
+        $this->expectException(PropelException::class);
+
         $col->save();
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDeleteOnReadOnlyEntityThrowsException()
     {
         $col = new PropelObjectCollection();
@@ -55,6 +52,9 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         $cv = new ContestView();
         $cv->setNew(false);
         $col []= $cv;
+
+        $this->expectException(PropelException::class);
+
         $col->delete();
     }
 

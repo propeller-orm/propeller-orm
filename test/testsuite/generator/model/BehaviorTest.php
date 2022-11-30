@@ -90,9 +90,6 @@ EOF;
         $this->assertEquals(array('create_column' => 'created_on', 'update_column' => 'updated_on', 'disable_updated_at' => 'false'), $behavior->getParameters(), 'XmlToAppData sets the behavior parameters correctly');
     }
 
-  /**
-   * @expectedException InvalidArgumentException
-   */
     public function testUnknownBehavior()
     {
         $xmlToAppData = new XmlToAppData();
@@ -104,6 +101,8 @@ EOF;
   </table>
 </database>
 EOF;
+        $this->expectException(InvalidArgumentException::class);
+
         $appData = $xmlToAppData->parseString($schema);
     }
 

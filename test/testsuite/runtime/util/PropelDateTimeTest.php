@@ -159,11 +159,10 @@ class PropelDateTimeTest extends \PHPUnit\Framework\TestCase
         date_default_timezone_set($originalTimezone);
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testNewInstanceInvalidValue()
     {
+        $this->expectException(PropelException::class);
+
         $dt = PropelDateTime::newInstance('some string');
     }
 

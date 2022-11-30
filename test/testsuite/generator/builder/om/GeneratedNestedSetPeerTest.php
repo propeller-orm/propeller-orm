@@ -172,10 +172,11 @@ class GeneratedNestedSetPeerTest extends CmsTestBase
 
     /**
      * Test xxxNestedSetPeer::createRoot() exception
-     * @expectedException PropelException
      */
     public function testPeerCreateRootException()
     {
+        $this->expectException(PropelException::class);
+
         $c = new Criteria();
         $c->add(PagePeer::TITLE, 'home', Criteria::EQUAL);
 

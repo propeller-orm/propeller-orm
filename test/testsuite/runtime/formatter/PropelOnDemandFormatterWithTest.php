@@ -230,9 +230,6 @@ class PropelOnDemandFormatterWithTest extends BookstoreEmptyTestBase
         $this->assertEquals('J.K.', $author->getFirstName(), 'Related object is correctly hydrated');
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testFindOneWithOneToMany()
     {
         BookstoreDataPopulator::populate();
@@ -244,6 +241,9 @@ class PropelOnDemandFormatterWithTest extends BookstoreEmptyTestBase
         $c->add(BookPeer::ISBN, '043935806X');
         $c->leftJoin('Book.Review');
         $c->with('Review');
+
+        $this->expectException(PropelException::class);
+
         $books = $c->find();
     }
 

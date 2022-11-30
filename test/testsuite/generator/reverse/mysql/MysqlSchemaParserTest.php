@@ -19,7 +19,7 @@ set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../../../
  */
 class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +32,7 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         Propel::initialize();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Propel::init(dirname(__FILE__) . '/../../../../fixtures/bookstore/build/conf/bookstore-conf.php');

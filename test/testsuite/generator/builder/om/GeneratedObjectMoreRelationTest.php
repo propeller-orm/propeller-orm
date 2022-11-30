@@ -22,7 +22,7 @@ class GeneratedObjectMoreRelationTest extends \PHPUnit\Framework\TestCase
     /**
      * Setup schema und some default data
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -12,6 +12,7 @@
     "homepage": "http://www.willdurand.fr"
   }],
   "autoload": {
+    "files": ["runtime/lib/connection/PropelPDO.php"],
     "classmap": ["runtime/lib", "generator/lib"]
   },
   "autoload-dev": {
@@ -22,7 +23,7 @@
   },
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
-    "php": "~7.1",
+    "php": ">=7.1",
     "ext-dom": "*",
     "ext-pdo": "*",
     "phing/phing": "~2.16.3",
@@ -32,7 +33,7 @@
     "ext-xsl": "Required for using using the optional schemaTransform functionality."
   },
   "require-dev": {
-    "phpunit/phpunit": "~7.5",
+    "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
     "nette/robot-loader": "^3.4"
   },
   "replace": {

@@ -18,7 +18,7 @@
  */
 class I18nBehaviorObjectBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('I18nBehaviorTest1')) {
             $schema = <<<EOF

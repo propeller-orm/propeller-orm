@@ -42,13 +42,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         });
     }
 
-    protected function useDebug(PropelPDO $con): callable
+    protected function useDebug(PropelPDO $con, bool $debug = true): callable
     {
-        return $this->useEffect(function () use ($con) {
-            $con->useDebug(true);
+        return $this->useEffect(function () use ($con, $debug) {
+            $wasDebug = $con->useDebug($debug);
 
-            return function () use ($con) {
-                $con->useDebug(false);
+            return function () use ($con, $wasDebug) {
+                $con->useDebug($wasDebug);
             };
         });
     }

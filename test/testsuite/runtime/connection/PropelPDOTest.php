@@ -312,6 +312,8 @@ class PropelPDOTest extends TestCase
     {
         $con = $this->getConnection(BookPeer::DATABASE_NAME);
 
+        $this->useDebug($con, false);
+
         $this->assertEquals([PDOStatement::class], $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'Statement is PDOStatement when debug is false');
 
         $this->useDebug($con);

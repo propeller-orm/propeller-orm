@@ -87,7 +87,7 @@ class PropelPDO extends PDO
     protected $lastExecutedQuery;
 
     /**
-     * Whether or not the debug is enabled
+     * Whether the debug is enabled
      *
      * @var       boolean
      */
@@ -398,12 +398,8 @@ class PropelPDO extends PDO
         }
 
         if ($this->cachePreparedStatements) {
-            if (!isset($this->preparedStatements[$sql])) {
-                $return = parent::prepare($sql, $driver_options);
-                $this->preparedStatements[$sql] = $return;
-            } else {
-                $return = $this->preparedStatements[$sql];
-            }
+            $this->preparedStatements[$sql] = $this->preparedStatements[$sql] ?? parent::prepare($sql, $driver_options);
+            $return = $this->preparedStatements[$sql];
         } else {
             $return = parent::prepare($sql, $driver_options);
         }
@@ -478,7 +474,7 @@ class PropelPDO extends PDO
      */
     public function clearStatementCache()
     {
-        $this->preparedStatements = array();
+        $this->preparedStatements = [];
     }
 
     /**
@@ -493,7 +489,7 @@ class PropelPDO extends PDO
     {
         // extending PDOStatement is only supported with non-persistent connections
         if (!$this->getAttribute(PDO::ATTR_PERSISTENT)) {
-            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array($class, array($this)));
+            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, [$class, [$this]]);
         } elseif (!$suppressError) {
             throw new PropelException('Extending PDOStatement is not supported with persistent connections.');
         }
@@ -550,23 +546,34 @@ class PropelPDO extends PDO
         $this->lastExecutedQuery = $query;
     }
 
+    public function isDebug(): bool
+    {
+        return $this->useDebug;
+    }
+
     /**
      * Enable or disable the query debug features
      *
-     * @param boolean $value True to enable debug (default), false to disable it
+     * @param bool $value True to enable debug (default), false to disable it
+     * @returns bool Previous `useDebug` value.
      */
-    public function useDebug($value = true)
+    public function useDebug($value = true): bool
     {
         if ($value) {
             $this->configureStatementClass('DebugPDOStatement', true);
         } else {
             // reset query logging
-            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('PDOStatement'));
+            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, [PDOStatement::class]);
             $this->setLastExecutedQuery('');
             $this->queryCount = 0;
         }
         $this->clearStatementCache();
+
+        $prev = $this->useDebug;
+
         $this->useDebug = $value;
+
+        return $prev;
     }
 
     /**
@@ -664,11 +671,11 @@ class PropelPDO extends PDO
     public function getDebugSnapshot()
     {
         if ($this->useDebug) {
-            return array(
+            return [
                 'microtime'             => microtime(true),
                 'memory_get_usage'      => memory_get_usage($this->getLoggingConfig('realmemoryusage', false)),
                 'memory_get_peak_usage' => memory_get_peak_usage($this->getLoggingConfig('realmemoryusage', false)),
-                );
+            ];
         } else {
             throw new PropelException('Should not get debug snapshot when not debugging');
         }

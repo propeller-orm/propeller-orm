@@ -422,7 +422,7 @@ class PropelPDOTest extends TestCase
         $logger = new class extends AbstractLogger {
             public $latestMessage = '';
 
-            public function log($level, $message, array $context = [])
+            public function log($level, $message, array $context = []): void
             {
                 $this->latestMessage = "{$level}: {$message}";
             }

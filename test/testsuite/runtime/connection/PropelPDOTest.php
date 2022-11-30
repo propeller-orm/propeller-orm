@@ -329,15 +329,19 @@ class PropelPDOTest extends TestCase
     {
         $con = $this->getConnection(BookPeer::DATABASE_NAME);
 
+        $this->useDebug($con);
+
         $c = new Criteria();
         $c->add(BookPeer::TITLE, 'Harry%s', Criteria::LIKE);
+
+        $this->useDebug($con, false);
 
         $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO reinitializes the latest query when debug is set to false');
 
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO does not update the last executed query when useLogging is false');
 
-        $undebug = $this->useDebug($con);
+        $this->useDebug($con);
 
         $books = BookPeer::doSelect($c, $con);
         $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
@@ -363,7 +367,7 @@ class PropelPDOTest extends TestCase
         $stmt->execute();
         $this->assertEquals("DELETE FROM book WHERE 1='2'", $con->getLastExecutedQuery(), 'PropelPDO updates the last executed query on prapared statements');
 
-        $undebug();
+        $this->useDebug($con, false);
 
         $this->assertEquals('', $con->getLastExecutedQuery(), 'PropelPDO reinitializes the latest query when debug is set to false');
     }
@@ -371,6 +375,8 @@ class PropelPDOTest extends TestCase
     public function testDebugQueryCount()
     {
         $con = $this->getConnection(BookPeer::DATABASE_NAME);
+
+        $this->useDebug($con, false);
 
         $c = new Criteria();
         $c->add(BookPeer::TITLE, 'Harry%s', Criteria::LIKE);
@@ -380,7 +386,7 @@ class PropelPDOTest extends TestCase
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO does not update the query count when useLogging is false');
 
-        $undebug = $this->useDebug($con);
+        $this->useDebug($con);
 
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals(1, $con->getQueryCount(), 'PropelPDO updates the query count when useLogging is true');
@@ -401,7 +407,7 @@ class PropelPDOTest extends TestCase
         $stmt->execute();
         $this->assertEquals(5, $con->getQueryCount(), 'PropelPDO updates the query count on prapared statements');
 
-        $undebug();
+        $this->useDebug($con, false);
 
         $this->assertEquals(0, $con->getQueryCount(), 'PropelPDO reinitializes the query count when debug is set to false');
     }

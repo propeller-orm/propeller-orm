@@ -135,6 +135,9 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 
+        $this->useDebug($con, false);
+        $this->useDebug($con);
+
         $this->assertEquals(0, $con->getQueryCount());
 
         $stmt = $con->query('SELECT * FROM author LEFT JOIN book ON (author.id = book.author_id) WHERE author.id = (SELECT author_id FROM book WHERE title = "The Tin Drum 2")');
@@ -155,9 +158,12 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, $con->getQueryCount());
     }
 
-    public function testFormaWithRelatedObjects()
+    public function testFormatWithRelatedObjects()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        $this->useDebug($con, false);
+        $this->useDebug($con);
 
         $this->assertEquals(0, $con->getQueryCount());
 

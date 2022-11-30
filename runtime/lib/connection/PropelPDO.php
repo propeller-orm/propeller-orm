@@ -21,9 +21,9 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
             return parent::prepareStatement($query, $options);
         }
 
-        public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args)
+        public function query($statement, $mode = PDO::FETCH_NUM, ...$fetch_mode_args)
         {
-            return parent::executeQuery($statement, $mode, $fetch_mode_args);
+            return parent::executeQuery(...func_get_args());
         }
     }
 } else {
@@ -47,7 +47,7 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
             return parent::prepareStatement($query, $options ?? []);
         }
 
-        public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = [])
+        public function query($statement, $mode = PDO::FETCH_NUM, $arg3 = null, array $ctorargs = [])
         {
             return parent::executeQuery(...func_get_args());
         }

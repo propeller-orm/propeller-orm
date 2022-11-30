@@ -13,7 +13,7 @@
  *
  * @package    generator.builder.om
  */
-class GeneratedObjectLazyLoadTest extends \PHPUnit\Framework\TestCase
+class GeneratedObjectLazyLoadTest extends TestCase
 {
     public function setUp()
     {
@@ -36,7 +36,9 @@ EOF;
     public function testNormalColumnsRequireNoQueryOnGetter()
     {
         $con = Propel::getconnection(LazyLoadActiveRecordPeer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         $obj = new LazyLoadActiveRecord();
         $obj->setFoo('hello');
         $obj->save($con);
@@ -50,7 +52,9 @@ EOF;
     public function testLazyLoadedColumnsRequireAnAdditionalQueryOnGetter()
     {
         $con = Propel::getconnection(LazyLoadActiveRecordPeer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         $obj = new LazyLoadActiveRecord();
         $obj->setBar('hello');
         $obj->save($con);
@@ -64,7 +68,9 @@ EOF;
     public function testLazyLoadedColumnsWithDefaultRequireAnAdditionalQueryOnGetter()
     {
         $con = Propel::getconnection(LazyLoadActiveRecordPeer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         $obj = new LazyLoadActiveRecord();
         $obj->setBaz('hello');
         $obj->save($con);
@@ -78,7 +84,9 @@ EOF;
     public function testLazyLoadedColumnsMayBeUnsetWithoutLoading()
     {
         $con = Propel::getconnection(LazyLoadActiveRecordPeer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         $obj = new LazyLoadActiveRecord();
         $obj->setBar('hello');
         $obj->save($con);

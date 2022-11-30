@@ -134,8 +134,6 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
     public function testFormatOneWithRelatedObjects()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
-        $con->useDebug(false);
-        $con->useDebug(true);
 
         $this->assertEquals(0, $con->getQueryCount());
 
@@ -160,8 +158,6 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
     public function testFormaWithRelatedObjects()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
-        $con->useDebug(false);
-        $con->useDebug(true);
 
         $this->assertEquals(0, $con->getQueryCount());
 

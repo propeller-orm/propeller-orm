@@ -9,6 +9,8 @@
  * @license    MIT License
  */
 
+use Propeller\Tests\TestCase;
+
 /**
  * Tests for I18nBehavior class query modifier
  *
@@ -16,7 +18,7 @@
  * @version    $Revision$
  * @package    generator.behavior.i18n
  */
-class I18nBehaviorQueryBuilderModifierTest extends \PHPUnit\Framework\TestCase
+class I18nBehaviorQueryBuilderModifierTest extends TestCase
 {
     public function setUp()
     {
@@ -98,13 +100,14 @@ EOF;
     public function testJoinI18nCreatesACorrectQuery()
     {
         $con = Propel::getConnection(I18nBehaviorTest11Peer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         I18nBehaviorTest11Query::create()
             ->joinI18n('fr_FR')
             ->find($con);
         $expected = "SELECT i18n_behavior_test_11.id, i18n_behavior_test_11.foo FROM i18n_behavior_test_11 LEFT JOIN i18n_behavior_test_11_i18n ON (i18n_behavior_test_11.id=i18n_behavior_test_11_i18n.id AND i18n_behavior_test_11_i18n.locale = 'fr_FR')";
         $this->assertEquals($expected, $con->getLastExecutedQuery());
-        $con->useDebug(false);
     }
 
     public function testUseI18nQueryAddsTheProperJoin()
@@ -138,7 +141,9 @@ EOF;
     public function testUseI18nQueryCreatesACorrectQuery()
     {
         $con = Propel::getConnection(I18nBehaviorTest11Peer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         I18nBehaviorTest11Query::create()
             ->useI18nQuery('fr_FR')
                 ->filterByBar('bar')
@@ -146,7 +151,6 @@ EOF;
             ->find($con);
         $expected = "SELECT i18n_behavior_test_11.id, i18n_behavior_test_11.foo FROM i18n_behavior_test_11 LEFT JOIN i18n_behavior_test_11_i18n ON (i18n_behavior_test_11.id=i18n_behavior_test_11_i18n.id AND i18n_behavior_test_11_i18n.locale = 'fr_FR') WHERE i18n_behavior_test_11_i18n.bar='bar'";
         $this->assertEquals($expected, $con->getLastExecutedQuery());
-        $con->useDebug(false);
     }
 
     public function testJoinWithI18nAddsTheI18nColumns()
@@ -189,7 +193,9 @@ EOF;
     public function testJoinWithI18nHydratesRelatedObject()
     {
         $con = Propel::getConnection(I18nBehaviorTest11Peer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         I18nBehaviorTest11Query::create()->deleteAll();
         I18nBehaviorTest11I18nQuery::create()->deleteAll();
         $o = new I18nBehaviorTest11();
@@ -253,7 +259,9 @@ EOF;
     {
         $this->markTestSkipped();
         $con = Propel::getConnection(I18nBehaviorTest11Peer::DATABASE_NAME);
-        $con->useDebug(true);
+
+        $this->useDebug($con);
+
         I18nBehaviorTest11Query::create()->deleteAll();
         I18nBehaviorTest11I18nQuery::create()->deleteAll();
         $o = new I18nBehaviorTest11();

@@ -8,6 +8,8 @@
  * @license    MIT License
  */
 
+use Psr\Log\LoggerInterface;
+
 /**
  * PDO connection subclass that provides the basic fixes to PDO that are required by Propel.
  *
@@ -85,23 +87,23 @@ class PropelPDO extends PDO
     protected $lastExecutedQuery;
 
     /**
-     * Whether or not the debug is enabled
+     * Whether the debug is enabled
      *
      * @var       boolean
      */
     public $useDebug = false;
 
     /**
-     * Configured BasicLogger (or compatible) logger.
+     * Configured logger.
      *
-     * @var       BasicLogger
+     * @var       LoggerInterface|null
      */
-    protected $logger;
+    protected $logger = null;
 
     /**
      * The log level to use for logging.
      *
-     * @var       integer
+     * @var       string
      */
     private $logLevel = Propel::LOG_DEBUG;
 
@@ -138,7 +140,7 @@ class PropelPDO extends PDO
      * Add PropelPDO::__construct to $defaultLogMethods to see this message
      *
      * @param string $dsn            Connection DSN.
-     * @param string $username       The user name for the DSN string.
+     * @param string $username       The username for the DSN string.
      * @param string $password       The password for the DSN string.
      * @param array  $driver_options A key=>value array of driver-specific connection options.
      *
@@ -396,12 +398,8 @@ class PropelPDO extends PDO
         }
 
         if ($this->cachePreparedStatements) {
-            if (!isset($this->preparedStatements[$sql])) {
-                $return = parent::prepare($sql, $driver_options);
-                $this->preparedStatements[$sql] = $return;
-            } else {
-                $return = $this->preparedStatements[$sql];
-            }
+            $this->preparedStatements[$sql] = $this->preparedStatements[$sql] ?? parent::prepare($sql, $driver_options);
+            $return = $this->preparedStatements[$sql];
         } else {
             $return = parent::prepare($sql, $driver_options);
         }
@@ -476,7 +474,7 @@ class PropelPDO extends PDO
      */
     public function clearStatementCache()
     {
-        $this->preparedStatements = array();
+        $this->preparedStatements = [];
     }
 
     /**
@@ -491,7 +489,7 @@ class PropelPDO extends PDO
     {
         // extending PDOStatement is only supported with non-persistent connections
         if (!$this->getAttribute(PDO::ATTR_PERSISTENT)) {
-            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array($class, array($this)));
+            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, [$class, [$this]]);
         } elseif (!$suppressError) {
             throw new PropelException('Extending PDOStatement is not supported with persistent connections.');
         }
@@ -548,31 +546,42 @@ class PropelPDO extends PDO
         $this->lastExecutedQuery = $query;
     }
 
+    public function isDebug(): bool
+    {
+        return $this->useDebug;
+    }
+
     /**
      * Enable or disable the query debug features
      *
-     * @param boolean $value True to enable debug (default), false to disable it
+     * @param bool $value True to enable debug (default), false to disable it
+     * @returns bool Previous `useDebug` value.
      */
-    public function useDebug($value = true)
+    public function useDebug($value = true): bool
     {
         if ($value) {
             $this->configureStatementClass('DebugPDOStatement', true);
         } else {
             // reset query logging
-            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('PDOStatement'));
+            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, [PDOStatement::class]);
             $this->setLastExecutedQuery('');
             $this->queryCount = 0;
         }
         $this->clearStatementCache();
+
+        $prev = $this->useDebug;
+
         $this->useDebug = $value;
+
+        return $prev;
     }
 
     /**
      * Sets the logging level to use for logging method calls and SQL statements.
      *
-     * @param integer $level Value of one of the Propel::LOG_* class constants.
+     * @param string $level Value of one of the `LogLevel` class constants.
      */
-    public function setLogLevel($level)
+    public function setLogLevel(string $level)
     {
         $this->logLevel = $level;
     }
@@ -582,9 +591,9 @@ class PropelPDO extends PDO
      *
      * The logger will be used by this class to log various method calls and their properties.
      *
-     * @param BasicLogger $logger A Logger with an API compatible with BasicLogger (or PEAR Log).
+     * @param LoggerInterface|null $logger
      */
-    public function setLogger($logger)
+    public function setLogger(?LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
@@ -592,9 +601,9 @@ class PropelPDO extends PDO
     /**
      * Gets the logger in use.
      *
-     * @return BasicLogger A Logger with an API compatible with BasicLogger (or PEAR Log).
+     * @return LoggerInterface|null
      */
-    public function getLogger()
+    public function getLogger(): ?LoggerInterface
     {
         return $this->logger;
     }
@@ -605,12 +614,12 @@ class PropelPDO extends PDO
      * @uses      self::getLogPrefix()
      * @see       self::setLogger()
      *
-     * @param string  $msg           Message to log.
-     * @param integer $level         Log level to use; will use self::setLogLevel() specified level by default.
-     * @param string  $methodName    Name of the method whose execution is being logged.
-     * @param array   $debugSnapshot Previous return value from self::getDebugSnapshot().
+     * @param string       $msg           Message to log.
+     * @param string|null  $level         Log level to use; will use self::setLogLevel() specified level by default.
+     * @param string|null  $methodName    Name of the method whose execution is being logged.
+     * @param array|null   $debugSnapshot Previous return value from self::getDebugSnapshot().
      */
-    public function log($msg, $level = null, $methodName = null, array $debugSnapshot = null)
+    public function log(string $msg, string $level = null, string $methodName = null, array $debugSnapshot = null): void
     {
         // If logging has been specifically disabled, this method won't do anything
         if (!$this->getLoggingConfig('enabled', true)) {
@@ -645,11 +654,10 @@ class PropelPDO extends PDO
             return;
         }
 
+        $logger = $this->logger ?: Propel::logger();
         // Delegate the actual logging forward
-        if ($this->logger) {
-            $this->logger->log($msg, $level);
-        } else {
-            Propel::log($msg, $level);
+        if ($logger) {
+            $logger->log($level, $msg);
         }
     }
 
@@ -663,11 +671,11 @@ class PropelPDO extends PDO
     public function getDebugSnapshot()
     {
         if ($this->useDebug) {
-            return array(
+            return [
                 'microtime'             => microtime(true),
                 'memory_get_usage'      => memory_get_usage($this->getLoggingConfig('realmemoryusage', false)),
                 'memory_get_peak_usage' => memory_get_peak_usage($this->getLoggingConfig('realmemoryusage', false)),
-                );
+            ];
         } else {
             throw new PropelException('Should not get debug snapshot when not debugging');
         }

@@ -8,13 +8,15 @@
  * @license    MIT License
  */
 
+use Propeller\Tests\TestCase;
+
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../../fixtures/bookstore/build/classes'));
 Propel::init(dirname(__FILE__) . '/../../../fixtures/bookstore/build/conf/bookstore-conf.php');
 
 /**
  * Base class contains some methods shared by subclass test cases.
  */
-abstract class BookstoreTestBase extends \PHPUnit\Framework\TestCase
+abstract class BookstoreTestBase extends TestCase
 {
     /** @var PropelPDO */
     protected $con;

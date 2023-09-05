@@ -168,8 +168,8 @@ class Propel
 
         // check whether the generated model has the same version as the runtime, see gh-#577
         // we need to check for existance first, because tasks which rely on the runtime.xml conf will not provide a generator_version
-        if (self::$configuration->getParameter('generator_version') !== null && self::$configuration->getParameter('generator_version') != self::VERSION) {
-            $warning = "Version mismatch: The generated model was build using propel '" . self::$configuration['generator_version'] . "' while the current runtime is at version '" . self::VERSION . "'";
+        if (self::$configuration->getParameter('generator_version') != self::VERSION) {
+            $warning = "Version mismatch: The generated model was build using propel '" . self::$configuration->getParameter('generator_version') . "' while the current runtime is at version '" . self::VERSION . "'";
             if (self::$logger) {
                 self::$logger->warning($warning);
             } else {
@@ -427,7 +427,9 @@ class Propel
     {
         if (!isset(self::$connectionMap[$name]['master'])) {
             // load connection parameter for master connection
-            $conparams = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
+            $conparams = self::$configuration->getParameter("datasources.$name.connection")
+                ? self::$configuration->getParameter("datasources.$name.connection")
+                : null;
             if (empty($conparams)) {
                 throw new PropelException('No connection information in your runtime configuration file for datasource [' . $name . ']');
             }
@@ -453,7 +455,7 @@ class Propel
     {
         if (!isset(self::$connectionMap[$name]['slave'])) {
 
-            $slaveconfigs = isset(self::$configuration['datasources'][$name]['slaves']) ? self::$configuration['datasources'][$name]['slaves'] : null;
+            $slaveconfigs = self::$configuration->getParameter("datasources.$name.slaves") ? self::$configuration->getParameter("datasources.$name.slaves") : null;
 
             if (empty($slaveconfigs)) {
                 // no slaves configured for this datasource
@@ -608,10 +610,10 @@ class Propel
         }
 
         if (!isset(self::$adapterMap[$name])) {
-            if (!isset(self::$configuration['datasources'][$name]['adapter'])) {
+            if (!self::$configuration->getParameter("datasources.$name.adapter")) {
                 throw new PropelException("Unable to find adapter for datasource [" . $name . "].");
             }
-            $db = DBAdapter::factory(self::$configuration['datasources'][$name]['adapter']);
+            $db = DBAdapter::factory(self::$configuration->getParameter("datasources.$name.adapter"));
             // register the adapter for this name
             self::$adapterMap[$name] = $db;
         }
@@ -642,7 +644,7 @@ class Propel
     {
         if (self::$defaultDBName === null) {
             // Determine default database name.
-            self::$defaultDBName = isset(self::$configuration['datasources']['default']) && is_scalar(self::$configuration['datasources']['default']) ? self::$configuration['datasources']['default'] : self::DEFAULT_NAME;
+            self::$defaultDBName = self::$configuration->getParameter('datasources.default') && is_scalar(self::$configuration['datasources']['default']) ? self::$configuration['datasources']['default'] : self::DEFAULT_NAME;
         }
 
         return self::$defaultDBName;

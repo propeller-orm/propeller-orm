@@ -20,14 +20,14 @@
  * @version    $Revision$
  * @package    propel.runtime.config
  */
-class PropelConfiguration implements ArrayAccess
+class PropelConfiguration
 {
     const TYPE_ARRAY = 1;
     const TYPE_ARRAY_FLAT = 2;
     const TYPE_OBJECT = 3;
 
-    protected $parameters = array();
-    protected $flattenedParameters = array();
+    protected $parameters = [];
+    protected $flattenedParameters = [];
     protected $isFlattened = false;
 
     /**
@@ -35,56 +35,9 @@ class PropelConfiguration implements ArrayAccess
      *
      * @param array $parameters
      */
-    public function __construct(array $parameters = array())
+    public function __construct(array $parameters = [])
     {
         $this->parameters = $parameters;
-    }
-
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return array_key_exists($offset, $this->parameters);
-    }
-
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     * @param mixed   $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->parameters[$offset] = $value;
-        $this->isFlattened = false;
-    }
-
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     *
-     * @return array
-     */
-    public function offsetGet($offset)
-    {
-        return $this->parameters[$offset];
-    }
-
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->parameters[$offset]);
-        $this->isFlattened = false;
     }
 
     /**

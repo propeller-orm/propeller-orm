@@ -644,7 +644,9 @@ class Propel
     {
         if (self::$defaultDBName === null) {
             // Determine default database name.
-            self::$defaultDBName = self::$configuration->getParameter('datasources.default') && is_scalar(self::$configuration['datasources']['default']) ? self::$configuration['datasources']['default'] : self::DEFAULT_NAME;
+            self::$defaultDBName = self::$configuration->getParameter('datasources.default') && is_scalar(self::$configuration->getParameter('datasources.default'))
+                ? self::$configuration->getParameter('datasources.default')
+                : self::DEFAULT_NAME;
         }
 
         return self::$defaultDBName;

@@ -63,7 +63,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         throw new PropelException('The On Demand Collection does not allow access by offset');
     }
@@ -75,6 +75,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         throw new PropelException('The On Demand Collection does not allow access by offset');
@@ -86,7 +87,7 @@ class PropelOnDemandCollection extends PropelCollection
      * @param integer $offset
      * @param mixed   $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new PropelException('The On Demand Collection is read only');
     }
@@ -96,7 +97,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @param integer $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new PropelException('The On Demand Collection is read only');
     }

@@ -99,7 +99,7 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function execute($input_parameters = null)
+    public function execute($input_parameters = null): bool
     {
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
@@ -122,7 +122,7 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function bindValue($pos, $value, $type = PDO::PARAM_STR)
+    public function bindValue($pos, $value, $type = PDO::PARAM_STR): bool
     {
         $debug = $this->pdo->getDebugSnapshot();
         $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';

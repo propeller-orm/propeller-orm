@@ -84,7 +84,7 @@ class DebugPDOStatement extends PDOStatement
                 if (is_resource($boundValue)) {
                     $boundValue = '[resource]';
                 }
-                $sql = str_replace($pos, $boundValue, $sql);
+                $sql = str_replace($pos, $boundValue ?? '', $sql);
             }
         }
 

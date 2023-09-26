@@ -291,8 +291,6 @@ class PropelCollection extends ArrayObject
      *
      * @param mixed $key
      *
-     * @return mixed The removed element
-     *
      * @throws PropelException
      */
     public function remove($key)
@@ -301,7 +299,7 @@ class PropelCollection extends ArrayObject
             throw new PropelException('Unknown key ' . $key);
         }
 
-        return $this->offsetUnset($key);
+        $this->offsetUnset($key);
     }
 
     /**
@@ -382,7 +380,7 @@ class PropelCollection extends ArrayObject
      *
      * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         $this->iterator = new ArrayIterator($this);
 
@@ -392,7 +390,7 @@ class PropelCollection extends ArrayObject
     /**
      * @return ArrayIterator
      */
-    public function getInternalIterator()
+    public function getInternalIterator(): ArrayIterator
     {
         if (null === $this->iterator) {
             return $this->getIterator();
@@ -472,7 +470,7 @@ class PropelCollection extends ArrayObject
      *
      * @param string $type The connection type (Propel::CONNECTION_READ by default; can be Propel::connection_WRITE)
      *
-     * @return PropelPDO A PropelPDO connection object
+     * @return PDO A PropelPDO connection object
      */
     public function getConnection($type = Propel::CONNECTION_READ)
     {

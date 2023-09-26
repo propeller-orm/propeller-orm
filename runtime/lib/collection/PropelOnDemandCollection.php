@@ -49,7 +49,7 @@ class PropelOnDemandCollection extends PropelCollection
     /**
      * @return PropelOnDemandIterator
      */
-    public function getIterator()
+    public function getIterator(): Iterator
     {
         return $this->iterator;
     }
@@ -63,7 +63,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         throw new PropelException('The On Demand Collection does not allow access by offset');
     }
@@ -75,6 +75,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         throw new PropelException('The On Demand Collection does not allow access by offset');
@@ -86,7 +87,7 @@ class PropelOnDemandCollection extends PropelCollection
      * @param integer $offset
      * @param mixed   $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new PropelException('The On Demand Collection is read only');
     }
@@ -96,29 +97,17 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @param integer $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new PropelException('The On Demand Collection is read only');
     }
 
-    // Serializable Interface
-
-    /**
-     * @throws PropelException
-     */
-    public function serialize()
+    public function __serialize(): array
     {
         throw new PropelException('The On Demand Collection cannot be serialized');
     }
 
-    /**
-     * @throws PropelException
-     *
-     * @param string $data
-     *
-     * @return void
-     */
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
         throw new PropelException('The On Demand Collection cannot be serialized');
     }

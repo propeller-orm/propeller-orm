@@ -380,7 +380,7 @@ class PropelCollection extends ArrayObject
      *
      * @return ArrayIterator
      */
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Iterator
     {
         $this->iterator = new ArrayIterator($this);
 
@@ -390,7 +390,7 @@ class PropelCollection extends ArrayObject
     /**
      * @return ArrayIterator
      */
-    public function getInternalIterator(): ArrayIterator
+    public function getInternalIterator(): Iterator
     {
         if (null === $this->iterator) {
             return $this->getIterator();

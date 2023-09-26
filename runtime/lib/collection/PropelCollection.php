@@ -25,7 +25,7 @@
  * @author     Francois Zaninotto
  * @package    propel.runtime.collection
  */
-class PropelCollection extends ArrayObject implements Serializable
+class PropelCollection extends ArrayObject
 {
     /**
      * @var       string
@@ -360,31 +360,18 @@ class PropelCollection extends ArrayObject implements Serializable
         return $diff;
     }
 
-    // Serializable interface
-
-    /**
-     * @return string
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        $repr = array(
+        return [
             'data'   => $this->getArrayCopy(),
             'model'  => $this->model,
-        );
-
-        return serialize($repr);
+        ];
     }
 
-    /**
-     * @param string $data
-     *
-     * @return void
-     */
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $repr = unserialize($data);
-        $this->exchangeArray($repr['data']);
-        $this->model = $repr['model'];
+        $this->exchangeArray($data['data']);
+        $this->model = $data['model'];
     }
 
     // IteratorAggregate method

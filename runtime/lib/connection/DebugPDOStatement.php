@@ -151,8 +151,9 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = 0, $driver_options = null)
+    public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = null, $driver_options = null): bool
     {
+        $length = $length ?? 0;
         $originalValue = $value;
         $debug = $this->pdo->getDebugSnapshot();
         $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';

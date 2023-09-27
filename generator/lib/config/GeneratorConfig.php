@@ -252,7 +252,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     {
         $propname = 'behavior' . ucfirst(strtolower($name)) . 'Class';
         try {
-            $ret = $this->getBuildProperty($propname);
+            $ret = $this->getClassname($propname);
         } catch (BuildException $e) {
             // class path not configured
             $ret = false;

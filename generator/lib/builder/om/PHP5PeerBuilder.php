@@ -2105,7 +2105,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         }
         $script .= "
      * @param      PropelPDO \$con
-     * @return " . $this->getObjectClassname() . "
+     * @return ?" . $this->getObjectClassname() . "
      */
     public static function " . $this->getRetrieveMethodName() . "(";
 

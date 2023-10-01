@@ -62,7 +62,7 @@ class PropelOnDemandIterator implements Iterator
      *
      * @return integer Number of results
      */
-    public function count()
+    public function count(): int
     {
         return $this->stmt->rowCount();
     }
@@ -133,7 +133,7 @@ class PropelOnDemandIterator implements Iterator
     /**
      * @return boolean
      */
-    public function valid()
+    public function valid(): bool
     {
         return (boolean) $this->isValid;
     }

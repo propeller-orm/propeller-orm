@@ -184,31 +184,6 @@ class Propel
     }
 
     /**
-     * Include once a file specified in DOT notation and return unqualified classname.
-     *
-     * Typically, Propel uses autoload is used to load classes and expects that all classes
-     * referenced within Propel are included in Propel's autoload map.  This method is only
-     * called when a specific non-Propel classname was specified -- for example, the
-     * classname of a validator in the schema.xml.  This method will attempt to include that
-     * class via autoload and then relative to a location on the include_path.
-     *
-     * @param string $class dot-path to clas (e.g. path.to.my.ClassName).
-     *
-     * @return string unqualified classname
-     *
-     * @throws PropelException
-     */
-    public static function importClass($class)
-    {
-        // check if class exists, using autoloader to attempt to load it.
-        if (class_exists($class, true)) {
-            return $class;
-        }
-
-        throw new PropelException("Unable to import class: " . $class . " from " . $class);
-    }
-
-    /**
      * Configure Propel a PHP (array) config file.
      *
      * @param      string Path (absolute or relative to include_path) to config file.

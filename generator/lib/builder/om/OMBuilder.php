@@ -68,22 +68,6 @@ abstract class OMBuilder extends DataModelBuilder
     }
 
     /**
-     * Gets the dot-path representation of current class being built.
-     *
-     * @return string
-     */
-    public function getClasspath()
-    {
-        if ($this->getPackage()) {
-            $path = $this->getPackage() . '.' . $this->getClassname();
-        } else {
-            $path = $this->getClassname();
-        }
-
-        return $path;
-    }
-
-    /**
      * Validates the current table to make sure that it won't
      * result in generated code that will not parse.
      *

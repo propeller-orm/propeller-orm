@@ -198,31 +198,14 @@ class Propel
      *
      * @throws PropelException
      */
-    public static function importClass($path)
+    public static function importClass($class)
     {
-        // extract classname
-        if (($pos = strrpos($path, '.')) === false) {
-            $class = $path;
-        } else {
-            $class = substr($path, $pos + 1);
-        }
-
         // check if class exists, using autoloader to attempt to load it.
-        if (class_exists($class, $useAutoload = true)) {
+        if (class_exists($class, true)) {
             return $class;
         }
 
-        // turn to filesystem path
-        $path = strtr($path, '.', DIRECTORY_SEPARATOR) . '.php';
-
-        // include class
-        $ret = include_once($path);
-        if ($ret === false) {
-            throw new PropelException("Unable to import class: " . $class . " from " . $path);
-        }
-
-        // return qualified name
-        return $class;
+        throw new PropelException("Unable to import class: " . $class . " from " . $class);
     }
 
     /**

@@ -110,21 +110,6 @@ class " . $this->getClassname() . " extends TableMap
     }
 
     /**
-     * Adds any constants needed for this TableMap class.
-     *
-     * @param string &$script The script will be modified in this method.
-     */
-    protected function addConstants(&$script)
-    {
-        $script .= "
-    /**
-     * The (dot-path) name of this class
-     */
-    const CLASS_NAME = '" . $this->getClasspath() . "';
-";
-    }
-
-    /**
      * Adds any attributes needed for this TableMap class.
      *
      * @param string &$script The script will be modified in this method.

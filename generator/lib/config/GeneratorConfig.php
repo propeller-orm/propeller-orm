@@ -109,44 +109,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     {
         $propname = 'builder' . ucfirst(strtolower($type)) . 'Class';
 
-        return $this->getClassname($propname);
-    }
-
-    /**
-     * Resolves and returns the class name based on the specified property value.
-     *
-     * @param string $propname The name of the property that holds the class path (dot-path notation).
-     *
-     * @return string         The class name.
-     * @throws BuildException If the classname cannot be determined or class cannot be loaded.
-     */
-    public function getClassname($propname)
-    {
-        $classpath = $this->getBuildProperty($propname);
-        if (null === $classpath) {
-            throw new BuildException("Unable to find class path for '$propname' property.");
-        }
-
-        // This is a slight hack to workaround camel case inconsistencies for the DataSQL classes.
-        // Basically, we want to turn ?.?.?.sqliteDataSQLBuilder into ?.?.?.SqliteDataSQLBuilder
-        $lastdotpos = strrpos($classpath, '.');
-        if ($lastdotpos !== false) {
-            $classpath[$lastdotpos + 1] = strtoupper($classpath[$lastdotpos + 1]);
-        } else {
-            // Allows to configure full classname instead of a dot-path notation
-            if (class_exists($classpath)) {
-                return $classpath;
-            }
-            $classpath = ucfirst($classpath);
-        }
-
-        if (empty($classpath)) {
-            throw new BuildException("Unable to find class path for '$propname' property.");
-        }
-
-        $clazz = Phing::import($classpath);
-
-        return $clazz;
+        return $this->getBuildProperty($propname);
     }
 
     /**
@@ -252,7 +215,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     {
         $propname = 'behavior' . ucfirst(strtolower($name)) . 'Class';
         try {
-            $ret = $this->getClassname($propname);
+            $ret = $this->getBuildProperty($propname);
         } catch (BuildException $e) {
             // class path not configured
             $ret = false;

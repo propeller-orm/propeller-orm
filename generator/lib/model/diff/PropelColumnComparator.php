@@ -61,7 +61,7 @@ class PropelColumnComparator
         if ($fromDomain->getSize() != $toDomain->getSize()) {
             $changedProperties['size'] = array($fromDomain->getSize(), $toDomain->getSize());
         }
-        if (strtoupper($fromDomain->getSqlType()) != strtoupper($toDomain->getSqlType())) {
+        if (strtoupper($fromDomain->getSqlType()) != strtoupper($toDomain->getSqlType() ?? '')) {
             $changedProperties['sqlType'] = array($fromDomain->getSqlType(), $toDomain->getSqlType());
         }
         if ($fromColumn->isNotNull() != $toColumn->isNotNull()) {

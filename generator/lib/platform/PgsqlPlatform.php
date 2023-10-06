@@ -69,7 +69,7 @@ class PgsqlPlatform extends DefaultPlatform
     public function disconnectedEscapeText($text)
     {
         if (function_exists('pg_escape_string')) {
-            return pg_escape_string($text);
+            return pg_escape_string($text, $this->getConnection());
         } else {
             return parent::disconnectedEscapeText($text);
         }

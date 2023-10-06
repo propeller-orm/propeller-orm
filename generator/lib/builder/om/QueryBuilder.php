@@ -139,7 +139,7 @@ class QueryBuilder extends OMBuilder
 
         // override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
         $script .= "
- * @method $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method ?$modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
  * @method $modelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
  *";
 
@@ -930,7 +930,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         if (null === \$comparison) {
             if (is_array(\$$variableName)) {
                 \$comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', \$$variableName)) {
+            } elseif (preg_match('/[\%\*]/', \$$variableName ?? '')) {
                 \$$variableName = str_replace('*', '%', \$$variableName);
                 \$comparison = Criteria::LIKE;
             }

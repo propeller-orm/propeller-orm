@@ -460,7 +460,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->getResult());
     }
@@ -470,6 +470,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         if (!isset($this->rs)) {
@@ -484,6 +485,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->currentKey;
@@ -494,7 +496,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->currentKey++;
     }
@@ -504,7 +506,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->currentKey = 0;
     }
@@ -514,7 +516,7 @@ class PropelPager implements Countable, Iterator
      *
      * @return boolean
      */
-    public function valid()
+    public function valid(): bool
     {
         if (!isset($this->rs)) {
             $this->doRs();

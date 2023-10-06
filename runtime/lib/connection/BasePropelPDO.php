@@ -341,6 +341,7 @@ class BasePropelPDO extends PDO
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function setAttribute($attribute, $value): void
     {
         switch ($attribute) {
@@ -364,6 +365,7 @@ class BasePropelPDO extends PDO
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function getAttribute($attribute)
     {
         switch ($attribute) {
@@ -417,6 +419,7 @@ class BasePropelPDO extends PDO
      *
      * @return int|false
      */
+    #[ReturnTypeWillChange]
     public function exec($statement)
     {
         if ($this->useDebug) {

@@ -32,27 +32,29 @@ class CriterionIterator implements Iterator
         $this->criteriaSize = count($this->criteriaKeys);
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->idx = 0;
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->idx < $this->criteriaSize;
     }
 
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->criteriaKeys[$this->idx];
     }
 
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->criteria->getCriterion($this->criteriaKeys[$this->idx]);
     }
 
-    public function next()
+    public function next(): void
     {
         $this->idx++;
     }

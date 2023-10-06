@@ -25,7 +25,7 @@
  * @author     Francois Zaninotto
  * @package    propel.runtime.collection
  */
-class PropelCollection extends ArrayObject implements Serializable
+class PropelCollection extends ArrayObject
 {
     /**
      * @var       string
@@ -291,8 +291,6 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @param mixed $key
      *
-     * @return mixed The removed element
-     *
      * @throws PropelException
      */
     public function remove($key)
@@ -301,7 +299,7 @@ class PropelCollection extends ArrayObject implements Serializable
             throw new PropelException('Unknown key ' . $key);
         }
 
-        return $this->offsetUnset($key);
+        $this->offsetUnset($key);
     }
 
     /**
@@ -360,31 +358,18 @@ class PropelCollection extends ArrayObject implements Serializable
         return $diff;
     }
 
-    // Serializable interface
-
-    /**
-     * @return string
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        $repr = array(
+        return [
             'data'   => $this->getArrayCopy(),
             'model'  => $this->model,
-        );
-
-        return serialize($repr);
+        ];
     }
 
-    /**
-     * @param string $data
-     *
-     * @return void
-     */
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $repr = unserialize($data);
-        $this->exchangeArray($repr['data']);
-        $this->model = $repr['model'];
+        $this->exchangeArray($data['data']);
+        $this->model = $data['model'];
     }
 
     // IteratorAggregate method
@@ -395,7 +380,7 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): Iterator
     {
         $this->iterator = new ArrayIterator($this);
 
@@ -405,7 +390,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * @return ArrayIterator
      */
-    public function getInternalIterator()
+    public function getInternalIterator(): Iterator
     {
         if (null === $this->iterator) {
             return $this->getIterator();
@@ -485,7 +470,7 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @param string $type The connection type (Propel::CONNECTION_READ by default; can be Propel::connection_WRITE)
      *
-     * @return PropelPDO A PropelPDO connection object
+     * @return PDO A PropelPDO connection object
      */
     public function getConnection($type = Propel::CONNECTION_READ)
     {

@@ -16,11 +16,13 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
      */
     class PropelPDO extends BasePropelPDO
     {
+        #[ReturnTypeWillChange]
         public function prepare(string $query, array $options = [])
         {
             return parent::prepareStatement($query, $options);
         }
 
+        #[ReturnTypeWillChange]
         public function query($statement, $mode = PDO::FETCH_NUM, ...$fetch_mode_args)
         {
             return parent::executeQuery(...func_get_args());

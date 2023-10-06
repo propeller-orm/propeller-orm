@@ -26,8 +26,8 @@ class PropelConfiguration implements ArrayAccess
     const TYPE_ARRAY_FLAT = 2;
     const TYPE_OBJECT = 3;
 
-    protected $parameters = array();
-    protected $flattenedParameters = array();
+    protected $parameters = [];
+    protected $flattenedParameters = [];
     protected $isFlattened = false;
 
     /**
@@ -35,7 +35,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @param array $parameters
      */
-    public function __construct(array $parameters = array())
+    public function __construct(array $parameters = [])
     {
         $this->parameters = $parameters;
     }
@@ -47,7 +47,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->parameters);
     }
@@ -58,7 +58,7 @@ class PropelConfiguration implements ArrayAccess
      * @param integer $offset
      * @param mixed   $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->parameters[$offset] = $value;
         $this->isFlattened = false;
@@ -71,6 +71,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->parameters[$offset];
@@ -81,7 +82,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @param integer $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->parameters[$offset]);
         $this->isFlattened = false;

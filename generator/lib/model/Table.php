@@ -21,6 +21,7 @@
  * @version    $Revision$
  * @package    propel.generator.model
  */
+#[AllowDynamicProperties]
 class Table extends ScopedElement implements IDMethod
 {
 

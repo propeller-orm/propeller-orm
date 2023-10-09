@@ -20,6 +20,7 @@
  * @version    $Revision$
  * @package    propel.generator.builder.util
  */
+#[AllowDynamicProperties]
 class XmlToAppData
 {
     /** enables debug output */

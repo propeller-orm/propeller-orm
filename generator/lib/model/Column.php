@@ -140,7 +140,7 @@ class Column extends XMLElement
             if ($dom) {
                 $this->getDomain()->copy($this->getTable()->getDatabase()->getDomain($dom));
             } else {
-                $type = strtoupper($this->getAttribute("type"));
+                $type = strtoupper($this->getAttribute("type") ?? '');
                 if ($type) {
                     if ($platform = $this->getPlatform()) {
                         $this->getDomain()->copy($this->getPlatform()->getDomainForType($type));

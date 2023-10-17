@@ -4587,16 +4587,30 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
 
-        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
-
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+        $joinedTablePeerClassname = $joinedTableObjectBuilder->getPeerClassname();
         $className = $joinedTableObjectBuilder->getObjectClassname();
         $refKObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
         $tblFK = $refFK->getTable();
         $foreignObjectName = '$' . $tblFK->getStudlyPhpName();
+
+        $params = [];
+
+        /** @var Column[] $mapping */
+        foreach ($refFK->getColumnObjectsMapping() as $mapping) {
+            $localColumnName = strtolower($mapping['local']->getName());
+            $params[] = "$localColumnName: \$this->get{$mapping['foreign']->getPhpName()}()";
+        }
+        /** @var Column[] $mapping */
+        foreach ($crossFK->getColumnObjectsMapping() as $mapping) {
+            $localColumnName = strtolower($mapping['local']->getName());
+            $params[] = "$localColumnName: \$$lowerRelatedObjectClassName->get{$mapping['foreign']->getPhpName()}()";
+        }
+
+        $params = implode(', ', $params);
 
         $script .= "
     /**
@@ -4606,12 +4620,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
+        if (!{$joinedTablePeerClassname}::retrieveByPk({$params})) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
-
-            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
-            \$foreignCollection[] = \$this;
         }
     }
 ";

@@ -4587,7 +4587,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
 
-        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
+        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4633,7 +4633,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
             
-            \${$lowerRelatedObjectClassName}->add{$selfRelationNamePlural}();
+            \${$lowerRelatedObjectClassName}->add{$selfRelationName}(\$this);
         }
     }
 ";

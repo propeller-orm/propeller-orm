@@ -4547,6 +4547,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 
+        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
+
+        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
+
         $scheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
 
         $script .= "
@@ -4564,8 +4568,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
 
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
-            \$this->" . $collName . "[] = " . $crossObjectName . "; // must go before doAdd{$relatedObjectClassName} call to avoid recursion
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
+            \$this->{$collName}[] = \${$lowerRelatedObjectClassName};
+            \${$lowerRelatedObjectClassName}->add{$selfRelationName}(\$this);
 
             if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
                 \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));
@@ -4584,10 +4589,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
+        $collName = $this->getCrossFKVarName($crossFK);
+
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
-
-        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4625,6 +4630,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
         if (
+            (\$this->{$collName} === null || !\$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) &&
             !{$joinedTableQueryClassname}::create(__METHOD__)
                 {$filters}
                 ->findOne()
@@ -4632,8 +4638,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
-            
-            \${$lowerRelatedObjectClassName}->add{$selfRelationName}(\$this);
         }
     }
 ";

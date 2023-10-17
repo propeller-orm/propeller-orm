@@ -4608,11 +4608,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             $filters[] = "->filterBy{$mapping['local']->getPhpName()}(\${$lowerRelatedObjectClassName}->get{$mapping['foreign']->getPhpName()}(), Criteria::EQUAL)";
         }
 
-        $filters= implode(PHP_EOL . "\t\t\t\t", $filters);
-
         if (! $filters) {
             throw new EngineException("Cross-reference table misconfigured, cannot generate filters for {$crossFK->getTable()->getPhpName()}");
         }
+
+        $filters= implode(PHP_EOL . "\t\t\t\t", $filters);
 
         $script .= "
     /**

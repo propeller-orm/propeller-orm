@@ -4602,12 +4602,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         /** @var Column[] $mapping */
         foreach ($refFK->getColumnObjectsMapping() as $mapping) {
             $localColumnName = strtolower($mapping['local']->getName());
-            $params[] = "$localColumnName: \$this->get{$mapping['foreign']->getPhpName()}()";
+            $params[] = "{$localColumnName}: \$this->get{$mapping['foreign']->getPhpName()}()";
         }
         /** @var Column[] $mapping */
         foreach ($crossFK->getColumnObjectsMapping() as $mapping) {
             $localColumnName = strtolower($mapping['local']->getName());
-            $params[] = "$localColumnName: \$$lowerRelatedObjectClassName->get{$mapping['foreign']->getPhpName()}()";
+            $params[] = "{$localColumnName}: \${$lowerRelatedObjectClassName}->get{$mapping['foreign']->getPhpName()}()";
         }
 
         $params = implode(', ', $params);

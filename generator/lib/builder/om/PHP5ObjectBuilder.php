@@ -4549,8 +4549,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
 
-        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
-
         $scheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
 
         $script .= "
@@ -4569,8 +4567,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
-            \$this->{$collName}[] = \${$lowerRelatedObjectClassName};
-            \${$lowerRelatedObjectClassName}->add{$selfRelationName}(\$this);
+            \$this->{$collName}[] = {$crossObjectName};
+            {$crossObjectName}->add{$selfRelationName}(\$this);
 
             if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
                 \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));

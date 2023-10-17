@@ -4428,7 +4428,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             if (\$this->isNew() && null === \$this->$collName) {
                 // return empty collection
                 \$this->init{$relatedName}();
-            } elseif (null === \$this->$collName) {
+            } else {
                 \$$collName = $relatedQueryClassName::create(null, \$criteria)
                     ->filterBy{$selfRelationName}(\$this)
                     ->find(\$con);

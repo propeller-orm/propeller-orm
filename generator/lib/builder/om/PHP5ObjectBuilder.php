@@ -4313,6 +4313,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             $this->addCrossFKSet($script, $refFK, $crossFK);
             $this->addCrossFKCount($script, $refFK, $crossFK);
             $this->addCrossFKAdd($script, $refFK, $crossFK);
+            $this->addCrossFKAddInMemory($script, $refFK, $crossFK);
             $this->addCrossFKDoAdd($script, $refFK, $crossFK);
             $this->addCrossFKRemove($script, $refFK, $crossFK);
         }
@@ -4577,13 +4578,55 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     }
 
     /**
+     * Adds the method that adds an object into the referrer fkey collection.
+     *
+     * @param string &$script The script will be modified in this method.
+     */
+    protected function addCrossFKAddInMemory(&$script, ForeignKey $refFK, ForeignKey $crossFK)
+    {
+        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $collName = $this->getCrossFKVarName($crossFK);
+
+        $tblFK = $refFK->getTable();
+
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
+        $crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
+        $crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
+
+        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+
+        $script .= "
+    /**
+     * Associate a " . $crossObjectClassName . " object to this object
+     * through the " . $tblFK->getName() . " cross reference table.
+     *
+     * @param  " . $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
+     * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
+     */
+    public function add{$relatedObjectClassName}InMemory($crossObjectClassName $crossObjectName)
+    {
+        if (\$this->" . $collName . " === null) {
+            \$this->init" . $relCol . "();
+        }
+
+        if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
+            \$this->{$collName}[] = {$crossObjectName};
+        }
+
+        return \$this;
+    }
+";
+    }
+
+    /**
      * @param string     &$script The script will be modified in this method.
      * @param ForeignKey $refFK
      * @param ForeignKey $crossFK
      */
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
-        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
         $collName = $this->getCrossFKVarName($crossFK);
 
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
@@ -4623,14 +4666,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
     protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName})
-    {
-        if (\$this->{$collName} !== null && \$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) {
-            return;
-        }
-    
+    {    
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
         if (
+            !\$this->{$collName}->contains(\${$lowerRelatedObjectClassName}) &&
             !{$joinedTableQueryClassname}::create(__METHOD__)
                 {$filters}
                 ->findOne()
@@ -4638,18 +4678,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
-        }
-        
-        if (\$this->$collName === null) {
-            \$this->init{$relCol}();
+            \${$lowerRelatedObjectClassName}->add{$selfRelationName}InMemory(\$this);
         }
         
         if (!\$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) {
             \$this->{$collName}[] = \${$lowerRelatedObjectClassName};
-        }
-        
-        if (isset({$foreignObjectName})) {
-            \${$lowerRelatedObjectClassName}->add{$selfRelationName}(\$this);
         }
     }
 ";

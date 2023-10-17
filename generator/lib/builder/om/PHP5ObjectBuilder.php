@@ -4610,6 +4610,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $filters= implode(PHP_EOL . "\t\t\t\t", $filters);
 
+        if (! $filters) {
+            throw new EngineException("Cross-reference table misconfigured, cannot generate filters for {$crossFK->getTable()->getPhpName()}");
+        }
+
         $script .= "
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.

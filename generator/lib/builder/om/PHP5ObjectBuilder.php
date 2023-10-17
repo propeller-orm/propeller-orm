@@ -4590,27 +4590,25 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
-        $joinedTablePeerClassname = $joinedTableObjectBuilder->getPeerClassname();
+        $joinedTableQueryClassname = $joinedTableObjectBuilder->getQueryClassname();
         $className = $joinedTableObjectBuilder->getObjectClassname();
         $refKObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
         $tblFK = $refFK->getTable();
         $foreignObjectName = '$' . $tblFK->getStudlyPhpName();
 
-        $params = [];
+        $filters = [];
 
         /** @var Column[] $mapping */
         foreach ($refFK->getColumnObjectsMapping() as $mapping) {
-            $localColumnName = strtolower($mapping['local']->getName());
-            $params[] = "{$localColumnName}: \$this->get{$mapping['foreign']->getPhpName()}()";
+            $filters[] = "->filterBy{$mapping['local']->getPhpName()}(\$this->get{$mapping['foreign']->getPhpName()}(), Criteria::EQUAL)";
         }
         /** @var Column[] $mapping */
         foreach ($crossFK->getColumnObjectsMapping() as $mapping) {
-            $localColumnName = strtolower($mapping['local']->getName());
-            $params[] = "{$localColumnName}: \${$lowerRelatedObjectClassName}->get{$mapping['foreign']->getPhpName()}()";
+            $filters[] = "->filterBy{$mapping['local']->getPhpName()}(\${$lowerRelatedObjectClassName}->get{$mapping['foreign']->getPhpName()}(), Criteria::EQUAL)";
         }
 
-        $params = implode(', ', $params);
+        $filters= implode(PHP_EOL . "\t\t\t\t", $filters);
 
         $script .= "
     /**
@@ -4620,7 +4618,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!{$joinedTablePeerClassname}::retrieveByPk({$params})) { {$foreignObjectName} = new {$className}();
+        if (
+            !{$joinedTableQueryClassname}::create(__METHOD__)
+                {$filters}
+                ->findOne()
+        ) { 
+            {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
         }

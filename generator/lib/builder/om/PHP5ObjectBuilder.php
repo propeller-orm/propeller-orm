@@ -4428,7 +4428,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             if (\$this->isNew() && null === \$this->$collName) {
                 // return empty collection
                 \$this->init{$relatedName}();
-            } else {
+            } elseif (null === \$this->$collName) {
                 \$$collName = $relatedQueryClassName::create(null, \$criteria)
                     ->filterBy{$selfRelationName}(\$this)
                     ->find(\$con);
@@ -4564,8 +4564,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
 
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
+            \$this->" . $collName . "[] = " . $crossObjectName . "; // must go before doAdd{$relatedObjectClassName} call to avoid recursion
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
-            \$this->" . $collName . "[] = " . $crossObjectName . ";
 
             if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
                 \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));
@@ -4586,6 +4586,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
+
+        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4630,6 +4632,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
+            
+            \${$lowerRelatedObjectClassName}->add{$selfRelationNamePlural}();
         }
     }
 ";

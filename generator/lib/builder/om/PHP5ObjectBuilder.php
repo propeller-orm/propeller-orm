@@ -4644,7 +4644,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->init{$relCol}();
         }
         
-        if (!\$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) 
+        if (!\$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) {
             \$this->{$collName}[] = \${$lowerRelatedObjectClassName};
         }
         

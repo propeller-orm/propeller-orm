@@ -39,7 +39,7 @@ interface PropelPlatformInterface
      *
      * @param PDO $con The database connection to use in this Platform class.
      */
-    public function setConnection(PDO $con = null);
+    public function setConnection(?PDO $con = null);
 
     /**
      * Returns the database connection to use for this Platform class.

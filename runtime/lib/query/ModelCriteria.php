@@ -2340,7 +2340,7 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param PropelPDO $con = null
+     * @param PropelPDO|null $con = null
      *
      * @return boolean
      */

@@ -614,7 +614,7 @@ class BasePropelPDO extends PDO
      * @param string|null  $methodName    Name of the method whose execution is being logged.
      * @param array|null   $debugSnapshot Previous return value from self::getDebugSnapshot().
      */
-    public function log(string $msg, string $level = null, string $methodName = null, array $debugSnapshot = null): void
+    public function log(string $msg, ?string $level = null, ?string $methodName = null, ?array $debugSnapshot = null): void
     {
         // If logging has been specifically disabled, this method won't do anything
         if (!$this->isLoggingEnabled()) {

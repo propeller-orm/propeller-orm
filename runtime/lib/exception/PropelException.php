@@ -27,12 +27,12 @@ class PropelException extends Exception
     /**
      * Emulates wrapped exceptions for PHP < 5.3
      *
-     * @param string    $message
-     * @param Exception $previous
+     * @param string         $message
+     * @param Exception|null $previous
      *
      * @return PropelException
      */
-    public function __construct($message = null, Exception $previous = null)
+    public function __construct($message = null, ?Exception $previous = null)
     {
         if ($previous === null && $message instanceof Exception) {
             $previous = $message;

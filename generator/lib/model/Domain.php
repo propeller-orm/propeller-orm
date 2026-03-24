@@ -303,9 +303,9 @@ class Domain extends XMLElement
     /**
      * Replaces the default value if the new value is not null.
      *
-     * @param ColumnDefaultValue $value The default value object
+     * @param ColumnDefaultValue|null $value The default value object
      */
-    public function replaceDefaultValue(ColumnDefaultValue $value = null)
+    public function replaceDefaultValue(?ColumnDefaultValue $value = null)
     {
         if ($value !== null) {
             $this->defaultValue = $value;

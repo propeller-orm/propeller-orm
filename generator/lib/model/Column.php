@@ -915,7 +915,7 @@ class Column extends XMLElement
         return $this->getType();
     }
 
-    public function isDefaultSqlType(PropelPlatformInterface $platform = null)
+    public function isDefaultSqlType(?PropelPlatformInterface $platform = null)
     {
         if (null === $this->domain || null === $this->domain->getSqlType() || null === $platform) {
             return true;

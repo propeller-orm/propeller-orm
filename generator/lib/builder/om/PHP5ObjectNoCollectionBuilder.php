@@ -68,7 +68,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * the [$clo] column, since it is not populated by
      * the hydrate() method.
      *
-     * @param      \$con PropelPDO (optional) The PropelPDO connection to use.
+     * @param      \$con PropelPDO|null (optional) The PropelPDO connection to use.
      * @return void
      * @throws PropelException - any underlying error will be wrapped and re-thrown.
      */";
@@ -86,7 +86,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     {
         $cfc = $col->getPhpName();
         $script .= "
-    protected function load$cfc(PropelPDO \$con = null)
+    protected function load$cfc(?PropelPDO \$con = null)
     {";
     }
 
@@ -389,11 +389,11 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * This will only work if the object has been saved and has a valid primary key set.
      *
      * @param      boolean \$deep (optional) Whether to also de-associated any related objects.
-     * @param      PropelPDO \$con (optional) The PropelPDO connection to use.
+     * @param      PropelPDO|null \$con (optional) The PropelPDO connection to use.
      * @return void
      * @throws PropelException - if this object is deleted, unsaved or doesn't have pk match in db
      */
-    public function reload(\$deep = false, PropelPDO \$con = null)
+    public function reload(\$deep = false, ?PropelPDO \$con = null)
     {
         if (\$this->isDeleted()) {
             throw new PropelException(\"Cannot reload a deleted object.\");
@@ -534,11 +534,11 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Get the associated $className object
      *
-     * @param      PropelPDO Optional Connection object.
+     * @param      PropelPDO|null Optional Connection object.
      * @return                 $className The associated $className object.
      * @throws PropelException
      */
-    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(?PropelPDO \$con = null)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional)) {";
@@ -670,11 +670,11 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      *
      * @param      Criteria \$criteria
      * @param      boolean \$distinct
-     * @param      PropelPDO \$con
+     * @param      PropelPDO|null \$con
      * @return int             Count of related $className objects.
      * @throws PropelException
      */
-    public function count$relCol(Criteria \$criteria = null, \$distinct = false, PropelPDO \$con = null)
+    public function count$relCol(?Criteria \$criteria = null, \$distinct = false, ?PropelPDO \$con = null)
     {";
 
         $script .= "
@@ -771,12 +771,12 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * related $relCol from storage. If this " . $this->getObjectClassname() . " is new, it will return
      * an empty collection or the current collection, the criteria is ignored on a new object.
      *
-     * @param      PropelPDO \$con
+     * @param      PropelPDO|null \$con
      * @param      Criteria \$criteria
      * @return array           {$className}[]
      * @throws PropelException
      */
-    public function get$relCol(\$criteria = null, PropelPDO \$con = null)
+    public function get$relCol(\$criteria = null, ?PropelPDO \$con = null)
     {";
 
         $script .= "
@@ -861,11 +861,11 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Gets a single $className object, which is related to this object by a one-to-one relationship.
      *
-     * @param      PropelPDO \$con
+     * @param      PropelPDO|null \$con
      * @return                 $className
      * @throws PropelException
      */
-    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(?PropelPDO \$con = null)
     {
 ";
         $script .= "

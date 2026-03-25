@@ -183,11 +183,11 @@ public function childrenOf($objectName)
  * The result does not include the object passed as parameter.
  *
  * @param     {$this->objectClassname} $objectName The object to use for sibling search
- * @param      PropelPDO \$con Connection to use.
+ * @param      PropelPDO|null \$con Connection to use.
  *
  * @return    {$this->queryClassname} The current query, for fluid interface
  */
-public function siblingsOf($objectName, PropelPDO \$con = null)
+public function siblingsOf($objectName, ?PropelPDO \$con = null)
 {
     if ({$objectName}->isRoot()) {
         return \$this->

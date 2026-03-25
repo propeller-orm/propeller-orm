@@ -204,11 +204,11 @@ public function orderByRank(\$order = Criteria::ASC)
 $paramsDoc";
         }
         $script .= "
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname}
  */
-public function findOneByRank(\$rank, " . ($useScope ? "$methodSignature, " : "") . "PropelPDO \$con = null)
+public function findOneByRank(\$rank, " . ($useScope ? "$methodSignature, " : "") . "?PropelPDO \$con = null)
 {";
 
         if ($useScope) {
@@ -242,7 +242,7 @@ $paramsDoc
 ";
          }
         $script .= "
- * @param      PropelPDO \$con	Connection to use.
+ * @param      PropelPDO|null \$con	Connection to use.
  *
  * @return     mixed the list of results, formatted by the current formatter
  */
@@ -287,11 +287,11 @@ $paramsDoc
 ";
         }
         $script .= "
- * @param     PropelPDO optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    integer highest position
  */
-public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "PropelPDO \$con = null)
+public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
@@ -330,7 +330,7 @@ public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "Propel
  *
  * @return    integer highest position
  */
-public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO \$con = null)
+public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
@@ -366,7 +366,7 @@ public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO 
  *
  * @return    boolean true if the reordering took place, false if a database problem prevented it
  */
-public function reorder(array \$order, PropelPDO \$con = null)
+public function reorder(array \$order, ?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME);

@@ -247,11 +247,11 @@ public function enforceVersioning()
 /**
  * Checks whether the current state must be recorded as a version
  *
- * @param PropelPDO \$con An optional PropelPDO connection to use.
+ * @param PropelPDO|null \$con An optional PropelPDO connection to use.
  *
  * @return  boolean
  */
-public function isVersioningNecessary(\$con = null)
+public function isVersioningNecessary(?PropelPDO \$con = null)
 {
     if (\$this->alreadyInSave) {
         return false;
@@ -326,11 +326,11 @@ public function isVersioningNecessary(\$con = null)
 /**
  * Creates a version of the current object and saves it.
  *
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  {$versionARClassname} A version object
  */
-public function addVersion(\$con = null)
+public function addVersion(?PropelPDO \$con = null)
 {
     \$this->enforceVersion = false;
 
@@ -388,12 +388,12 @@ public function addVersion(\$con = null)
  * Sets the properties of the current object to the value they had at a specific version
  *
  * @param   integer \$versionNumber The version number to read
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  {$ARclassName} The current object (for fluent API support)
  * @throws  PropelException - if no object with the given version can be found.
  */
-public function toVersion(\$versionNumber, \$con = null)
+public function toVersion(\$versionNumber, ?PropelPDO \$con = null)
 {
     \$version = \$this->getOneVersion(\$versionNumber, \$con);
     if (!\$version) {
@@ -420,12 +420,12 @@ public function toVersion(\$versionNumber, \$con = null)
  * Sets the properties of the curent object to the value they had at a specific version
  *
  * @param   {$versionARClassname} \$version The version object to use
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  * @param   array \$loadedObjects objects thats been loaded in a chain of populateFromVersion calls on referrer or fk objects.
  *
  * @return  {$ARclassName} The current object (for fluent API support)
  */
-public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = array())
+public function populateFromVersion(\$version, ?PropelPDO \$con = null, &\$loadedObjects = array())
 {
 ";
         $script .= "
@@ -548,11 +548,11 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
 /**
  * Gets the latest persisted version number for the current object
  *
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  integer
  */
-public function getLastVersionNumber(\$con = null)
+public function getLastVersionNumber(?PropelPDO \$con = null)
 {
     \$v = {$this->getVersionQueryClassName()}::create()
         ->filterBy{$this->table->getPhpName()}(\$this)
@@ -573,11 +573,11 @@ public function getLastVersionNumber(\$con = null)
 /**
  * Checks whether the current object is the latest one
  *
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  boolean
  */
-public function isLastVersion(\$con = null)
+public function isLastVersion(?PropelPDO \$con = null)
 {
     return \$this->getLastVersionNumber(\$con) == \$this->getVersion();
 }
@@ -592,11 +592,11 @@ public function isLastVersion(\$con = null)
  * Retrieves a version object for this entity and a version number
  *
  * @param   integer \$versionNumber The version number to read
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  {$versionARClassname} A version object
  */
-public function getOneVersion(\$versionNumber, \$con = null)
+public function getOneVersion(\$versionNumber, ?PropelPDO \$con = null)
 {
     return {$this->getVersionQueryClassName()}::create()
         ->filterBy{$this->table->getPhpName()}(\$this)
@@ -617,11 +617,11 @@ public function getOneVersion(\$versionNumber, \$con = null)
 /**
  * Gets all the versions of this object, in incremental order
  *
- * @param   PropelPDO \$con the connection to use
+ * @param   PropelPDO|null \$con the connection to use
  *
  * @return  PropelObjectCollection A list of {$versionARClassname} objects
  */
-public function getAllVersions(\$con = null)
+public function getAllVersions(?PropelPDO \$con = null)
 {
     \$criteria = new Criteria();
     \$criteria->addAscendingOrderByColumn({$this->builder->getColumnConstant($versionForeignColumn)});
@@ -715,14 +715,14 @@ protected function computeDiff(\$fromVersion, \$toVersion, \$keys = 'columns', \
  * );
  * </code>
  *
- * @param   integer   \$versionNumber
- * @param   string    \$keys Main key used for the result diff (versions|columns)
- * @param   PropelPDO \$con the connection to use
- * @param   array     \$ignoredColumns  The columns to exclude from the diff.
+ * @param   integer        \$versionNumber
+ * @param   string         \$keys Main key used for the result diff (versions|columns)
+ * @param   PropelPDO|null \$con the connection to use
+ * @param   array          \$ignoredColumns  The columns to exclude from the diff.
  *
  * @return  array A list of differences
  */
-public function compareVersion(\$versionNumber, \$keys = 'columns', \$con = null, \$ignoredColumns = array())
+public function compareVersion(\$versionNumber, \$keys = 'columns', ?PropelPDO \$con = null, \$ignoredColumns = array())
 {
     \$fromVersion = \$this->toArray();
     \$toVersion = \$this->getOneVersion(\$versionNumber, \$con)->toArray();
@@ -745,15 +745,15 @@ public function compareVersion(\$versionNumber, \$keys = 'columns', \$con = null
  * );
  * </code>
  *
- * @param   integer   \$fromVersionNumber
- * @param   integer   \$toVersionNumber
- * @param   string    \$keys Main key used for the result diff (versions|columns)
- * @param   PropelPDO \$con the connection to use
- * @param   array     \$ignoredColumns  The columns to exclude from the diff.
+ * @param   int            \$fromVersionNumber
+ * @param   int            \$toVersionNumber
+ * @param   string         \$keys Main key used for the result diff (versions|columns)
+ * @param   PropelPDO|null \$con the connection to use
+ * @param   string[]       \$ignoredColumns  The columns to exclude from the diff.
  *
  * @return  array A list of differences
  */
-public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys = 'columns', \$con = null, \$ignoredColumns = array())
+public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys = 'columns', ?PropelPDO \$con = null, array \$ignoredColumns = array())
 {
     \$fromVersion = \$this->getOneVersion(\$fromVersionNumber, \$con)->toArray();
     \$toVersion = \$this->getOneVersion(\$toVersionNumber, \$con)->toArray();
@@ -781,11 +781,11 @@ public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys =
  *
  * @param integer \$number the number of record to return.
  * @param {$this->getVersionQueryClassName()}|Criteria \$criteria Additional criteria to filter.
- * @param PropelPDO \$con An optional connection to use.
+ * @param PropelPDO|null \$con An optional connection to use.
  *
  * @return PropelCollection|{$versionARClassname}[] List of {$versionARClassname} objects
  */
-public function getLastVersions(\$number = 10, \$criteria = null, PropelPDO \$con = null)
+public function getLastVersions(\$number = 10, \$criteria = null, ?PropelPDO \$con = null)
 {
     \$criteria = {$this->getVersionQueryClassName()}::create(null, \$criteria);
     \$criteria->addDescendingOrderByColumn({$versionPeer}::VERSION);

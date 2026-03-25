@@ -139,8 +139,8 @@ class QueryBuilder extends OMBuilder
 
         // override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
         $script .= "
- * @method ?$modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
- * @method $modelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
+ * @method ?$modelClass findOne(?PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method $modelClass findOneOrCreate(?PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
  *";
 
         // magic findBy() methods, for IDE completion
@@ -427,11 +427,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * </code>
      *
      * @param " . $pkType . " \$key Primary key to use for the query $pkDescription
-     * @param     PropelPDO \$con an optional connection object
+     * @param     PropelPDO|null \$con an optional connection object
      *
      * @return   $class|{$class}[]|mixed the result, formatted by the current formatter
      */
-    public function findPk(\$key, \$con = null)
+    public function findPk(\$key, ?PropelPDO \$con = null)
     {
         if (\$key === null) {
             return null;
@@ -486,7 +486,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * @return                 $ARClassname A model object, or null if the key is not found
      * @throws PropelException
      */
-     public function findOneBy{$column}(\$key, \$con = null)
+     public function findOneBy{$column}(\$key, PropelPDO \$con)
      {
         return \$this->findPk(\$key, \$con);
      }
@@ -532,7 +532,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * @return                 $ARClassname A model object, or null if the key is not found
      * @throws PropelException
      */
-    protected function findPkSimple(\$key, \$con)
+    protected function findPkSimple(\$key, PropelPDO \$con)
     {
         \$sql = '$query';
         try {
@@ -594,7 +594,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      *
      * @return " . $class . "|{$class}[]|mixed the result, formatted by the current formatter
      */
-    protected function findPkComplex(\$key, \$con)
+    protected function findPkComplex(\$key, PropelPDO \$con)
     {
         // As the query uses a PK condition, no limit(1) is necessary.
         \$criteria = \$this->isKeepQuery() ? clone \$this : \$this;
@@ -633,11 +633,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         $script .= "
      * </code>
      * @param     array \$keys Primary keys to use for the query
-     * @param     PropelPDO \$con an optional connection object
+     * @param     PropelPDO|null \$con an optional connection object
      *
      * @return PropelObjectCollection|{$class}[]|mixed the list of results, formatted by the current formatter
      */
-    public function findPks(\$keys, \$con = null)
+    public function findPks(\$keys, ?PropelPDO \$con = null)
     {
         if (\$con === null) {
             \$con = Propel::getConnection(\$this->getDbName(), Propel::CONNECTION_READ);

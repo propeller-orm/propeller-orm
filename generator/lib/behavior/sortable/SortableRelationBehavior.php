@@ -74,9 +74,9 @@ class SortableRelationBehavior extends Behavior
         $script .= "
 /**
  * Moves related {$this->getRelatedClassPluralForm()} to null scope
- * @param PropelPDO \$con A connection object
+ * @param PropelPDO|null \$con A connection object
  */
-public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \$con = null)
+public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(?PropelPDO \$con = null)
 {
     \$maxRank = $queryClass::create()->getMaxRank(\$this->getPrimaryKey(), \$con);
     if (null !== \$maxRank) { // getMaxRank() returns null for empty tables

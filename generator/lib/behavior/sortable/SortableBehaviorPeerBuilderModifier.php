@@ -194,11 +194,11 @@ public static function sortableApplyScopeCriteria(Criteria \$criteria, \$scope, 
  * @param      int \$scope		Scope to determine which suite to consider";
         }
         $script .= "
- * @param     PropelPDO optional connection
+ * @param     PropelPDO|null optional connection
  *
  * @return    integer highest position
  */
-public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
+public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
@@ -232,11 +232,11 @@ public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "P
  * @param      int \$scope		Scope to determine which suite to consider";
         }
         $script .= "
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return {$this->objectClassname}
  */
-public static function retrieveByRank(\$rank, " . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
+public static function retrieveByRank(\$rank, " . ($useScope ? "\$scope = null, " : "") . "?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME);
@@ -266,12 +266,12 @@ public static function retrieveByRank(\$rank, " . ($useScope ? "\$scope = null, 
  * Beware that there is no check made on the positions passed
  * So incoherent positions will result in an incoherent list
  *
- * @param     array     \$order id => rank pairs
- * @param     PropelPDO \$con   optional connection
+ * @param     array          \$order id => rank pairs
+ * @param     PropelPDO|null \$con   optional connection
  *
  * @return    boolean true if the reordering took place, false if a database problem prevented it
  */
-public static function reorder(array \$order, PropelPDO \$con = null)
+public static function reorder(array \$order, ?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME);
@@ -306,13 +306,13 @@ public static function reorder(array \$order, PropelPDO \$con = null)
 /**
  * Return an array of sortable objects ordered by position
  *
- * @param     Criteria  \$criteria  optional criteria object
- * @param     string    \$order     sorting order, to be chosen between Criteria::ASC (default) and Criteria::DESC
- * @param     PropelPDO \$con       optional connection
+ * @param     Criteria       \$criteria  optional criteria object
+ * @param     string         \$order     sorting order, to be chosen between Criteria::ASC (default) and Criteria::DESC
+ * @param     PropelPDO|null \$con       optional connection
  *
  * @return    array list of sortable objects
  */
-public static function doSelectOrderByRank(Criteria \$criteria = null, \$order = Criteria::ASC, PropelPDO \$con = null)
+public static function doSelectOrderByRank(?Criteria \$criteria = null, \$order = Criteria::ASC, ?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME);
@@ -344,13 +344,13 @@ public static function doSelectOrderByRank(Criteria \$criteria = null, \$order =
 /**
  * Return an array of sortable objects in the given scope ordered by position
  *
- * @param     mixed     \$scope  the scope of the list
- * @param     string    \$order  sorting order, to be chosen between Criteria::ASC (default) and Criteria::DESC
- * @param     PropelPDO \$con    optional connection
+ * @param     mixed          \$scope  the scope of the list
+ * @param     string         \$order  sorting order, to be chosen between Criteria::ASC (default) and Criteria::DESC
+ * @param     PropelPDO|null \$con    optional connection
  *
  * @return    array list of sortable objects
  */
-public static function retrieveList(\$scope, \$order = Criteria::ASC, PropelPDO \$con = null)
+public static function retrieveList(\$scope, \$order = Criteria::ASC, ?PropelPDO \$con = null)
 {
     \$c = new Criteria();
     {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
@@ -367,12 +367,12 @@ public static function retrieveList(\$scope, \$order = Criteria::ASC, PropelPDO 
 /**
  * Return the number of sortable objects in the given scope
  *
- * @param     mixed     \$scope  the scope of the list
- * @param     PropelPDO \$con    optional connection
+ * @param     mixed          \$scope  the scope of the list
+ * @param     PropelPDO|null \$con    optional connection
  *
  * @return    array list of sortable objects
  */
-public static function countList(\$scope, PropelPDO \$con = null)
+public static function countList(\$scope, ?PropelPDO \$con = null)
 {
     \$c = new Criteria();
     {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
@@ -389,12 +389,12 @@ public static function countList(\$scope, PropelPDO \$con = null)
 /**
  * Deletes the sortable objects in the given scope
  *
- * @param     mixed     \$scope  the scope of the list
- * @param     PropelPDO \$con    optional connection
+ * @param     mixed          \$scope  the scope of the list
+ * @param     PropelPDO|null \$con    optional connection
  *
  * @return    int number of deleted objects
  */
-public static function deleteList(\$scope, PropelPDO \$con = null)
+public static function deleteList(\$scope, ?PropelPDO \$con = null)
 {
     \$c = new Criteria();
     {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
@@ -420,9 +420,9 @@ public static function deleteList(\$scope, PropelPDO \$con = null)
  * @param      mixed \$scope Scope to use for the shift. Scalar value (single scope) or array";
         }
         $script .= "
- * @param      PropelPDO \$con Connection to use.
+ * @param      PropelPDO|null \$con Connection to use.
  */
-public static function shiftRank(\$delta, \$first = null, \$last = null, " . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
+public static function shiftRank(\$delta, \$first = null, \$last = null, " . ($useScope ? "\$scope = null, " : "") . "?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);

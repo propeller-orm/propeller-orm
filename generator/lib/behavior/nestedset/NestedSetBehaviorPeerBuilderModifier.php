@@ -234,7 +234,7 @@ public static function retrieveTree(" . ($useScope ? "\$scope = null, " : "") . 
  * @param      $objectClassname \$node	Propel object for src node
  * @return     bool
  */
-public static function isValid($?objectClassname \$node = null)
+public static function isValid(?$objectClassname \$node = null)
 {
     if (is_object(\$node) && \$node->getRightValue() > \$node->getLeftValue()) {
         return true;

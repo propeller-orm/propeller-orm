@@ -909,7 +909,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
     " . $visibility . " function get$cfc(\$format = " . $defaultfmt . "";
         if ($col->isLazyLoad()) {
-            $script .= ", \$con = null";
+            $script .= ", ?PropelPDO \$con = null";
         }
         $script .= ")
     {";

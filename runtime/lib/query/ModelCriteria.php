@@ -1216,11 +1216,11 @@ class ModelCriteria extends Criteria
      * and format the list of results with the current formatter
      * By default, returns an array of model objects
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return PropelObjectCollection|array|mixed the list of results, formatted by the current formatter
      */
-    public function find($con = null)
+    public function find(?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
@@ -1237,11 +1237,11 @@ class ModelCriteria extends Criteria
      * and format the result with the current formatter
      * By default, returns a model object
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      */
-    public function findOne($con = null)
+    public function findOne(?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
@@ -1259,13 +1259,13 @@ class ModelCriteria extends Criteria
      * and format the result with the current formatter
      * By default, returns a model object
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      *
      * @throws PropelException
      */
-    public function findOneOrCreate($con = null)
+    public function findOneOrCreate(?PropelPDO $con = null)
     {
         if ($this->joins) {
             throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');
@@ -1292,12 +1292,12 @@ class ModelCriteria extends Criteria
      * $bookOpinion = $c->findPk(array(34, 634), $con);
      * </code>
      *
-     * @param mixed     $key Primary key to use for the query
-     * @param PropelPDO $con an optional connection object
+     * @param mixed          $key Primary key to use for the query
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      */
-    public function findPk($key, $con = null)
+    public function findPk($key, ?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
@@ -1332,14 +1332,14 @@ class ModelCriteria extends Criteria
      * $bookOpinion = $c->findPks(array(array(34, 634), array(45, 518), array(34, 765)), $con);
      * </code>
      *
-     * @param array     $keys Primary keys to use for the query
-     * @param PropelPDO $con  an optional connection object
+     * @param array          $keys Primary keys to use for the query
+     * @param PropelPDO|null $con  an optional connection object
      *
      * @return mixed the list of results, formatted by the current formatter
      *
      * @throws PropelException
      */
-    public function findPks($keys, $con = null)
+    public function findPks($keys, ?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
@@ -1370,7 +1370,7 @@ class ModelCriteria extends Criteria
      *
      * @throws PropelException
      */
-    protected function doSelect($con)
+    protected function doSelect(PropelPDO $con)
     {
         // check that the columns of the main class are already added (if this is the primary ModelCriteria)
         if (!$this->hasSelectClause() && !$this->getPrimaryCriteria()) {
@@ -1401,13 +1401,13 @@ class ModelCriteria extends Criteria
      * @see       filterBy()
      * @see       find()
      *
-     * @param string    $column A string representing the column phpName, e.g. 'AuthorId'
-     * @param mixed     $value  A value for the condition
-     * @param PropelPDO $con    An optional connection object
+     * @param string         $column A string representing the column phpName, e.g. 'AuthorId'
+     * @param mixed          $value  A value for the condition
+     * @param PropelPDO|null $con    An optional connection object
      *
      * @return mixed the list of results, formatted by the current formatter
      */
-    public function findBy($column, $value, $con = null)
+    public function findBy($column, $value, ?PropelPDO $con = null)
     {
         $method = 'filterBy' . $column;
         $this->$method($value);
@@ -1427,12 +1427,12 @@ class ModelCriteria extends Criteria
      * @see       filterByArray()
      * @see       find()
      *
-     * @param mixed     $conditions An array of conditions, using column phpNames as key
-     * @param PropelPDO $con        an optional connection object
+     * @param mixed          $conditions An array of conditions, using column phpNames as key
+     * @param PropelPDO|null $con        an optional connection object
      *
      * @return mixed the list of results, formatted by the current formatter
      */
-    public function findByArray($conditions, $con = null)
+    public function findByArray($conditions, ?PropelPDO $con = null)
     {
         $this->filterByArray($conditions);
 
@@ -1445,13 +1445,13 @@ class ModelCriteria extends Criteria
      * @see       filterBy()
      * @see       findOne()
      *
-     * @param mixed     $column A string representing thecolumn phpName, e.g. 'AuthorId'
-     * @param mixed     $value  A value for the condition
-     * @param PropelPDO $con    an optional connection object
+     * @param mixed          $column A string representing thecolumn phpName, e.g. 'AuthorId'
+     * @param mixed          $value  A value for the condition
+     * @param PropelPDO|null $con    an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      */
-    public function findOneBy($column, $value, $con = null)
+    public function findOneBy($column, $value, ?PropelPDO $con = null)
     {
         $method = 'filterBy' . $column;
         $this->$method($value);
@@ -1471,12 +1471,12 @@ class ModelCriteria extends Criteria
      * @see       filterByArray()
      * @see       findOne()
      *
-     * @param mixed     $conditions An array of conditions, using column phpNames as key
-     * @param PropelPDO $con        an optional connection object
+     * @param mixed          $conditions An array of conditions, using column phpNames as key
+     * @param PropelPDO|null $con        an optional connection object
      *
      * @return mixed the list of results, formatted by the current formatter
      */
-    public function findOneByArray($conditions, $con = null)
+    public function findOneByArray($conditions, ?PropelPDO $con = null)
     {
         $this->filterByArray($conditions);
 
@@ -1486,11 +1486,11 @@ class ModelCriteria extends Criteria
     /**
      * Issue a SELECT COUNT(*) query based on the current ModelCriteria
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return integer the number of results
      */
-    public function count($con = null)
+    public function count(?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
@@ -1517,11 +1517,11 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param $con
+     * @param PropelPDO $con
      * @return PDOStatement
      * @throws PropelException
      */
-    protected function doCount($con)
+    protected function doCount(PropelPDO $con)
     {
         $dbMap = Propel::getDatabaseMap($this->getDbName());
         $db = Propel::getDB($this->getDbName());
@@ -1556,7 +1556,6 @@ class ModelCriteria extends Criteria
             $sql = BasePeer::createSelectSql($this, $params);
         }
         try {
-            /* @var $con PDO */
             $stmt = $con->prepare($sql);
             $db->bindValues($stmt, $params, $dbMap);
             $stmt->execute();
@@ -1573,13 +1572,13 @@ class ModelCriteria extends Criteria
      * and uses a page and a maximum number of results per page
      * to compute an offet and a limit.
      *
-     * @param int       $page       number of the page to start the pager on. Page 1 means no offset
-     * @param int       $maxPerPage maximum number of results per page. Determines the limit
-     * @param PropelPDO $con        an optional connection object
+     * @param int            $page       number of the page to start the pager on. Page 1 means no offset
+     * @param int            $maxPerPage maximum number of results per page. Determines the limit
+     * @param PropelPDO|null $con        an optional connection object
      *
      * @return PropelModelPager a pager object, supporting iteration
      */
-    public function paginate($page = 1, $maxPerPage = 10, $con = null)
+    public function paginate($page = 1, $maxPerPage = 10, ?PropelPDO $con = null)
     {
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $pager = new PropelModelPager($criteria, $maxPerPage);
@@ -1633,13 +1632,13 @@ class ModelCriteria extends Criteria
      * Issue a DELETE query based on the current ModelCriteria
      * An optional hook on basePreDelete() can prevent the actual deletion
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return integer the number of deleted rows
      *
      * @throws PropelException
      */
-    public function delete($con = null)
+    public function delete(?PropelPDO $con = null)
     {
         if (count($this->getMap()) == 0) {
             throw new PropelException('delete() expects a Criteria with at least one condition. Use deleteAll() to delete all the rows of a table');
@@ -1675,7 +1674,7 @@ class ModelCriteria extends Criteria
      *
      * @return integer the number of deleted rows
      */
-    public function doDelete($con)
+    public function doDelete(PropelPDO $con)
     {
         $affectedRows = call_user_func(array($this->modelPeerName, 'doDelete'), $this, $con);
 
@@ -1686,13 +1685,13 @@ class ModelCriteria extends Criteria
      * Issue a DELETE query based on the current ModelCriteria deleting all rows in the table
      * An optional hook on basePreDelete() can prevent the actual deletion
      *
-     * @param PropelPDO $con an optional connection object
+     * @param PropelPDO|null $con an optional connection object
      *
      * @return integer the number of deleted rows
      *
      * @throws Exception|PropelException
      */
-    public function deleteAll($con = null)
+    public function deleteAll(?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_WRITE);
@@ -1764,15 +1763,15 @@ class ModelCriteria extends Criteria
      * Beware that behaviors based on hooks in the object's save() method
      * will only be triggered if you force individual saves, i.e. if you pass true as second argument.
      *
-     * @param array     $values               Associative array of keys and values to replace
-     * @param PropelPDO $con                  an optional connection object
-     * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
+     * @param array          $values               Associative array of keys and values to replace
+     * @param PropelPDO|null $con                  an optional connection object
+     * @param boolean        $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      *
      * @return Integer Number of updated rows
      *
      * @throws PropelException
      */
-    public function update($values, $con = null, $forceIndividualSaves = false)
+    public function update($values, ?PropelPDO $con = null, $forceIndividualSaves = false)
     {
         if (!is_array($values)) {
             throw new PropelException('set() expects an array as first argument');
@@ -2310,12 +2309,12 @@ class ModelCriteria extends Criteria
     /**
      * Make explain plan of the query
      *
-     * @param PropelPDO $con propel connection
+     * @param PropelPDO|null $con propel connection
      *
      * @throws PropelException on error
      * @return array           array of the explain plan
      */
-    public function explain($con = null)
+    public function explain(?PropelPDO $con = null)
     {
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName());
@@ -2340,11 +2339,11 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param PropelPDO|null $con = null
+     * @param PropelPDO|null $con optional propel connection object
      *
      * @return boolean
      */
-    public function exists($con = null)
+    public function exists(?PropelPDO $con = null)
     {
         return 0 !== $this->count($con);
     }

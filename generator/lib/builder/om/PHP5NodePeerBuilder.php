@@ -159,7 +159,7 @@ abstract class " . $this->getClassname() . " {
     /**
      * Temp function for CodeBase hacks that will go away.
      */
-    public static function isCodeBase(\$con = null)
+    public static function isCodeBase(?PropelPDO \$con = null)
     {
         if (\$con === null)
             \$con = Propel::getConnection($peerClassname::DATABASE_NAME);

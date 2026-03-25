@@ -310,11 +310,11 @@ public function orderByLevel(\$reverse = false)
  * @param      int \$scope		Scope to determine which root node to return";
         }
         $script .= "
- * @param      PropelPDO \$con	Connection to use.
+ * @param      PropelPDO|null \$con	Connection to use.
  *
  * @return     {$this->objectClassname} The tree root object
  */
-public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "\$con = null)
+public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "?PropelPDO \$con = null)
 {
     return \$this
         ->addUsingAlias({$this->peerClassname}::LEFT_COL, 1, Criteria::EQUAL)";
@@ -334,11 +334,11 @@ public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "\$con = nu
 /**
  * Returns the root objects for all trees.
  *
- * @param      PropelPDO \$con	Connection to use.
+ * @param      PropelPDO|null \$con	Connection to use.
  *
  * @return    mixed the list of results, formatted by the current formatter
  */
-public function findRoots(\$con = null)
+public function findRoots(?PropelPDO \$con = null)
 {
     return \$this
         ->treeRoots()
@@ -359,11 +359,11 @@ public function findRoots(\$con = null)
  * @param      int \$scope		Scope to determine which tree node to return";
         }
         $script .= "
- * @param      PropelPDO \$con	Connection to use.
+ * @param      PropelPDO|null \$con	Connection to use.
  *
  * @return     mixed the list of results, formatted by the current formatter
  */
-public function findTree(" . ($useScope ? "\$scope = null, " : "") . "\$con = null)
+public function findTree(" . ($useScope ? "\$scope = null, " : "") . "?PropelPDO \$con = null)
 {
     return \$this";
         if ($useScope) {

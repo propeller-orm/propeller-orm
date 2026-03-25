@@ -246,7 +246,7 @@ $paramsDoc
  *
  * @return     mixed the list of results, formatted by the current formatter
  */
-public function findList(" . ($useScope ? "$methodSignature, " : "") . "\$con = null)
+public function findList(" . ($useScope ? "$methodSignature, " : "") . "?PropelPDO \$con = null)
 {
 ";
 

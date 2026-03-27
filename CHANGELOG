@@ -1,7 +1,14 @@
 # Changelog Of The Propel 1.x Branch #
 
-## Unreleased
+## 2026-03-27: Version 3.1
 
+- [#21](https://github.com/propeller-orm/propeller-orm/pull/21) PHP 8.4 compatibility
+- Dropped support for PHP 7.4
+
+## 2023-10-09: Version 3.0.1
+
+- [#15](https://github.com/propeller-orm/propeller-orm/pull/15)
+  [#17](https://github.com/propeller-orm/propeller-orm/pull/17) PHP 8.2 compatibility
 - [#1](https://github.com/propeller-orm/propeller-orm/pull/1) Switch to external autoloader (i.e. composer.json) instead of requiring files explicitly
 
 ## 2022-11-28: Version 3.0.0

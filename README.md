@@ -1,6 +1,6 @@
 # Propeller ORM
 
-Propeller ORM is an open-source Object-Relational Mapping (ORM) for PHP7.
+Propeller ORM is an open-source Object-Relational Mapping (ORM) for PHP8.
 
 ## A quick tour of the features ##
 
@@ -14,7 +14,7 @@ Propeller has some nice features you should know about:
 ## Installation ##
 
 ```
-composer require propeller-orm/propeller-orm:^2.0
+composer require propeller-orm/propeller-orm:^3.1
 ```
 
 ## License ##

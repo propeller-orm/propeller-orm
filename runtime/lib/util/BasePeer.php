@@ -457,14 +457,14 @@ class BasePeer
     /**
      * Executes query build by createSelectSql() and returns the resultset statement.
      *
-     * @param Criteria  $criteria A Criteria.
-     * @param PropelPDO $con      A PropelPDO connection to use.
+     * @param Criteria       $criteria A Criteria.
+     * @param PropelPDO|null $con      A PropelPDO connection to use.
      *
      * @return PDOStatement    The resultset.
      * @throws PropelException
      * @see        createSelectSql()
      */
-    public static function doSelect(Criteria $criteria, PropelPDO $con = null)
+    public static function doSelect(Criteria $criteria, ?PropelPDO $con = null)
     {
         $dbMap = Propel::getDatabaseMap($criteria->getDbName());
         $db = Propel::getDB($criteria->getDbName());
@@ -499,14 +499,14 @@ class BasePeer
      * Executes a COUNT query using either a simple SQL rewrite or, for more complex queries, a
      * sub-select of the SQL created by createSelectSql() and returns the statement.
      *
-     * @param Criteria  $criteria A Criteria.
-     * @param PropelPDO $con      A PropelPDO connection to use.
+     * @param Criteria       $criteria A Criteria.
+     * @param PropelPDO|null $con      A PropelPDO connection to use.
      *
      * @return PDOStatement    The resultset statement.
      * @throws PropelException
      * @see        createSelectSql()
      */
-    public static function doCount(Criteria $criteria, PropelPDO $con = null)
+    public static function doCount(Criteria $criteria, ?PropelPDO $con = null)
     {
         $dbMap = Propel::getDatabaseMap($criteria->getDbName());
         $db = Propel::getDB($criteria->getDbName());

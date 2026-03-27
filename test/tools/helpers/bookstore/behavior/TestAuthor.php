@@ -10,7 +10,7 @@
 
 class TestAuthor extends Author
 {
-    public function preInsert(PropelPDO $con = null)
+    public function preInsert(?PropelPDO $con = null)
     {
         parent::preInsert($con);
         $this->setFirstName('PreInsertedFirstname');
@@ -18,13 +18,13 @@ class TestAuthor extends Author
         return true;
     }
 
-    public function postInsert(PropelPDO $con = null)
+    public function postInsert(?PropelPDO $con = null)
     {
         parent::postInsert($con);
         $this->setLastName('PostInsertedLastName');
     }
 
-    public function preUpdate(PropelPDO $con = null)
+    public function preUpdate(?PropelPDO $con = null)
     {
         parent::preUpdate($con);
         $this->setFirstName('PreUpdatedFirstname');
@@ -32,13 +32,13 @@ class TestAuthor extends Author
         return true;
     }
 
-    public function postUpdate(PropelPDO $con = null)
+    public function postUpdate(?PropelPDO $con = null)
     {
         parent::postUpdate($con);
         $this->setLastName('PostUpdatedLastName');
     }
 
-    public function preSave(PropelPDO $con = null)
+    public function preSave(?PropelPDO $con = null)
     {
         parent::preSave($con);
         $this->setEmail("pre@save.com");
@@ -46,13 +46,13 @@ class TestAuthor extends Author
         return true;
     }
 
-    public function postSave(PropelPDO $con = null)
+    public function postSave(?PropelPDO $con = null)
     {
         parent::postSave($con);
         $this->setAge(115);
     }
 
-    public function preDelete(PropelPDO $con = null)
+    public function preDelete(?PropelPDO $con = null)
     {
         parent::preDelete($con);
         $this->setFirstName("Pre-Deleted");
@@ -60,7 +60,7 @@ class TestAuthor extends Author
         return true;
     }
 
-    public function postDelete(PropelPDO $con = null)
+    public function postDelete(?PropelPDO $con = null)
     {
         parent::postDelete($con);
         $this->setLastName("Post-Deleted");
@@ -75,7 +75,7 @@ class TestAuthor extends Author
 
 class TestAuthorDeleteFalse extends TestAuthor
 {
-    public function preDelete(PropelPDO $con = null)
+    public function preDelete(?PropelPDO $con = null)
     {
         parent::preDelete($con);
         $this->setFirstName("Pre-Deleted");
@@ -85,7 +85,7 @@ class TestAuthorDeleteFalse extends TestAuthor
 }
 class TestAuthorSaveFalse extends TestAuthor
 {
-    public function preSave(PropelPDO $con = null)
+    public function preSave(?PropelPDO $con = null)
     {
         parent::preSave($con);
         $this->setEmail("pre@save.com");

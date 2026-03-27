@@ -50,7 +50,7 @@ interface GeneratorConfigInterface
     /**
      * Creates and configures a new Platform class.
      */
-    public function getConfiguredPlatform(PDO $con = null, $database = null);
+    public function getConfiguredPlatform(?PDO $con = null, $database = null);
 
     /**
      * Gets a configured behavior class

@@ -909,7 +909,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
     " . $visibility . " function get$cfc(\$format = " . $defaultfmt . "";
         if ($col->isLazyLoad()) {
-            $script .= ", \$con = null";
+            $script .= ", ?PropelPDO \$con = null";
         }
         $script .= ")
     {";
@@ -1154,7 +1154,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param PropelPDO|null \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return "               . $col->getPhpType() . "
@@ -1213,14 +1213,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param PropelPDO|null \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return boolean
      */
     $visibility function has$singularPhpName(\$value";
         if ($col->isLazyLoad()) {
-            $script .= ", PropelPDO \$con = null";
+            $script .= ", ?PropelPDO \$con = null";
         }
         $script .= ")
     {
@@ -1267,7 +1267,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param PropelPDO|null \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return " . $col->getPhpType() . "
@@ -1290,7 +1290,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
     " . $visibility . " function get$cfc(";
         if ($col->isLazyLoad()) {
-            $script .= "PropelPDO \$con = null";
+            $script .= "?PropelPDO \$con = null";
         }
         $script .= ")
     {";
@@ -1368,7 +1368,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * the [$clo] column, since it is not populated by
      * the hydrate() method.
      *
-     * @param  PropelPDO \$con (optional) The PropelPDO connection to use.
+     * @param  PropelPDO|null \$con (optional) The PropelPDO connection to use.
      * @return void
      * @throws PropelException - any underlying error will be wrapped and re-thrown.
      */";
@@ -1386,7 +1386,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $cfc = $col->getPhpName();
         $script .= "
-    protected function load$cfc(PropelPDO \$con = null)
+    protected function load$cfc(?PropelPDO \$con = null)
     {";
     }
 
@@ -1814,14 +1814,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param PropelPDO|null \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     $visibility function add$singularPhpName(\$value";
         if ($col->isLazyLoad()) {
-            $script .= ", PropelPDO \$con = null";
+            $script .= ", ?PropelPDO \$con = null";
         }
         $script .= ")
     {
@@ -1857,14 +1857,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param PropelPDO|null \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     $visibility function remove$singularPhpName(\$value";
         if ($col->isLazyLoad()) {
-            $script .= ", PropelPDO \$con = null";
+            $script .= ", ?PropelPDO \$con = null";
         }
         // we want to reindex the array, so array_ functions are not the best choice
         $script .= ")
@@ -2815,7 +2815,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Removes this object from datastore and sets delete attribute.
      *
-     * @param PropelPDO \$con
+     * @param PropelPDO|null \$con
      * @return void
      * @throws PropelException
      * @throws Exception
@@ -2834,7 +2834,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function addDeleteOpen(&$script)
     {
         $script .= "
-    public function delete(PropelPDO \$con = null)
+    public function delete(?PropelPDO \$con = null)
     {";
     }
 
@@ -2925,11 +2925,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * This will only work if the object has been saved and has a valid primary key set.
      *
      * @param boolean \$deep (optional) Whether to also de-associated any related objects.
-     * @param PropelPDO \$con (optional) The PropelPDO connection to use.
+     * @param PropelPDO|null \$con (optional) The PropelPDO connection to use.
      * @return void
      * @throws PropelException - if this object is deleted, unsaved or doesn't have pk match in db
      */
-    public function reload(\$deep = false, PropelPDO \$con = null)
+    public function reload(\$deep = false, ?PropelPDO \$con = null)
     {
         if (\$this->isDeleted()) {
             throw new PropelException(\"Cannot reload a deleted object.\");
@@ -3404,7 +3404,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
-    public function set" . $this->getFKPhpNameAffix($fk, $plural = false) . "($className \$v = null)
+    public function set" . $this->getFKPhpNameAffix($fk, $plural = false) . "(?$className \$v = null)
     {";
         foreach ($fk->getLocalColumns() as $columnName) {
             $column = $table->getColumn($columnName);
@@ -3506,12 +3506,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Get the associated $className object
      *
-     * @param PropelPDO \$con Optional Connection object.
+     * @param PropelPDO|null \$con Optional Connection object.
      * @param \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
-    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null, \$doQuery = true)
+    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(?PropelPDO \$con = null, \$doQuery = true)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional) && \$doQuery) {";
@@ -3867,11 +3867,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      *
      * @param Criteria \$criteria
      * @param boolean \$distinct
-     * @param PropelPDO \$con
+     * @param PropelPDO|null \$con
      * @return int             Count of related $className objects.
      * @throws PropelException
      */
-    public function count$relCol(Criteria \$criteria = null, \$distinct = false, PropelPDO \$con = null)
+    public function count$relCol(?Criteria \$criteria = null, \$distinct = false, ?PropelPDO \$con = null)
     {
         \$partial = \$this->{$collName}Partial && !\$this->isNew();
         if (null === \$this->$collName || null !== \$criteria || \$partial) {
@@ -3927,11 +3927,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param Criteria \$criteria optional Criteria object to narrow the query
-     * @param PropelPDO \$con optional connection object
+     * @param PropelPDO|null \$con optional connection object
      * @return PropelObjectCollection|{$className}[] List of $className objects
      * @throws PropelException
      */
-    public function get$relCol(\$criteria = null, PropelPDO \$con = null)
+    public function get$relCol(\$criteria = null, ?PropelPDO \$con = null)
     {
         \$partial = \$this->{$collName}Partial && !\$this->isNew();
         if (null === \$this->$collName || null !== \$criteria  || \$partial) {
@@ -3997,10 +3997,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * and new objects from the given Propel collection.
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
-     * @param PropelPDO \$con Optional connection object
+     * @param PropelPDO|null \$con Optional connection object
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
-    public function set{$relatedName}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
+    public function set{$relatedName}(PropelCollection \${$inputCollection}, ?PropelPDO \$con = null)
     {
         \${$inputCollection}ToDelete = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
@@ -4133,11 +4133,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Gets a single $className object, which is related to this object by a one-to-one relationship.
      *
-     * @param PropelPDO \$con optional connection object
+     * @param PropelPDO|null \$con optional connection object
      * @return $className
      * @throws PropelException
      */
-    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(?PropelPDO \$con = null)
     {
 ";
         $script .= "
@@ -4174,7 +4174,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
-    public function set" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$v = null)
+    public function set" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(?$className \$v = null)
     {
         \$this->$varName = \$v;
 
@@ -4418,11 +4418,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param Criteria \$criteria Optional query object to filter the query
-     * @param PropelPDO \$con Optional connection object
+     * @param PropelPDO|null \$con Optional connection object
      *
      * @return PropelObjectCollection|{$relatedObjectClassName}[] List of {$relatedObjectClassName} objects
      */
-    public function get{$relatedName}(\$criteria = null, PropelPDO \$con = null)
+    public function get{$relatedName}(\$criteria = null, ?PropelPDO \$con = null)
     {
         if (null === \$this->$collName || null !== \$criteria) {
             if (\$this->isNew() && null === \$this->$collName) {
@@ -4463,10 +4463,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * and new objects from the given Propel collection.
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
-     * @param PropelPDO \$con Optional connection object
+     * @param PropelPDO|null \$con Optional connection object
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
-    public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
+    public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, ?PropelPDO \$con = null)
     {
         \$this->clear{$relatedNamePlural}();
         \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}(null, \$con);
@@ -4501,11 +4501,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      *
      * @param Criteria \$criteria Optional query object to filter the query
      * @param boolean \$distinct Set to true to force count distinct
-     * @param PropelPDO \$con Optional connection object
+     * @param PropelPDO|null \$con Optional connection object
      *
      * @return int the number of related $relatedObjectClassName objects
      */
-    public function count{$relatedName}(\$criteria = null, \$distinct = false, PropelPDO \$con = null)
+    public function count{$relatedName}(\$criteria = null, \$distinct = false, ?PropelPDO \$con = null)
     {
         if (null === \$this->$collName || null !== \$criteria) {
             if (\$this->isNew() && null === \$this->$collName) {
@@ -4691,7 +4691,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * If the object is new, it inserts it; otherwise an update is performed.
      * All related objects are also updated in this method.
      *
-     * @param PropelPDO \$con";
+     * @param PropelPDO|null \$con";
         if ($reloadOnUpdate || $reloadOnInsert) {
             $script .= "
      * @param boolean \$skipReload Whether to skip the reload for this object from database.";
@@ -4841,7 +4841,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Insert the row in the database.
      *
-     * @param PropelPDO \$con
+     * @param PropelPDO|null \$con
      *
      * @throws PropelException
      * @see        doSave()
@@ -5072,7 +5072,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Update the row in the database.
      *
-     * @param PropelPDO \$con
+     * @param PropelPDO|null \$con
      *
      * @see        doSave()
      */
@@ -5152,7 +5152,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
         $script .= "
      *
-     * @param PropelPDO \$con";
+     * @param PropelPDO|null \$con";
         if ($reloadOnUpdate || $reloadOnInsert) {
             $script .= "
      * @param boolean \$skipReload Whether to skip the reload for this object from database.";
@@ -5178,7 +5178,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $reloadOnUpdate = $table->isReloadOnUpdate();
         $reloadOnInsert = $table->isReloadOnInsert();
         $script .= "
-    public function save(PropelPDO \$con = null" . ($reloadOnUpdate || $reloadOnInsert ? ", \$skipReload = false" : "") . ")
+    public function save(?PropelPDO \$con = null" . ($reloadOnUpdate || $reloadOnInsert ? ", \$skipReload = false" : "") . ")
     {";
     }
 

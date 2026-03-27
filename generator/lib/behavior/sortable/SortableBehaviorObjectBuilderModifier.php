@@ -355,11 +355,11 @@ public function isFirst()
 /**
  * Check if the object is last in the list, i.e. if its rank is the highest rank
  *
- * @param     PropelPDO  \$con      optional connection
+ * @param     PropelPDO|null  \$con      optional connection
  *
  * @return    boolean
  */
-public function isLast(PropelPDO \$con = null)
+public function isLast(?PropelPDO \$con = null)
 {
     return \$this->{$this->getColumnGetter()}() == {$this->queryClassname}::create()->getMaxRankArray(" . ($useScope ? "\$this->getScopeValue(), " : '') . "\$con);
 }
@@ -375,11 +375,11 @@ public function isLast(PropelPDO \$con = null)
 /**
  * Get the next item in the list, i.e. the one for which rank is immediately higher
  *
- * @param     PropelPDO  \$con      optional connection
+ * @param     PropelPDO|null  \$con      optional connection
  *
  * @return    {$this->objectClassname}
  */
-public function getNext(PropelPDO \$con = null)
+public function getNext(?PropelPDO \$con = null)
 {";
         $script .= "
 
@@ -418,11 +418,11 @@ public function getNext(PropelPDO \$con = null)
 /**
  * Get the previous item in the list, i.e. the one for which rank is immediately lower
  *
- * @param     PropelPDO  \$con      optional connection
+ * @param     PropelPDO|null  \$con      optional connection
  *
  * @return    {$this->objectClassname}
  */
-public function getPrevious(PropelPDO \$con = null)
+public function getPrevious(?PropelPDO \$con = null)
 {";
         $script .= "
 
@@ -460,13 +460,13 @@ public function getPrevious(PropelPDO \$con = null)
  * The modifications are not persisted until the object is saved.
  *
  * @param     integer    \$rank rank value
- * @param     PropelPDO  \$con      optional connection
+ * @param     PropelPDO|null  \$con      optional connection
  *
  * @return    {$this->objectClassname} the current object
  *
  * @throws    PropelException
  */
-public function insertAtRank(\$rank, PropelPDO \$con = null)
+public function insertAtRank(\$rank, ?PropelPDO \$con = null)
 {";
         $script .= "
     \$maxRank = {$this->queryClassname}::create()->getMaxRankArray(" . ($useScope ? "\$this->getScopeValue(), " : '') . "\$con);
@@ -496,13 +496,13 @@ public function insertAtRank(\$rank, PropelPDO \$con = null)
  * Insert in the last rank
  * The modifications are not persisted until the object is saved.
  *
- * @param PropelPDO \$con optional connection
+ * @param PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  *
  * @throws    PropelException
  */
-public function insertAtBottom(PropelPDO \$con = null)
+public function insertAtBottom(?PropelPDO \$con = null)
 {";
         $script .= "
     \$this->{$this->getColumnSetter()}({$this->queryClassname}::create()->getMaxRankArray(" . ($useScope ? "\$this->getScopeValue(), " : '') . "\$con) + 1);
@@ -538,13 +538,13 @@ public function insertAtTop()
  * Of the objects inbetween the old and new rank accordingly
  *
  * @param     integer   \$newRank rank value
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  *
  * @throws    PropelException
  */
-public function moveToRank(\$newRank, PropelPDO \$con = null)
+public function moveToRank(\$newRank, ?PropelPDO \$con = null)
 {
     if (\$this->isNew()) {
         throw new PropelException('New objects cannot be moved. Please use insertAtRank() instead');
@@ -589,13 +589,13 @@ public function moveToRank(\$newRank, PropelPDO \$con = null)
  * Exchange the rank of the object with the one passed as argument, and saves both objects
  *
  * @param     {$this->objectClassname} \$object
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  *
  * @throws Exception if the database cannot execute the two updates
  */
-public function swapWith(\$object, PropelPDO \$con = null)
+public function swapWith(\$object, ?PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
@@ -635,11 +635,11 @@ $script .= "
 /**
  * Move the object higher in the list, i.e. exchanges its rank with the one of the previous object
  *
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  */
-public function moveUp(PropelPDO \$con = null)
+public function moveUp(?PropelPDO \$con = null)
 {
     if (\$this->isFirst()) {
         return \$this;
@@ -668,11 +668,11 @@ public function moveUp(PropelPDO \$con = null)
 /**
  * Move the object higher in the list, i.e. exchanges its rank with the one of the next object
  *
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  */
-public function moveDown(PropelPDO \$con = null)
+public function moveDown(?PropelPDO \$con = null)
 {
     if (\$this->isLast(\$con)) {
         return \$this;
@@ -701,11 +701,11 @@ public function moveDown(PropelPDO \$con = null)
 /**
  * Move the object to the top of the list
  *
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  */
-public function moveToTop(PropelPDO \$con = null)
+public function moveToTop(?PropelPDO \$con = null)
 {
     if (\$this->isFirst()) {
         return \$this;
@@ -723,11 +723,11 @@ public function moveToTop(PropelPDO \$con = null)
 /**
  * Move the object to the bottom of the list
  *
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return integer the old object's rank
  */
-public function moveToBottom(PropelPDO \$con = null)
+public function moveToBottom(?PropelPDO \$con = null)
 {
     if (\$this->isLast(\$con)) {
         return false;
@@ -758,11 +758,11 @@ public function moveToBottom(PropelPDO \$con = null)
  * Removes the current object from the list".($useScope ? ' (moves it to the null scope)' : '').".
  * The modifications are not persisted until the object is saved.
  *
- * @param     PropelPDO \$con optional connection
+ * @param     PropelPDO|null \$con optional connection
  *
  * @return    {$this->objectClassname} the current object
  */
-public function removeFromList(PropelPDO \$con = null)
+public function removeFromList(?PropelPDO \$con = null)
 {";
         if ($useScope) {
           $script .= "

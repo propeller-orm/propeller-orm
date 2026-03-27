@@ -78,10 +78,7 @@ class MysqlSchemaParser extends BaseSchemaParser
         return self::$mysqlTypeMap;
     }
 
-    /**
-     *
-     */
-    public function parse(Database $database, Task $task = null)
+    public function parse(Database $database, ?Task $task = null)
     {
         $this->addVendorInfo = $this->getGeneratorConfig()->getBuildProperty('addVendorInfo');
 

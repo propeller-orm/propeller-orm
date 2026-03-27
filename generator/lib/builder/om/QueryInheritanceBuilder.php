@@ -314,13 +314,13 @@ class " . $this->getClassname() . " extends " . $baseClassname . " {
      * and format the result with the current formatter
      * By default, returns a model object
      *
-     * @param PropelPDO \$con an optional connection object
+     * @param PropelPDO|null \$con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      *
      * @throws PropelException
      */
-    public function findOneOrCreate(\$con = null)
+    public function findOneOrCreate(?PropelPDO \$con = null)
     {
         if (\$this->joins) {
             throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');

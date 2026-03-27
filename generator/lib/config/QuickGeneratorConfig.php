@@ -37,9 +37,12 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
 
     private $generatorConfig    = null;
 
+    /**
+     * @var PropelPlatformInterface|null
+     */
     private $configuredPlatform = null;
 
-    public function __construct(PropelPlatformInterface $platform = null)
+    public function __construct(?PropelPlatformInterface $platform = null)
     {
         $this->configuredPlatform = $platform;
         $this->setBuildProperties($this->parsePseudoIniFile(dirname(__FILE__) . '/../../default.properties'));
@@ -154,7 +157,7 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfiguredPlatform(PDO $con = null, $database = null)
+    public function getConfiguredPlatform(?PDO $con = null, $database = null)
     {
         if (null === $this->configuredPlatform) {
             return new SqlitePlatform($con);

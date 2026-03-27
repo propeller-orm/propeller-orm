@@ -392,7 +392,7 @@ class SoftDeleteBehaviorTest extends BookstoreTestBase
 
 class UndeletableTable4 extends Table4
 {
-    public function preDelete(PropelPDO $con = null)
+    public function preDelete(?PropelPDO $con = null)
     {
         parent::preDelete($con);
         $this->setTitle('foo');
@@ -403,7 +403,7 @@ class UndeletableTable4 extends Table4
 
 class PostdeletehookedTable4 extends Table4
 {
-    public function postDelete(PropelPDO $con = null)
+    public function postDelete(?PropelPDO $con = null)
     {
         parent::postDelete($con);
         $this->setTitle('post-deleted');

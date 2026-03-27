@@ -64,9 +64,9 @@ abstract class BaseSchemaParser implements SchemaParser
     protected $platform;
 
     /**
-     * @param PDO $dbh Optional database connection
+     * @param PDO|null $dbh Optional database connection
      */
-    public function __construct(PDO $dbh = null)
+    public function __construct(?PDO $dbh = null)
     {
         if ($dbh) {
             $this->setConnection($dbh);

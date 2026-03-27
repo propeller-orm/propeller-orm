@@ -152,11 +152,11 @@ abstract class BaseObject
     /**
      * Code to be run before persisting the object
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      *
      * @return boolean
      */
-    public function preSave(PropelPDO $con = null)
+    public function preSave(?PropelPDO $con = null)
     {
         return true;
     }
@@ -164,20 +164,20 @@ abstract class BaseObject
     /**
      * Code to be run after persisting the object
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      */
-    public function postSave(PropelPDO $con = null)
+    public function postSave(?PropelPDO $con = null)
     {
     }
 
     /**
      * Code to be run before inserting to database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      *
      * @return boolean
      */
-    public function preInsert(PropelPDO $con = null)
+    public function preInsert(?PropelPDO $con = null)
     {
         return true;
     }
@@ -185,20 +185,20 @@ abstract class BaseObject
     /**
      * Code to be run after inserting to database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      */
-    public function postInsert(PropelPDO $con = null)
+    public function postInsert(?PropelPDO $con = null)
     {
     }
 
     /**
      * Code to be run before updating the object in database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      *
      * @return boolean
      */
-    public function preUpdate(PropelPDO $con = null)
+    public function preUpdate(?PropelPDO $con = null)
     {
         return true;
     }
@@ -206,20 +206,20 @@ abstract class BaseObject
     /**
      * Code to be run after updating the object in database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      */
-    public function postUpdate(PropelPDO $con = null)
+    public function postUpdate(?PropelPDO $con = null)
     {
     }
 
     /**
      * Code to be run before deleting the object in database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      *
      * @return boolean
      */
-    public function preDelete(PropelPDO $con = null)
+    public function preDelete(?PropelPDO $con = null)
     {
         return true;
     }
@@ -227,16 +227,14 @@ abstract class BaseObject
     /**
      * Code to be run after deleting the object in database
      *
-     * @param PropelPDO $con
+     * @param PropelPDO|null $con
      */
-    public function postDelete(PropelPDO $con = null)
+    public function postDelete(?PropelPDO $con = null)
     {
     }
 
     /**
      * Code to be run after object hydration
-     *
-     * @param PropelPDO $con
      */
     public function postHydrate($row, $startcol = 0, $rehydrate = false)
     {
@@ -267,9 +265,9 @@ abstract class BaseObject
      * <code>obj</code> is an instance of <code>BaseObject</code>, delegates to
      * <code>equals(BaseObject)</code>.  Otherwise, returns <code>false</code>.
      *
-     * @param      obj The object to compare to.
+     * @param object The object to compare to.
      *
-     * @return Whether equal to the object specified.
+     * @return bool Whether equal to the object specified.
      */
     public function equals($obj)
     {

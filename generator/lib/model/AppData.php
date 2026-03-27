@@ -31,7 +31,7 @@ class AppData
     /**
      * The platform class for our database(s).
      *
-     * @var        string
+     * @var        PropelPlatformInterface|null
      */
     private $platform;
 
@@ -58,9 +58,9 @@ class AppData
     /**
      * Creates a new instance for the specified database type.
      *
-     * @param PropelPlatformInterface $defaultPlatform The default platform object to use for any databases added to this application model.
+     * @param PropelPlatformInterface|null $defaultPlatform The default platform object to use for any databases added to this application model.
      */
-    public function __construct(PropelPlatformInterface $defaultPlatform = null)
+    public function __construct(?PropelPlatformInterface $defaultPlatform = null)
     {
         if (null !== $defaultPlatform) {
             $this->platform = $defaultPlatform;
@@ -80,7 +80,7 @@ class AppData
     /**
      * Gets the platform object to use for any databases added to this application model.
      *
-     * @return PropelPlatformInterface
+     * @return PropelPlatformInterface|null
      */
     public function getPlatform()
     {

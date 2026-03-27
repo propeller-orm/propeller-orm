@@ -40,15 +40,15 @@ class PropelDateTime extends DateTime
     /**
      * Factory method to get a DateTime object from a temporal input
      *
-     * @param mixed        $value         The value to convert (can be a string, a timestamp, or another DateTime)
-     * @param DateTimeZone $timeZone      (optional) timezone
-     * @param string       $dateTimeClass The class of the object to create, defaults to DateTime
+     * @param mixed             $value         The value to convert (can be a string, a timestamp, or another DateTime)
+     * @param DateTimeZone|null $timeZone      (optional) timezone
+     * @param string            $dateTimeClass The class of the object to create, defaults to DateTime
      *
      * @return mixed null, or an instance of $dateTimeClass
      *
      * @throws PropelException
      */
-    public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime')
+    public static function newInstance($value, ?DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime')
     {
         if ($value instanceof DateTime) {
             return $value;
